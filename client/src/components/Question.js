@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Question(props) {
+function Question(props) {
     const { question } = props;
     var questionNum = 1;
     return(
