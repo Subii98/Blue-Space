@@ -1,0 +1,26 @@
+{
+  "name": "blue-space",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch server --exec node --experimental-modules server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seoeongeueun/Blue-Space.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seoeongeueun/Blue-Space/issues"
+  },
+  "homepage": "https://github.com/seoeongeueun/Blue-Space#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}

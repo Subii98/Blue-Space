@@ -1,0 +1,243 @@
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: 'oswald-light';
+  src: local('oswald-light'), url(./fonts/Oswald-Light.ttf) format('truetype');
+}
+* {
+  font-family: "oswald-light";
+}
+
+html{
+  font-size: 62.5%; /* default browser font size = 16px and 16 * 62.5 = 10 px = 1 rem */
+  box-sizing: border-box; /*easiler to manage box and add padding / margin*/
+  display: flex;
+  justify-content: center;
+  
+}
+body{
+  position: absolute;
+  height: 100vh;
+  
+  font-size: 1.6rem; /* 16px */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* layouts */
+.grid-container{
+  display: grid;
+  grid-template-areas: 
+      'header'
+      'main'
+      'footer';
+  grid-template-columns: 1fr;
+  grid-template-rows: 13rem 1fr 5rem; /*header body footer*/
+  height: 100%
+}
+header{
+  grid-area: header;
+  position: relative;
+  margin-left: 10%;
+  margin-right: 10%
+
+}
+main{
+  grid-area: main;
+  background-color: #ffffff;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+/* Header */
+.all{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+img.hamburger{
+  width: 100;
+  margin-right: 3rem;
+}
+
+.topLine {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.login {
+  display: flex;
+  flex-direction: row;
+}
+
+.login a{
+  text-decoration: none;
+  font-size: 1.5rem;
+  margin-left: 3rem;
+  color: #00aeef;
+}
+
+.searchBar{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.searchInput{
+  border-style: solid;
+  border-width: 1px;
+  border-color: #D2D2D2;
+  border-radius: 5px 0px 0px 5px;
+  width: 60rem;
+  height: 3rem;
+}
+.searchInput::placeholder{
+  padding: 5px;
+  font-size: 1.3rem;
+}
+.searchInput:focus{
+  outline-color: #00aeef;
+}
+/*searchbar magnifying glass button*/
+.all button{
+  border-style: 2px solid;
+  border-color: #00aeef;
+  background-color: transparent;
+  border-radius: 5px;
+}
+.searchBar button{
+  border-style: solid;
+  border-color: #00aeef;
+  background-color: #00aeef;
+  border-radius: 0px 5px 5px 0px;
+  width: 4rem;
+}
+
+.headerItems{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 3rem;
+}
+
+.mainButtons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 1.5rem;
+}
+.mainButtons button{
+  background-color: #ffffff;
+  border-width: 1px;
+  border-color: #00Aeef;
+  border-style: solid;
+  border-radius: 5px;
+  color: #00aeef;
+  margin-right: 3rem;
+  align-items: center;
+  font-size: 2rem;
+  padding: 1px 1.2rem;
+  width: 13rem;
+}
+.tags {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+.tags a{
+  text-decoration: none;
+  color: #00aeef;
+  font-size: 1.4rem;
+  margin-left: 0.5rem;
+}
+.banner {
+  border-style: solid;
+  border-radius: 5px 5px 0px 0px;
+  border-color: #d2d2d2;
+  border-width: 1px;
+  overflow: hidden;
+}
+.banner img{
+  max-width: 100%;
+  height: 25%;
+  margin: 0px;
+  margin: -70px 0px -70px 0px;
+}
+.postArea {
+  display: flex;
+  flex-direction: column;
+}
+.platformInfoArea img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin-right: 2rem;
+  object-fit: cover;
+  float: left;
+}
+.platformInfoArea{
+  display: block;
+  border-style: solid;
+  border-color: #d2d2d2;
+  border-width: 1px;
+  padding: 2rem;
+}
+
+.platformInfoArea a{
+  text-decoration: none;
+  color: #000000;
+  font-size: 4rem;
+}
+.platformInfo {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.platformTop{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.platformBottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.platformBottom button{
+  color: #00aeef;
+  border-color: #00aeef;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  background-color: transparent;
+  padding: 1px 1.2rem;
+}
+.quizArea {
+  border: 1px solid #d2d2d2;
+}
+.quizArea p{
+  margin: 2rem;
+  font-size: 2rem;
+}
+.questionSet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+.questionSet button{
+  margin-top: 2rem;
+  background-color: transparent;
+  border: 1px solid #00aeef;
+  border-radius: 5px;
+  color: #00aeef;
+}
