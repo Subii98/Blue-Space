@@ -1,3 +1,4 @@
+import env from "./env.js";
 import express from 'express'
 import cors from "cors";
 import mongoose from 'mongoose'
@@ -6,10 +7,11 @@ import path from "path"
 import cookieParser from "cookie-parser";
 import quizRouter from './routers/quizRouter.js';
 
+env(); // set enviornment variables
 const app = express();
 const __dirname = path.resolve();
 const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
-const URI = process.env.MONGODB_URL ? process.env.MONGODB_URL : "mongodb+srv://admin:adminpassword@bluespace.mloto.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const MONGODB_URL = process.env.MONGODB_URL ? process.env.MONGODB_URL : "mongodb://localhost/bluespace";
 
 // app.use(logger("dev"));
 app.use("/static",express.static(path.join(__dirname, "./client/build/static")));
@@ -25,7 +27,7 @@ app.use(
 app.use(cookieParser());
 app.use(
     cors({
-        origin: URI, //origin change need
+        origin: ORIGIN,
         credentials: true,
         optionsSuccessStatus: 200,
     })
@@ -37,7 +39,7 @@ app.use("/", function (req, res, next) {
 });
 
 mongoose
-    .connect(URI, {
+    .connect(MONGODB_URL, {
         useNewUrlParser: true })
     .catch(e => {
         console.error('Connection error', e.message)
