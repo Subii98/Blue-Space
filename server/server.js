@@ -2,11 +2,11 @@ import env from "./env.js";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import data from "./data.js";
 import path from "path";
 import cookieParser from "cookie-parser";
 import quizRouter from "./routers/quizRouter.js";
 import { exec } from "child_process";
+import questionRouter from "./routers/questionRouter.js";
 
 env(); // set enviornment variables
 const app = express();
@@ -62,19 +62,8 @@ mongoose
         console.error("Connection error", e.message);
     });
 
-app.get("/api/questions/:id", (req, res) => {
-    const question = data.questions.find((x) => x._id === req.params.id);
-    if (question) {
-        res.send(question);
-    } else {
-        res.status(404).send({ message: "Question Not Found" });
-    }
-});
-
-app.get("/api/questions", (req, res) => {
-    res.send(data.questions);
-});
 app.use("/api/quizzes", quizRouter);
+app.use('/api/questions', questionRouter)
 app.get("/", (req, res) => {
     res.send("Server is Ready");
 });
