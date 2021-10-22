@@ -41,9 +41,9 @@ function HomeScreen(props) {
     <div>
       <Tags/>
       <PostArea/>
-      {questions.map((question) => (
+      {questions.slice(0,1).map((question) => (
         <Question question = {question}></Question>
-      ))}
+      ))}      
     </div>
   )
 }
