@@ -48,6 +48,33 @@ const data = {
                     fourth: 0
                 }
             ]
+        },
+        {
+            _id: '2',
+            title: "Your Favourite Quiz",
+            description: "something about the beatles",
+            questionSet: [
+                {
+                    _id: '1',
+                    text: "What is Ringo Starr's last name?",
+                    option: ["Stanley", "Starr", "Starling", "Starkey"],
+                    answer: 4,
+                    first: 0,
+                    second: 0,
+                    third: 0,
+                    fourth: 0
+                },
+                {
+                    _id: '2',
+                    text: "What is George's Harrison's middle name?",
+                    option: ["Harold", "Henry", "Hugh", "none"],
+                    answer: 4,
+                    first: 0,
+                    second: 0,
+                    third: 0,
+                    fourth: 0
+                }
+            ]
         }
     ]
 }

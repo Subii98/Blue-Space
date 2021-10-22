@@ -4,8 +4,13 @@ import data from './data.js';
 import quizRouter from './routers/quizRouter.js';
 
 const app = express();
+
+const URI = "mongodb+srv://admin:adminpassword@bluespace.mloto.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const URIL = "mongodb://localhost/bluespace"
+
 mongoose
-    .connect('mongodb://127.0.0.1:27017/bluespace', { useNewUrlParser: true })
+    .connect(process.env.MONGODB_URL || URIL, {
+        useNewUrlParser: true })
     .catch(e => {
         console.error('Connection error', e.message)
 })

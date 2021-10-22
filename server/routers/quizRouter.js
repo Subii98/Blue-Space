@@ -5,13 +5,13 @@ import Quiz from '../models/quizModel.js'
 
 const quizRouter = express.Router();
 
-quizRouter.get('/quiz', 
+quizRouter.get('/seed', 
     expressAsyncHandler(async(req, res) => {
-        const createdQuizzes = await Quiz.insertMany(data.quizzes)
-        res.send({ createdQuizzes })
+        //await Quiz.remove({})
+        const createdQuizzes = data.quizzes
+        res.send({ createdQuizzes });
     })
-)
-
+);
 //quizRouter.put('/quiz/:id', QuizCtrl.updateQuiz)
 //quizRouter.get('/quiz/:nid', QuizCtrl.getQuizById)
 //quizRouter.get('/quizzes', QuizCtrl.getQuizzes)
