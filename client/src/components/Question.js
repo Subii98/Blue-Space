@@ -2,10 +2,9 @@ import React from 'react'
 
 function Question(props) {
     const { question } = props;
-    var questionNum = 1;
     return(
         <div className="quizArea">
-            <p>Question {questionNum++}</p>
+            <p>Question {question._id}</p>
             <form className="questionSet">
                 <span key={question._id} className="question">{question.text}</span><br/>
 

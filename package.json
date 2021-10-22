@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/seoeongeueun/Blue-Space#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.0.12"
   },
   "devDependencies": {
     "nodemon": "^2.0.14"
