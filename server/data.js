@@ -23,7 +23,6 @@ const data = {
     ],
     quizzes: [
         {
-            _id: '1',
             title: "Everyting about 80's Rock",
             description: "What do you know about rock music?",
             questionSet: [
@@ -38,7 +37,6 @@ const data = {
                     fourth: 0
                 },
                 {
-                    _id: '2',
                     text: "Which one of these songs is not by Tom Petty and the Heartbreakers?",
                     option: ["Breakdown", "Night Moves", "Refugee", "American Girl"],
                     answer: 2,
@@ -50,7 +48,6 @@ const data = {
             ]
         },
         {
-            _id: '2',
             title: "Your Favourite Quiz",
             description: "something about the beatles",
             questionSet: [
