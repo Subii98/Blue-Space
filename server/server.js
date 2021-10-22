@@ -1,15 +1,43 @@
 import express from 'express'
+import cors from "cors";
 import mongoose from 'mongoose'
 import data from './data.js';
+import path from "path"
+import cookieParser from "cookie-parser";
 import quizRouter from './routers/quizRouter.js';
 
 const app = express();
+const __dirname = path.resolve();
+const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
+const URI = process.env.MONGODB_URL ? process.env.MONGODB_URL : "mongodb+srv://admin:adminpassword@bluespace.mloto.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
-const URI = "mongodb+srv://admin:adminpassword@bluespace.mloto.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-const URIL = "mongodb://localhost/bluespace"
+// app.use(logger("dev"));
+app.use("/static",express.static(path.join(__dirname, "./client/build/static")));
+app.use("/images",express.static(path.join(__dirname, "./client/build/images")));
+app.use(express.json({ limit: "50mb" }));
+app.use(
+    express.urlencoded({
+        limit: "50mb",
+        extended: true,
+        parameterLimit: 50000,
+    })
+);
+app.use(cookieParser());
+app.use(
+    cors({
+        origin: URI, //origin change need
+        credentials: true,
+        optionsSuccessStatus: 200,
+    })
+);
+
+app.use("/", function (req, res, next) {
+    if (req.path.indexOf("api") != -1) return next();
+    res.sendFile(path.resolve(__dirname, "./client/build/index.html"));
+});
 
 mongoose
-    .connect(process.env.MONGODB_URL || URIL, {
+    .connect(URI, {
         useNewUrlParser: true })
     .catch(e => {
         console.error('Connection error', e.message)
