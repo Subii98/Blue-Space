@@ -241,3 +241,25 @@ img.hamburger{
   border-radius: 5px;
   color: #00aeef;
 }
+
+.sectionTitle {
+  
+position: absolute;
+width: 10rem;
+height: 20rem;
+left: 43.3rem;
+top: 71.6rem;
+
+font-size: 2.4rem;
+line-height: 3.6rem;
+
+color: #929292;
+}
+
+.platformListArea {
+  position: absolute;
+width: 110rem;
+height: 800rem;
+left: 15rem;
+top: 69rem;
+}
