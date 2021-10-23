@@ -24,4 +24,5 @@ platformRouter.get("/:id", expressAsyncHandler(async (req, res)=> {
     }
 }))
 
+console.log("check")
 export default platformRouter
