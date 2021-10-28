@@ -1,7 +1,10 @@
 import React from 'react'
 import { GoogleLogout } from "react-google-login";
+const clientId = '506755665568-6jjmmjkcpuc4of62a2s5idulrbuebr69.apps.googleusercontent.com';
+
 
 function Logout() {
+
     const handleLogout = async (googleData) => {
       const res = await fetch("/api/v1/auth/logout", {
         method: "DELETE",
@@ -17,7 +20,7 @@ function Logout() {
     return (
       <div>
         <GoogleLogout
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          clientId={clientId}
           buttonText="Log Out"
           onSuccess={handleLogout}
           onFailure={handleLogout}

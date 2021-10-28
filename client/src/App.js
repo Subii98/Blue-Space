@@ -6,6 +6,7 @@ import QuizScreen from './screens/QuizScreen.js';
 import createQuiz from './screens/createQuiz';
 import PlatformScreen from './screens/PlatformScreen.js';
 import Login from "./components/Login.js";
+import Logout from "./components/Logout.js";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         </div>
 
         <Login />
+        <Logout />
       </BrowserRouter>
 
       
