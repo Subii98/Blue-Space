@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen.js';
 import QuizScreen from './screens/QuizScreen.js';
 import createQuiz from './screens/createQuiz';
 import PlatformScreen from './screens/PlatformScreen.js';
+import Login from "./components/Login.js";
 
 
 function App() {
@@ -19,7 +20,11 @@ function App() {
             <Route path="/platform" component = { PlatformScreen }></Route>
             </main>
         </div>
+
+        <Login />
       </BrowserRouter>
+
+      
   );
 }
 

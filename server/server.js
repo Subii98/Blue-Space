@@ -5,8 +5,10 @@ import mongoose from "mongoose";
 import path from "path";
 import cookieParser from "cookie-parser";
 import quizRouter from "./routers/quizRouter.js";
+import userRouter from "./routers/userRouter.js";
 import { exec } from "child_process";
 import questionRouter from "./routers/questionRouter.js";
+
 
 env(); // set enviornment variables
 const app = express();
@@ -16,12 +18,22 @@ const MONGODB_URL = process.env.MONGODB_URL
     ? process.env.MONGODB_URL
     : "mongodb://localhost/bluespace";
 
+
+//just gets current user
+app.get("/me", async (req, res) => {
+  res.status(200);
+  res.json(req.user);
+});
+    
 // app.use(logger("dev"));
 //localhost:3000/static
 app.use("/githubwebhook", (req, res) => {
     exec("cd ./client/ && npm run build"); 
     res.status(200);
 });
+
+
+
 
 app.use(
     "/static",
@@ -63,7 +75,8 @@ mongoose
     });
 
 app.use("/api/quizzes", quizRouter);
-app.use('/api/questions', questionRouter)
+app.use('/api/questions', questionRouter);
+app.use("/api/v1", userRouter);
 app.get("/", (req, res) => {
     res.send("Server is Ready");
 });

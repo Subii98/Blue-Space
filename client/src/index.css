@@ -247,10 +247,10 @@ img.hamburger{
 position: absolute;
 width: 10rem;
 height: 20rem;
-left: 43.3rem;
-top: 71.6rem;
-
-font-size: 2.4rem;
+display: flex;
+flex-direction: column;
+margin: 0;
+font-size: 1.2rem;
 line-height: 3.6rem;
 
 color: #929292;
