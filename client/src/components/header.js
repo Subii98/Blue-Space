@@ -7,11 +7,14 @@ import { GlobalStoreContext } from "../store";
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
     console.log(GlobalStoreContext);
+  
     let userName = "hello";
     console.log(store)
     if (store.loggedIn){
       userName = store.username;
+      
     }
+    console.log('username for header: ', userName);
     return (
       <header>
         <div className="all">
@@ -44,7 +47,7 @@ function Header(props) {
               </div>
               <div className="login">
                 {store.loggedIn ? (
-                  <a href="">{store.userName} </a>
+                  <a href="">{userName} </a>
                 ) : (
                   <a href="">LOG IN</a>
                 )}

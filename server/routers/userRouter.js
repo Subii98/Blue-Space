@@ -35,7 +35,7 @@ userRouter.post("/auth/google", async (req, res) => {
 
   // Setup stuff
   console.log(req.params.email);
-  var query = { _email: email },
+  var query = { email: email },
     update = { expire: new Date() },
     options = { upsert: true };
   //req.session.email = email;
@@ -43,7 +43,7 @@ userRouter.post("/auth/google", async (req, res) => {
 
 
   
-  User.findOne(query, function (error, user) {
+  const loggedUser = User.findOne(query, function (error, user) {
     console.log("find one and update");
     console.log("error:", error);
     console.log("next is error msg: ");
@@ -61,17 +61,18 @@ userRouter.post("/auth/google", async (req, res) => {
         randomName = randomName.replace(/\s+/g, '');
         randomName += Math.floor((Math.random() * 100) + 1);
         console.log("randomname: ", randomName);
-        user = new User({username: randomName, expire: new Date(), _email: email});
+        user = new User({username: randomName, expire: new Date(), email: email});
         
         console.log("saved user: ", user);
         console.log("username: ", user.username);
-        console.log("email: ", user._email);
+        console.log("email: ", user.email);
         console.log("email retrieived: ", email);
         
       }
       // Save the document
-
+      
       console.log("saving username: ", user.username);
+      console.log("what user", user);
       user
         .save()
         .then(() => {
@@ -85,11 +86,12 @@ userRouter.post("/auth/google", async (req, res) => {
           });
         })
         .catch((error) => {
+          console.log(error);
           return res.status(404).json({
             error,
             message: "User not updated!",
           });
-        });
+        }); 
         
 
 
@@ -102,6 +104,18 @@ userRouter.post("/auth/google", async (req, res) => {
       }  */
       //res.json(user);
       }
+      /*
+      if (!loggedUser){
+        var randomName = "";
+        randomName += name.toLowerCase();
+        randomName = randomName.replace(/\s+/g, '');
+        randomName += Math.floor((Math.random() * 100) + 1);
+        console.log("randomname: ", randomName);
+        newUser = new User({username: randomName, expire: new Date(), _email: email})
+        const createdUser = await User.insert(newUser);
+      }else {
+        const updateUser = 
+      } */
   });
 
   
