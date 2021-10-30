@@ -39,7 +39,7 @@ function QuizScreen(props) {
   
   return(
     <div>
-      {loading ? (
+      {loading && questions.length == 0 ? (
         <LoadingModal></LoadingModal>
       ) : error ? (
         <MessageModal variant="danger">{error}</MessageModal>
@@ -47,9 +47,7 @@ function QuizScreen(props) {
         <div>
           <Tags/>
           <PostArea/>
-          {questions.map((question) => (
-            <Question question = {question}></Question>
-          ))}
+          <Question question = {questions}></Question>
         </div>
       )}
     </div>
