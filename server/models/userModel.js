@@ -14,14 +14,11 @@ const userSchema = new mongoose.Schema({
         type: Number
     }, 
     */
-  email: {
+  _email: {
     type: String,
     unique: true,
   },
-  id: {
-    type: Number,
-    unique: true,
-  },
+  
 });
 
 const User = mongoose.model("User", userSchema)

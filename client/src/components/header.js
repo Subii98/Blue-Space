@@ -1,6 +1,17 @@
 import React from 'react'
+import { useContext } from "react";
 
-function header() {
+import { GlobalStoreContext } from "../store";
+
+
+function Header(props) {
+    const { store } = useContext(GlobalStoreContext);
+    console.log(GlobalStoreContext);
+    let userName = "hello";
+    console.log(store)
+    if (store.loggedIn){
+      userName = store.username;
+    }
     return (
       <header>
         <div className="all">
@@ -32,7 +43,12 @@ function header() {
                 </button>
               </div>
               <div className="login">
-                <a href="">LOG IN</a>
+                {store.loggedIn ? (
+                  <a href="">{store.userName} </a>
+                ) : (
+                  <a href="">LOG IN</a>
+                )}
+
                 <a href="">SIGN OUT</a>
               </div>
             </div>
@@ -49,4 +65,4 @@ function header() {
     );
 }
 
-export default header
+export default Header
