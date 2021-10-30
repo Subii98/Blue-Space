@@ -49,7 +49,8 @@ function Login() {
   });
   console.log("logged in");  
   const data = await res.json();
-  
+  console.log("message:", res.message);
+  console.log("data var: ", data);
   store.logIn(data);
    
   // store returned user somehow

@@ -40,9 +40,13 @@ userRouter.post("/auth/google", async (req, res) => {
     options = { upsert: true };
   //req.session.email = email;
   // Find the document
+
+
+  
   User.findOne(query, function (error, user) {
     console.log("find one and update");
-    console.log(error);
+    console.log("error:", error);
+    console.log("next is error msg: ");
     if (!error) {
       // If the document doesn't exist
       console.log("no errors");
@@ -57,34 +61,36 @@ userRouter.post("/auth/google", async (req, res) => {
         randomName = randomName.replace(/\s+/g, '');
         randomName += Math.floor((Math.random() * 100) + 1);
         console.log("randomname: ", randomName);
-        user = new User();
-        user.username =  randomName;
-        user.email = email;
-        user.expire = new Date();
-        console.log("saved user");
+        user = new User({username: randomName, expire: new Date(), _email: email});
+        
+        console.log("saved user: ", user);
         console.log("username: ", user.username);
-        user
-          .save()
-          .then(() => {
-            return res.status(200).json({
-              success: true,
-              id: user._id,
-              username: user.username,
-              email: user.email,
-              actualName: name,
-              message: "User updated!",
-            });
-          })
-          .catch((error) => {
-            return res.status(404).json({
-              error,
-              message: "User not updated!",
-            });
-          });
+        console.log("email: ", user._email);
+        console.log("email retrieived: ", email);
+        
       }
       // Save the document
-      
-      
+
+      console.log("saving username: ", user.username);
+      user
+        .save()
+        .then(() => {
+          return res.status(200).json({
+            success: true,
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            actualName: name,
+            message: "User updated!",
+          });
+        })
+        .catch((error) => {
+          return res.status(404).json({
+            error,
+            message: "User not updated!",
+          });
+        });
+        
 
 
       /*
