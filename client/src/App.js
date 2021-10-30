@@ -7,6 +7,7 @@ import createQuiz from './screens/createQuiz';
 import PlatformScreen from './screens/PlatformScreen.js';
 import Login from "./components/Login.js";
 import Logout from "./components/Logout.js";
+import CreatePlatform from "./screens/CreatePlatform.js"
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/quiz/:id" component = { QuizScreen }></Route>
             <Route path="/quizCreate" component = { createQuiz }></Route>
             <Route path="/platform" component = { PlatformScreen }></Route>
+            <Route path="/CreatePlatform" component = {CreatePlatform}></Route>
             </main>
         </div>
 
