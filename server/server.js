@@ -8,6 +8,7 @@ import quizRouter from "./routers/quizRouter.js";
 import userRouter from "./routers/userRouter.js";
 import { exec } from "child_process";
 import questionRouter from "./routers/questionRouter.js";
+import platformRouter from "./routers/platformRouter.js";
 
 
 env(); // set enviornment variables
@@ -76,6 +77,7 @@ mongoose
 
 app.use("/api/quizzes", quizRouter);
 app.use('/api/questions', questionRouter);
+app.use("/api/platform", platformRouter);
 app.use("/api/v1", userRouter);
 app.get("/", (req, res) => {
     res.send("Server is Ready");

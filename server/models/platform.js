@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 
 const platformSchema = new mongoose.Schema({
-    _id: String,
     userId : String,
     name: String,
     description: String,
@@ -12,11 +11,11 @@ const platformSchema = new mongoose.Schema({
     titleFontSize: Number,
     descFontSize: Number,
     fontColor: String,
-    tag1: Srtring,
+    tag1: String,
     tag2: String,
     tag3: String,
     quizId: [Number]
-})
+});
 
 const Platform = mongoose.model('Platform', platformSchema)
 

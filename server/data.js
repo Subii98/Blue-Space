@@ -73,6 +73,24 @@ const data = {
                 }
             ]
         }
+    ],
+    platform : [
+        {
+            userId : '0001',
+            name: 'testname',
+            description: 'asdfasdf',
+            subscriber: ['12','13'],
+            icon: 'none',
+            banner: 'none',
+            fontFamily: '',
+            titleFontSize: 23,
+            descFontSize: 34,
+            fontColor: 'skyblue',
+            tag1: 'music',
+            tag2: 'space',
+            tag3: 'abc',
+            quizId: [0,1,2]
+        }
     ]
 }
 
