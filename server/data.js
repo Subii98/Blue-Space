@@ -25,7 +25,7 @@ const data = {
         {
             title: "Everyting about 80's Rock",
             description: "What do you know about rock music?",
-            questionSet: [
+            questions: [
                 {
                     _id: '1',
                     text: "Which one of these songs is not by Bob Seger & The Silver Bullet Band?",
@@ -50,7 +50,7 @@ const data = {
         {
             title: "Your Favourite Quiz",
             description: "something about the beatles",
-            questionSet: [
+            questions: [
                 {
                     _id: '1',
                     text: "What is Ringo Starr's last name?",
