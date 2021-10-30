@@ -4,6 +4,7 @@ function Question(props) {
     const [index, setIndex] = useState(0)
     const [questions, setQuestions] = useState(props.question)
     const [question, setQuestion] = useState(questions[0])
+    const [checked, setChecked] = useState(false)
     //const question = questions[index]
 
     useEffect( () => {
@@ -17,22 +18,36 @@ function Question(props) {
         var ele = document.getElementsByTagName('input');
         for (var i = 0; i < ele.length; i++) {
             if (ele[i].type = "radio") {
-                if (ele[i].checked && ele[i].value == question.answer)
+                if (ele[i].checked && ele[i].value == question.answer){
                     document.getElementById("result").innerHTML += "Correct!"
-                else if (ele[i].checked)
+                    setChecked(true)
+                }  
+                else if (ele[i].checked){
                     document.getElementById("result").innerHTML
                             += "Wrong<br>Answer: " + question.option[question.answer-1] + "<br>";
+                    setChecked(true)
+                }
             }
         }
     }
     
     const onNextClick = (e) => {
         e.preventDefault();
-        console.log('next question')
-        if (index < questions.length-1)
-            setIndex(index+1)
+        if (checked){
+            console.log('next question')
+            if (index < questions.length-1)
+                setIndex(index+1)
+                document.getElementById("result").innerHTML = ""
+                setChecked(false)
+        }            
+    }
+
+    const onBackClick = (e) => {
+        e.preventDefault();
+        if (index >= 0) {
+            setIndex(index-1)
             document.getElementById("result").innerHTML = ""
-            
+        }            
     }
 
     return(
@@ -72,6 +87,7 @@ function Question(props) {
                 </div>
                 <button type="submit" onClick = {(e)=> {onSaveClickCheckAnswer(e)}}>SAVE</button>
                 <button onClick = {(e)=>{onNextClick(e)}}>NEXT</button>
+                <button onClick = {(e)=>{onBackClick(e)}}>BACK</button>
             </form>
             <div className="result" id = "result"></div>
         </div>
