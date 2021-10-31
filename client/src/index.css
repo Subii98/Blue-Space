@@ -242,8 +242,21 @@ img.hamburger{
   color: #00aeef;
 }
 
+.questionButtons{
+  display: flex;
+  flex-direction: row;
+}
+
+.questionButtons button{
+  margin-right: 1rem
+}
+
+.questionButtons button:disabled{
+  color: #929292;
+  border-color: #929292;
+}
+
 .sectionTitle {
-  
 position: absolute;
 width: 10rem;
 height: 20rem;
