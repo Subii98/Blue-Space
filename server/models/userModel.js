@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    unique: true,
+    //unique: true,
   },
 
   expire: {
@@ -16,13 +16,12 @@ const userSchema = new mongoose.Schema({
     */
   email: {
     type: String,
-    unique: true,
+    //unique: true,
   },
-  id: {
-    type: Number,
-    unique: true,
-  },
+  
 });
+
+
 
 const User = mongoose.model("User", userSchema)
 

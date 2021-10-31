@@ -4,11 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { GlobalStoreContext, useGlobalStore } from "./store";
+const AppWrapper = () => {
+  const store = useGlobalStore();
+  return (
+    <GlobalStoreContext.Provider value={store}>
+      <App />
+    </GlobalStoreContext.Provider>
+  );
+};
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppWrapper />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
