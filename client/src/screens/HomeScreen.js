@@ -22,7 +22,7 @@ function HomeScreen(props) {
   //use react hooks to set data (empty array by default)
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
   const isMounted = useIsMounted();
 
   useEffect( () => {

@@ -280,3 +280,9 @@ top: 69rem;
 .result {
   text-align: center;
 }
+
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
