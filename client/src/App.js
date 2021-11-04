@@ -9,6 +9,7 @@ import Login from "./components/Login.js";
 import Logout from "./components/Logout.js";
 import CreatePlatform from "./screens/CreatePlatform.js";
 import QuizScoreScreen from "./components/QuizScore.js";
+import HomeScreenTmp from "./screens/HomeScreenTmp.js";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/quizCreate" component={createQuiz}></Route>
           <Route path="/platform" component={PlatformScreen}></Route>
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>
+          <Route path="/test" component={HomeScreenTmp}></Route>
         </main>
       </div>
 
