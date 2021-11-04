@@ -283,6 +283,12 @@ top: 69rem;
 
 .score {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.questionsCorrect {
+  display: flex;
+  flex-direction: row;
 }
