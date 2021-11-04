@@ -1,6 +1,6 @@
 import express from 'express'
 import expressAsyncHandler from 'express-async-handler';
-import Platform from '../models/platform.js';
+import Platform from '../models/platformModel.js';
 import data from '../data.js';
 
 const platformRouter = express.Router()
@@ -16,9 +16,9 @@ platformRouter.get('/test/insert', expressAsyncHandler(async(req, res)=> {
 }))
 
 platformRouter.get('/test/select', expressAsyncHandler(async(req, res)=> {
-    const platform = await Platform.find({ userId : "0001" }); // db select
+    const platform = await Platform.find({ userId : "3333" }); // db select
     // await Platform.deleteMany(platform[0])
-    await Platform.update({userId : "3333"})
+    // await Platform.updateOne({userId : "3333"})
     res.send(platform)
 }));
 
@@ -65,10 +65,32 @@ platformRouter.post("/insert", expressAsyncHandler(async(req, res)=> {
 }));
 
 
-platformRouter.get("/:id", expressAsyncHandler(async (req, res)=> {
-    const platform = await Platform.findById(req.params.id)
+platformRouter.get("/:userId", expressAsyncHandler(async (req, res)=> {
+    const platform = await Platform.findById(req.params.userId)
     if(platform){
         res.send(platform)
+    }
+    else{
+        res.status(404).send({message: 'Platform Not Found'})
+    }
+}))
+
+platformRouter.delete("/delete/:userId", expressAsyncHandler(async (req, res)=> {
+    const platform = await Platform.findById(req.params.userId)
+    if(platform){
+        const delPlatform = await Platform.deleteOne(platform)
+        res.send({message: 'plaform deleted'})
+    }
+    else{
+        res.status(404).send({message: 'Platform Not Found'})
+    }
+}))
+
+platformRouter.put("/update/:userId", expressAsyncHandler(async (req, res)=> {
+    const platform = await Platform.findById(req.params.userId)
+    if(platform){
+        await Platform.updateOne({_id: req.params.userId}, )
+        res.send({message: 'plaform deleted'})
     }
     else{
         res.status(404).send({message: 'Platform Not Found'})
