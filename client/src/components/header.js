@@ -2,7 +2,8 @@ import React from 'react'
 import { useContext } from "react";
 
 import { GlobalStoreContext } from "../store";
-
+import LoginComponent from "./Login";
+import LogoutComponent from "./Logout";
 
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -56,10 +57,10 @@ function Header(props) {
                 {store.loggedIn ? (
                   <a href="">{userName} </a>
                 ) : (
-                  <a href="">LOG IN</a>
+                  <LoginComponent />
                 )}
 
-                <a href="">SIGN OUT</a>
+                <LogoutComponent />
               </div>
             </div>
             <div className="mainButtons">

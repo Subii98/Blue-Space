@@ -79,7 +79,7 @@ function Login() {
     console.log('[Login failed] res: ', res)
   }
     return (
-      <div>
+      <>
         <GoogleLogin
           clientId="506755665568-6jjmmjkcpuc4of62a2s5idulrbuebr69.apps.googleusercontent.com"
           buttonText="Log in with Google"
@@ -87,8 +87,13 @@ function Login() {
           onFailure={onFailure}
           cookiePolicy={"single_host_origin"}
           isSignedIn={true}
+          render={(renderProps)=>{
+            return (
+              <a onClick={renderProps.onClick}>LOGIN</a>
+            )
+          }}
         />
-      </div>
+      </>
     );
 }
 

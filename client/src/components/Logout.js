@@ -26,13 +26,18 @@ function Logout() {
       
     };
     return (
-      <div>
+      <>
         <GoogleLogout
         clientId={clientId}
         buttonText="Logout"
         onLogoutSuccess={onSuccess}
-      ></GoogleLogout>
-      </div>
+        render={(renderProps)=>{
+          return (
+            <a onClick={renderProps.onClick}>LOGOUT</a>
+          )
+        }}
+      />
+      </>
     );
 }
 

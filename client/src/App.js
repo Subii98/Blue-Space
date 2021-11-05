@@ -5,8 +5,6 @@ import HomeScreen from "./screens/HomeScreen.js";
 import QuizScreen from "./screens/QuizScreen.js";
 import createQuiz from "./screens/createQuiz";
 import PlatformScreen from "./screens/PlatformScreen.js";
-import Login from "./components/Login.js";
-import Logout from "./components/Logout.js";
 import CreatePlatform from "./screens/CreatePlatform.js";
 import QuizScoreScreen from "./components/QuizScore.js";
 import Categories from "./components/CategoriesCard/Categories.js"
@@ -28,8 +26,6 @@ function App() {
         </main>
       </div>
 
-      <Login />
-      <Logout />
     </BrowserRouter>
   );
 }
