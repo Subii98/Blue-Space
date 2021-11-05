@@ -2,6 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import User from "../models/userModel.js";
+import Counter from "../models/counterModel.js";
 import cookieParser from "cookie-parser";
 import { createRequire } from "module";
 
@@ -44,9 +45,55 @@ userRouter.post("/auth/google", async (req, res) => {
 
   
   const loggedUser = User.findOne(query, function (error, user) {
+    var currentUserCounter = 0;
+    const userCounter = Counter.findOne(
+      { name: "user" },
+      function (error, userCnt) {
+        if (!error) {
+          if (!userCnt) {
+            //create a new counter
+            userCnt = new Counter({ name: "user", counter: 0 });
+          }
+          userCnt.counter = userCnt.counter + 1;
+          currentUserCounter = userCnt.counter;
+          userCnt
+            .save()
+            .then(() => {
+              console.log("new user cnt: ", userCnt.counter);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    );
+    /*
+    const userCounter = Counter.findOne(
+      { name: "user" },
+      function (error, userCnt) {
+        if (!error) {
+          if (!userCnt) {
+            //create a new counter
+            userCnt = new Counter({ name: "user", counter: 0 });
+          }
+          userCnt.counter = userCnt.counter + 1;
+          userCnt
+            .save()
+            .then(() => {
+              console.log("new user cnt: ", userCnt.counter);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    );
+    */
+
     console.log("find one and update");
     console.log("error:", error);
     console.log("next is error msg: ");
+
     if (!error) {
       // If the document doesn't exist
       console.log("no errors");
@@ -55,22 +102,22 @@ userRouter.post("/auth/google", async (req, res) => {
       // console.log(user.length == 0);
       if (!user) {
         // Create it
-        console.log('entered create user');
+        console.log("entered create user");
         var randomName = "";
         randomName += name.toLowerCase();
-        randomName = randomName.replace(/\s+/g, '');
-        randomName += Math.floor((Math.random() * 100) + 1);
+        randomName = randomName.replace(/\s+/g, "");
+        randomName += Math.floor(Math.random() * 100 + 1);
         console.log("randomname: ", randomName);
-        user = new User({username: randomName, expire: new Date(), email: email});
         
+        user = new User({ username: randomName, expire: new Date(), email: email, uniqueId: currentUserCounter, });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
         console.log("email: ", user.email);
         console.log("email retrieived: ", email);
-        
+        console.log("id: ", user._id);
       }
       // Save the document
-      
+
       console.log("saving username: ", user.username);
       console.log("what user", user);
       user
@@ -89,11 +136,10 @@ userRouter.post("/auth/google", async (req, res) => {
           console.log(error);
           return res.status(404).json({
             error,
+            testUser: user,
             message: "User not updated!",
           });
-        }); 
-        
-
+        });
 
       /*
       if (!user.id){
@@ -103,8 +149,8 @@ userRouter.post("/auth/google", async (req, res) => {
         req.session.email = user.email;
       }  */
       //res.json(user);
-      }
-      /*
+    }
+    /*
       if (!loggedUser){
         var randomName = "";
         randomName += name.toLowerCase();
@@ -116,9 +162,29 @@ userRouter.post("/auth/google", async (req, res) => {
       }else {
         const updateUser = 
       } */
+    console.log("logged user var: ", loggedUser);
   });
 
-  
+  const userCounter = Counter.findOne(
+      { name: "user" },
+      function (error, userCnt) {
+        if (!error) {
+          if (!userCnt) {
+            //create a new counter
+            userCnt = new Counter({ name: "user", counter: 0 });
+          }
+          userCnt.counter = userCnt.counter + 1;
+          userCnt
+            .save()
+            .then(() => {
+              console.log("new user cnt: ", userCnt.counter);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    );
   
   
 });

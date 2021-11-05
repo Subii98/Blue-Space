@@ -74,6 +74,12 @@ const data = {
                 }
             ]
         }
+    ],
+    platform: [
+        {
+            userId : '1234',
+            name : "test"
+        }
     ]
 }
 

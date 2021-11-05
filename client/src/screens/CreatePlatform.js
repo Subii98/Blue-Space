@@ -26,7 +26,7 @@ function CreatePlatform(props) {
     // const [fontFamily, setFontFamily] = useState("");
     // const [titleFontSize, setTitleFontSize] = useState(0);
     // const [descFontSize, setDescFontSize] = useState(0);
-    // const [fontColor, setFontColor] = useState("");
+    const [fontColor, setFontColor] = useState("");
     const [tag1, setTag1] = useState("");
     const [tag2, setTag2] = useState("");
     const [tag3, setTag3] = useState("");
