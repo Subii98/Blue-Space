@@ -23,6 +23,7 @@ const data = {
     ],
     quizzes: [
         {
+            _id: '001',
             title: "Everyting about 80's Rock",
             description: "What do you know about rock music?",
             questions: [
@@ -48,6 +49,7 @@ const data = {
             ]
         },
         {
+            _id: '002',
             title: "Your Favourite Quiz",
             description: "something about the beatles",
             questions: [
