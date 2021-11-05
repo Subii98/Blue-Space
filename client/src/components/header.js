@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from "react";
-
+import { Link } from "react-router-dom";
 import { GlobalStoreContext } from "../store";
 import LoginComponent from "./Login";
 import LogoutComponent from "./Logout";
@@ -23,6 +23,13 @@ function Header(props) {
       userName = store.username;
     }
     console.log('username for header: ', userName);
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      store.searchQuery(event.target.search);
+      console.log("printing search query: ", store.search);
+    }
+
     return (
       <header>
         <div className="all">
@@ -43,15 +50,18 @@ function Header(props) {
           <div className="headerItems">
             <div className="topLine">
               <div className="searchBar">
-                <input
-                  type="text"
-                  className="searchInput"
-                  placeholder="search categories"
-                  id="searchInput"
-                />
-                <button type="submit">
-                  <img src="./images/magnifyingglass.png" width="13" />
-                </button>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    name="search"
+                    className="searchInput"
+                    placeholder="search categories"
+                    id="searchInput"
+                  />
+                    <button type="submit">
+                      <img src="./images/magnifyingglass.png" width="13" />
+                    </button>
+                </form>
               </div>
               <div className="login">
                 {store.loggedIn ? (
@@ -64,11 +74,21 @@ function Header(props) {
               </div>
             </div>
             <div className="mainButtons">
-              <button type="button">CATEGORIES</button>
-              <button type="button">CREATE</button>
-              <button type="button">LEADERBOARD</button>
-              <button type="button">STORE</button>
-              <button type="button">HELP</button>
+              <Link to="/categories">
+                <button type="button">CATEGORIES</button>
+              </Link>
+              <Link to="create">
+                <button type="button">CREATE</button>
+              </Link>
+              <Link to="leaderboard">
+                <button type="button">LEADERBOARD</button>
+              </Link>
+              <Link to="/store">
+                <button type="button">STORE</button>
+              </Link>
+              <Link to="/help">
+                <button type="button">HELP</button>
+              </Link>
             </div>
           </div>
         </div>

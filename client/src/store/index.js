@@ -12,7 +12,8 @@ export const GlobalStoreContext = createContext({});
 // DATA STORE STATE THAT CAN BE PROCESSED
 export const GlobalStoreActionType = {
   SIGN_IN: "SIGN_IN",
-  SIGN_OUT: "SIGN_OUT"
+  SIGN_OUT: "SIGN_OUT",
+  SEARCH: "SEARCH"
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -27,6 +28,7 @@ export const useGlobalStore = () => {
     username: "hello",
     email: null,
     actualName: null,
+    search: "",
   });
 
   // HERE'S THE DATA STORE'S REDUCER, IT MUST
@@ -50,6 +52,11 @@ export const useGlobalStore = () => {
           username: null,
           email: null,
           actualName: null,
+        });
+      }
+      case GlobalStoreActionType.SEARCH: {
+        return setStore({
+          search: payload.search,
         });
       }
       default:
@@ -82,8 +89,17 @@ export const useGlobalStore = () => {
         empty: "empty"
       },
     });
-  };
+  }
+  store.searchQuery = function (data) {
+    storeReducer({
+      type: GlobalStoreActionType.SEARCH,
+      payload: {
+        search: data.search
+      },
+    });
+  }
 
+  
 
   // THIS GIVES OUR STORE AND ITS REDUCER TO ANY COMPONENT THAT NEEDS IT
   return { store, storeReducer };
