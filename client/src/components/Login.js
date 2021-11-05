@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext } from "react";
+import { useContext, useEffect, useState} from "react";
 import { GlobalStoreContext } from "../store";
 import {GoogleLogin} from 'react-google-login';
 // refresh token
@@ -39,9 +39,13 @@ function Login() {
 
 function Login() {
   const { store } = useContext(GlobalStoreContext);
+  const [signedIn, setSignedIn] = useState(0);
+
+ 
+
   const handleLogin = async googleData => {  
       console.log(googleData);
-      refreshTokenSetup(googleData);
+      
         const res = await fetch("/api/v1/auth/google", {
             method: "POST",
             body: JSON.stringify({
@@ -52,11 +56,16 @@ function Login() {
     }
     
   });
+  refreshTokenSetup(googleData);
+
   console.log("logged in");  
   const data = await res.json();
   console.log("message:", res.message);
   console.log("data var: ", data);
   store.logIn(data);
+  if (res.status == 200){
+      localStorage.setItem("signed-in", true);
+  }
   
   // store returned user somehow
 }
@@ -68,6 +77,7 @@ function Login() {
           onSuccess={handleLogin}
           onFailure={handleLogin}
           cookiePolicy={"single_host_origin"}
+          isSignedIn={true}
         />
       </div>
     );
