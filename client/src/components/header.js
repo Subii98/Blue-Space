@@ -7,12 +7,19 @@ import { GlobalStoreContext } from "../store";
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
     console.log(GlobalStoreContext);
+    const loginData = localStorage.getItem('data');
+    /*
+    if (loginData){
+      if (!store.loggedIn){
+        console.log("entered loginData assignment: ", loginData);
+        store.logIn(loginData);
+      }
+    } */
   
     let userName = "hello";
     console.log(store)
     if (store.loggedIn){
       userName = store.username;
-      
     }
     console.log('username for header: ', userName);
     return (

@@ -41,10 +41,11 @@ function Login() {
   const { store } = useContext(GlobalStoreContext);
   const [signedIn, setSignedIn] = useState(0);
 
- 
+  
 
-  const handleLogin = async googleData => {  
-      console.log(googleData);
+
+  const onSuccess = async googleData => {  
+      //console.log(googleData);
       
         const res = await fetch("/api/v1/auth/google", {
             method: "POST",
@@ -59,23 +60,31 @@ function Login() {
   refreshTokenSetup(googleData);
 
   console.log("logged in");  
+  
   const data = await res.json();
   console.log("message:", res.message);
   console.log("data var: ", data);
-  store.logIn(data);
+  
   if (res.status == 200){
       localStorage.setItem("signed-in", true);
+      localStorage.setItem("data", data);
+      store.logIn(data);
   }
+  
   
   // store returned user somehow
 }
+
+  const onFailure = (res) => {
+    console.log('[Login failed] res: ', res)
+  }
     return (
       <div>
         <GoogleLogin
           clientId="506755665568-6jjmmjkcpuc4of62a2s5idulrbuebr69.apps.googleusercontent.com"
           buttonText="Log in with Google"
-          onSuccess={handleLogin}
-          onFailure={handleLogin}
+          onSuccess={onSuccess}
+          onFailure={onFailure}
           cookiePolicy={"single_host_origin"}
           isSignedIn={true}
         />
