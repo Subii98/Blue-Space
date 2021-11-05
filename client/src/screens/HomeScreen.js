@@ -20,6 +20,7 @@ function HomeScreen(props) {
   */
 
   //use react hooks to set data (empty array by default)
+  const [quiz, setQuiz] = useState([])
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

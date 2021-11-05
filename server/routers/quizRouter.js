@@ -20,7 +20,7 @@ quizRouter.get('/seed',
 
 quizRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     const quiz = await Quiz.findById(req.params.id)
-    if (product){
+    if (quiz){
         res.send(quiz)
     }else{
         res.status(404).send({message: 'Quiz Not Found'})
