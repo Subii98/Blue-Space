@@ -16,7 +16,7 @@ platformRouter.get('/test/insert', expressAsyncHandler(async(req, res)=> {
 }))
 
 platformRouter.get('/test/select', expressAsyncHandler(async(req, res)=> {
-    const platform = await Platform.find({ userId : "3333" }); // db select
+    const platform = await Platform.find({ name : "abc" }); // db select
     // await Platform.deleteMany(platform[0])
     // await Platform.updateOne({userId : "3333"})
     res.send(platform)
@@ -56,14 +56,12 @@ platformRouter.post("/insert", expressAsyncHandler(async(req, res)=> {
             tag3 : tag3,
             quizId : quizId,
         }]); 
-    
         res.send(createdPlatform);
     } catch(err){
         console.log(err);
         res.send(err);
     }
 }));
-
 
 platformRouter.get("/:userId", expressAsyncHandler(async (req, res)=> {
     const platform = await Platform.findById(req.params.userId)
@@ -73,7 +71,17 @@ platformRouter.get("/:userId", expressAsyncHandler(async (req, res)=> {
     else{
         res.status(404).send({message: 'Platform Not Found'})
     }
-}))
+}));
+
+platformRouter.get("/:name", expressAsyncHandler(async (req, res)=> {
+    const platform = await Platform.find({ name : req.params.name }) 
+    if(platform){
+        res.send(platform)
+    }
+    else{
+        res.status(404).send({message: 'Platform Not Found'})
+    }
+}));
 
 platformRouter.delete("/delete/:userId", expressAsyncHandler(async (req, res)=> {
     const platform = await Platform.findById(req.params.userId)
@@ -84,7 +92,7 @@ platformRouter.delete("/delete/:userId", expressAsyncHandler(async (req, res)=> 
     else{
         res.status(404).send({message: 'Platform Not Found'})
     }
-}))
+}));
 
 platformRouter.put("/update/:userId", expressAsyncHandler(async (req, res)=> {
     const platform = await Platform.findById(req.params.userId)
@@ -95,6 +103,6 @@ platformRouter.put("/update/:userId", expressAsyncHandler(async (req, res)=> {
     else{
         res.status(404).send({message: 'Platform Not Found'})
     }
-}))
+}));
 
 export default platformRouter
