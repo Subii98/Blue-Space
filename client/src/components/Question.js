@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import QuizScore from './QuizScore.js'
 
@@ -8,11 +9,20 @@ function Question(props) {
     const [checked, setChecked] = useState(false)
     const [disable, setDisable] = useState(false)
     const [endQuiz, setEndQuiz] = useState(false);
+    const [option, setOption] = useState("");
+    const [first, setFirst] = useState(question.first)
+    const [second, setSecond] = useState(question.second)
+    const [third, setThird] = useState(question.third)
+    const [fourth, setFourth] = useState(question.fourth)
+    const [correct, setCorrect] = useState(0)
     //const question = questions[index]
 
     useEffect( () => {
         setQuestion(questions[index])
-        console.log(index)
+        setFirst(question.first)
+        setSecond(question.second)
+        setThird(question.third)
+        setFourth(question.fourth)
     }, [index])
 
     const onSaveClickCheckAnswer = (e) => {
@@ -25,21 +35,46 @@ function Question(props) {
                 if (ele[i].checked && ele[i].value == question.answer){
                     document.getElementById("result").innerHTML += "Correct!"
                     setChecked(true)
+                    setCorrect(correct+1)
+                    setOption(ele[i].value)
+                    if (option == "1"){
+                        setFirst(first+1)
+                    }
+                    else if (option == "2"){
+                        setSecond(second+1)
+                    }
+                    else if (option == "3"){
+                        setThird(third+1)
+                    }
+                    else if (option == "4"){
+                        setFourth(fourth+1)
+                    }
                 }  
                 else if (ele[i].checked){
                     document.getElementById("result").innerHTML
                             += "Wrong<br>Answer: " + question.option[question.answer-1] + "<br>";
                     setChecked(true)
+                    setOption(ele[i].value)
                 }
             }
         }
     }
     
-    const onNextClick = (e) => {
+    const onNextClick = async (e) => {
         e.preventDefault();
         setDisable(false)
         if (checked){
             console.log('next question')
+            try{
+                const res = await axios.put(`/:id/question/${question._id}`, {
+                    first: first,
+                    second: second,
+                    third: third,
+                    fourth: fourth
+                })
+            } catch(err){
+                console.log(err)
+            }
             if (index < questions.length-1){
                 setIndex(index+1)
                 document.getElementById("result").innerHTML = ""
@@ -107,7 +142,7 @@ function Question(props) {
     }
     else{
         return(
-            <QuizScore/>
+            <QuizScore questions={questions} correct={correct}/>
         )
     }
 }
