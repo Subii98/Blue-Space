@@ -41,32 +41,33 @@ userRouter.post("/auth/google", async (req, res) => {
     options = { upsert: true };
   //req.session.email = email;
   // Find the document
+  var currentUserCounter = 0;
+const userCounter = Counter.findOne(
+  { name: "user" },
+  function (error, userCnt) {
+    if (!error) {
+      if (!userCnt) {
+        //create a new counter
+        userCnt = new Counter({ name: "user", counter: 0 });
+      }
+      currentUserCounter = userCnt.counter;
 
-
+      userCnt
+        .save()
+        .then(() => {
+          //console.log("new user cnt: ", currentUserCounter);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+);
   
   const loggedUser = User.findOne(query, function (error, user) {
-    var currentUserCounter = 0;
-    const userCounter = Counter.findOne(
-      { name: "user" },
-      function (error, userCnt) {
-        if (!error) {
-          if (!userCnt) {
-            //create a new counter
-            userCnt = new Counter({ name: "user", counter: 0 });
-          }
-          userCnt.counter = userCnt.counter + 1;
-          currentUserCounter = userCnt.counter;
-          userCnt
-            .save()
-            .then(() => {
-              console.log("new user cnt: ", userCnt.counter);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      }
-    );
+    
+    
+    
     /*
     const userCounter = Counter.findOne(
       { name: "user" },
@@ -109,12 +110,37 @@ userRouter.post("/auth/google", async (req, res) => {
         randomName += Math.floor(Math.random() * 100 + 1);
         console.log("randomname: ", randomName);
         
+        console.log("current user cnt is: ", currentUserCounter);
         user = new User({ username: randomName, expire: new Date(), email: email, uniqueId: currentUserCounter, });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
         console.log("email: ", user.email);
         console.log("email retrieived: ", email);
         console.log("id: ", user._id);
+        console.log("uniqueid: ", user.uniqueId);
+
+        const userCounter = Counter.findOne(
+          { name: "user" },
+          function (error, userCnt) {
+            if (!error) {
+              if (!userCnt) {
+                //create a new counter
+                userCnt = new Counter({ name: "user", counter: 1 });
+              }
+              userCnt.counter = userCnt.counter + 1;
+              currentUserCounter = userCnt.counter;
+
+              userCnt
+                .save()
+                .then(() => {
+                  console.log("new user cnt: ", currentUserCounter);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          }
+        );
       }
       // Save the document
 
@@ -162,29 +188,11 @@ userRouter.post("/auth/google", async (req, res) => {
       }else {
         const updateUser = 
       } */
-    console.log("logged user var: ", loggedUser);
+    //console.log("logged user var: ", loggedUser);
+    
   });
 
-  const userCounter = Counter.findOne(
-      { name: "user" },
-      function (error, userCnt) {
-        if (!error) {
-          if (!userCnt) {
-            //create a new counter
-            userCnt = new Counter({ name: "user", counter: 0 });
-          }
-          userCnt.counter = userCnt.counter + 1;
-          userCnt
-            .save()
-            .then(() => {
-              console.log("new user cnt: ", userCnt.counter);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      }
-    );
+  
   
   
 });
