@@ -64,7 +64,7 @@ function CreatePlatform(props) {
             // name : name,
             title: title,
             description : description,
-            subscriber : subscriber,
+            // subscriber : subscriber,
             // icon : icon,
             // banner : banner,
             // fontFamily : fontFamily,
@@ -76,7 +76,8 @@ function CreatePlatform(props) {
             tag3 : tag3,
             // quizId : quizId.split(','),
         });
-        setCreatePlatform(JSON.stringify(res));
+        // setCreatePlatform(JSON.stringify(res));
+        alert("platform created!")
     };
 
     return (
@@ -121,11 +122,11 @@ function CreatePlatform(props) {
                         <input value={tag3} onChange={(e)=>setTag3(e.target.value)} />
                     </div>
                     <button onClick={onClickSubmit}>submit</button>
-                    <span style={{ border : "1px solid blue"}}>CREATE RESULT :: {createPlatform}</span>
+                    {/* <span style={{ border : "1px solid blue"}}>CREATE RESULT :: {createPlatform}</span> */}
                 </div>
-                <div style={{ border : "1px solid red"}}>
+                {/* <div style={{ border : "1px solid red"}}>
                     <div>PLATFORMS :: {platforms}</div>
-                </div>
+                </div> */}
                 {/* <PlatformListArea /> */}
             </div>
         </div>

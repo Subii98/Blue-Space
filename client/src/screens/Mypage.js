@@ -8,6 +8,14 @@ import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
 import { FetchApiGet } from "../utils/Network";
 
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import { Link } from 'react-router-dom';
+
+
 function CreatePlatform(props) {
     const { store } = useContext(GlobalStoreContext);
     //use react hooks to set data (empty array by default)
@@ -47,10 +55,17 @@ function CreatePlatform(props) {
                 {platforms && platforms.map((raw,idx)=>{
                     return (
                         <div key={"Platform" + idx}>
-                            <div>{idx+1}</div>
-                            {/* <div>{raw.description}</div> */}
-                            <div>{raw.title}</div>
-                            {/* <div>{raw.subscriber}</div> */}
+                            {/* <div>{idx+1}</div>
+                            <div>{raw.title}</div> */}
+                            <CardContent>
+                                <Typography >
+                                    {idx+1}
+                                </Typography>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    {raw.title}
+                                </Typography>     
+                            </CardContent>
+                            
                         </div>
                     );
                 })}
