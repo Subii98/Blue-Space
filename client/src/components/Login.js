@@ -37,6 +37,7 @@ function Login() {
 function Login() {
   const { store } = useContext(GlobalStoreContext);
   const handleLogin = async googleData => {  
+      console.log(googleData);
         const res = await fetch("/api/v1/auth/google", {
             method: "POST",
             body: JSON.stringify({
