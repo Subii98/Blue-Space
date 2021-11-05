@@ -47,9 +47,10 @@ function CreatePlatform(props) {
                 {platforms && platforms.map((raw,idx)=>{
                     return (
                         <div key={"Platform" + idx}>
-                            <div>{raw.description}</div>
-                            <div>{raw.name}</div>
-                            <div>{raw.subscriber}</div>
+                            <div>{idx+1}</div>
+                            {/* <div>{raw.description}</div> */}
+                            <div>{raw.title}</div>
+                            {/* <div>{raw.subscriber}</div> */}
                         </div>
                     );
                 })}
