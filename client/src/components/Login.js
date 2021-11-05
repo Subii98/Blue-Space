@@ -89,7 +89,7 @@ function Login() {
           isSignedIn={true}
           render={(renderProps)=>{
             return (
-              <a onClick={renderProps.onClick}>LOGIN</a>
+              <a className="loginButton" onClick={renderProps.onClick}>LOGIN</a>
             )
           }}
         />

@@ -73,6 +73,14 @@ img.hamburger{
   flex-direction: row;
 }
 
+.loginButton{
+  cursor:pointer;
+}
+
+.logoutButton{
+  cursor:pointer;
+}
+
 .login a{
   text-decoration: none;
   font-size: 1.5rem;

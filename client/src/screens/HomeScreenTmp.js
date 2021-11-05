@@ -26,23 +26,22 @@ function HomeScreenTmp(props) {
   const [error, setError] = useState(false);
   const isMounted = useIsMounted();
 
-  useEffect( () => {
-    const fetchData = async () => {
-      try{
-        const { data } = await axios.get('/api/platforms');
-        setPlatforms(data);
-        setLoading(false)
-      } catch (err){
-        setError(err.message);
-        setLoading(false);
-      }
-      
-    };
-    fetchData().then(data => {
-      if (isMounted.current) { setPlatforms(data); }
-    });
-  }, [])
-
+  useEffect(() => {
+    axios
+         .get('/api/platform')
+         .then((res) => {
+             setPlatforms(res?.data)
+             setLoading(false)
+           return res.data;
+         })
+         .catch((error) => {
+           setError(
+             "Sth wrong happened"
+           );
+           setLoading(false)
+   console.log("Sth wrong happened");
+         });
+}, []);
 
   return(
     <div>
