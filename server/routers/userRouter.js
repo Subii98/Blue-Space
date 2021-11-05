@@ -197,7 +197,7 @@ const userCounter = Counter.findOne(
   
 });
 userRouter.delete("/auth/logout", async (req, res) => {
-  await req.session.destroy();
+  //await req.session.destroy();
   res.status(200);
   res.json({
     message: "Logged out successfully",
