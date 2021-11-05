@@ -2,6 +2,9 @@ import React from 'react';
 import { useContext } from "react";
 import { GlobalStoreContext } from "../store";
 import {GoogleLogin} from 'react-google-login';
+// refresh token
+import { refreshTokenSetup } from '../utils/refreshToken';
+
 const clientId = '506755665568-6jjmmjkcpuc4of62a2s5idulrbuebr69.apps.googleusercontent.com';
 
 
@@ -38,6 +41,7 @@ function Login() {
   const { store } = useContext(GlobalStoreContext);
   const handleLogin = async googleData => {  
       console.log(googleData);
+      refreshTokenSetup(googleData);
         const res = await fetch("/api/v1/auth/google", {
             method: "POST",
             body: JSON.stringify({
@@ -46,14 +50,14 @@ function Login() {
     headers: {
       "Content-Type": "application/json"
     }
-
+    
   });
   console.log("logged in");  
   const data = await res.json();
   console.log("message:", res.message);
   console.log("data var: ", data);
   store.logIn(data);
-   
+  
   // store returned user somehow
 }
     return (
