@@ -9,6 +9,7 @@ import CreatePlatform from "./screens/CreatePlatform.js";
 import QuizScoreScreen from "./components/QuizScore.js";
 import Categories from "./components/CategoriesCard/Categories.js"
 import HomeScreenTmp from "./screens/HomeScreenTmp.js";
+import MyPage from "./screens/Mypage.js";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>
           <Route path="/categories" component={Categories}></Route>
           <Route path="/test" component={HomeScreenTmp}></Route>
+          <Route path="/mypage" component={MyPage}></Route>
         </main>
       </div>
 

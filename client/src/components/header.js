@@ -55,7 +55,7 @@ function Header(props) {
               </div>
               <div className="login">
                 {store.loggedIn ? (
-                  <a href="">{userName} </a>
+                  <a href="/MyPage">{userName} </a>
                 ) : (
                   <LoginComponent />
                 )}

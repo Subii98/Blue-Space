@@ -16,7 +16,7 @@ platformRouter.get('/test/insert', expressAsyncHandler(async(req, res)=> {
 }))
 
 platformRouter.get('/test/select', expressAsyncHandler(async(req, res)=> {
-    const platform = await Platform.find({ name : "abc" }); // db select
+    const platform = await Platform.find({ name : {$eq : "test"} }); // db select
     // await Platform.deleteMany(platform[0])
     // await Platform.updateOne({userId : "3333"})
     res.send(platform)
@@ -73,7 +73,7 @@ platformRouter.get("/:userId", expressAsyncHandler(async (req, res)=> {
     }
 }));
 
-platformRouter.get("/:name", expressAsyncHandler(async (req, res)=> {
+platformRouter.get("/name/:name", expressAsyncHandler(async (req, res)=> {
     const platform = await Platform.find({ name : req.params.name }) 
     if(platform){
         res.send(platform)

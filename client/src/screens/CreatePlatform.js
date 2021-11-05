@@ -1,5 +1,6 @@
 import "../PlatformScreen.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { GlobalStoreContext } from "../store";
 import axios from "axios";
 import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
@@ -8,7 +9,7 @@ import MessageModal from "../components/MessageModal.js";
 import { FetchApiPost } from "../utils/Network";
 
 function CreatePlatform(props) {
-
+    const { store } = useContext(GlobalStoreContext);
     //use react hooks to set data (empty array by default)
     const [platforms, setPlatforms] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ function CreatePlatform(props) {
 
     const [id, setId] = useState("0");
     const [userId, setUserId] = useState("0");
-    const [name, setName] = useState("");
+    const [name, setName] = useState(store.username);
     const [description, setDescription] = useState("");
     
     const [subscriber, setSubscriber] = useState("");
@@ -47,7 +48,10 @@ function CreatePlatform(props) {
         fetchData();
     }, []);
 
-  
+    useEffect(()=>{
+        console.log(store)
+        setName(store.username)
+    },[store]);
 
     const onClickSubmit = async () => {
         let res = await FetchApiPost("/api/platform/insert", {
