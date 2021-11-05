@@ -7,6 +7,7 @@ import LoadingModal from '../components/LoadingModal.js';
 import MessageModal from '../components/MessageModal.js';
 import { load } from 'dotenv';
 import { useIsMounted } from '../components/useIsMounted.js';
+import Platform from '../components/Platform.js';
 
 
 function HomeScreen(props) {   
@@ -20,29 +21,27 @@ function HomeScreen(props) {
   */
 
   //use react hooks to set data (empty array by default)
-  const [quiz, setQuiz] = useState([])
-  const [questions, setQuestions] = useState([]);
+  const [platforms, setPlatforms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const isMounted = useIsMounted();
 
-  useEffect( () => {
-    const fetchData = async () => {
-      try{
-        const { data } = await axios.get('/api/questions');
-        setQuestions(data);
-        setLoading(false)
-      } catch (err){
-        setError(err.message);
-        setLoading(false);
-      }
-      
-    };
-    fetchData().then(data => {
-      if (isMounted.current) { setQuestions(data); }
-    });
-  }, [])
-
+  useEffect(() => {
+    axios
+         .get('/api/platform')
+         .then((res) => {
+             setPlatforms(res?.data)
+             setLoading(false)
+           return res.data;
+         })
+         .catch((error) => {
+           setError(
+             "Sth wrong happened"
+           );
+           setLoading(false)
+   console.log("Sth wrong happened");
+         });
+}, []);
 
   return(
     <div>
@@ -51,11 +50,7 @@ function HomeScreen(props) {
       ) : error ? (
         <MessageModal variant="danger">{error}</MessageModal>
       ) : (
-        <div>
-          <Tags/>
-          <PostArea/>
-          <Question question = {questions}></Question>
-        </div>
+          <Platform platforms = {platforms}></Platform>
       )}
     </div>
   )

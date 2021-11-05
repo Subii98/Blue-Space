@@ -6,9 +6,7 @@ import QuizScreen from "./screens/QuizScreen.js";
 import createQuiz from "./screens/createQuiz";
 import PlatformScreen from "./screens/PlatformScreen.js";
 import CreatePlatform from "./screens/CreatePlatform.js";
-import QuizScoreScreen from "./components/QuizScore.js";
 import Categories from "./components/CategoriesCard/Categories.js"
-import HomeScreenTmp from "./screens/HomeScreenTmp.js";
 import MyPage from "./screens/Mypage.js";
 
 function App() {
@@ -17,13 +15,12 @@ function App() {
       <div className="grid-container">
         <Header />
         <main>
-          <Route path="/" component={HomeScreen} exact></Route>
-          <Route path="/quiz/:id" component={QuizScreen}></Route>
+          <Route path="/quiz" component={QuizScreen}></Route>
           <Route path="/quizCreate" component={createQuiz}></Route>
           <Route path="/platform" component={PlatformScreen}></Route>
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>
           <Route path="/categories" component={Categories}></Route>
-          <Route path="/test" component={HomeScreenTmp}></Route>
+          <Route path="/" component={HomeScreen} exact></Route>
           <Route path="/mypage" component={MyPage}></Route>
         </main>
       </div>

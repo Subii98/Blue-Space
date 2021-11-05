@@ -32,7 +32,7 @@ function Header(props) {
             alt="hamburger"
             width="25"
           />
-          <a href="index1.html">
+          <a href="/">
             <img
               src="./images/logo11.png"
               className="logo"

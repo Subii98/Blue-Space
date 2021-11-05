@@ -19,23 +19,23 @@ function PlatformCard(props) {
     return (
         <div>
             <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea component={Link} to={'/'}>
-        <CardMedia
-          component="img"
-          height="140"
-          image={"./images/logo11.png"}
-          alt="category"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.platform.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.platform.description}
-          </Typography>     
-        </CardContent>
-      </CardActionArea>
-    </Card>
+            <CardActionArea component={Link} to={'/quiz'}>
+            <CardMedia
+              component="img"
+              height="140"
+              image={"./images/sample.jpeg"}
+              alt="category"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {props.platform.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {props.platform.description}
+              </Typography>     
+            </CardContent>
+          </CardActionArea>
+          </Card>
         </div>
     )
 }

@@ -5,7 +5,7 @@ function Platform(props){
     const [platforms, setPlatforms] = useState(props.platforms)
 
     return(
-        <div>
+        <div className="platformCard">
         {props.platforms.map((platform)=> (
             <PlatformCard platform={platform}></PlatformCard>)
         )}
