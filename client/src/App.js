@@ -5,13 +5,12 @@ import HomeScreen from "./screens/HomeScreen.js";
 import QuizScreen from "./screens/QuizScreen.js";
 import createQuiz from "./screens/createQuiz";
 import PlatformScreen from "./screens/PlatformScreen.js";
-import Login from "./components/Login.js";
-import Logout from "./components/Logout.js";
 import CreatePlatform from "./screens/CreatePlatform.js";
 import QuizScoreScreen from "./components/QuizScore.js";
 import Categories from "./components/CategoriesCard/Categories.js"
 import HomeScreenTmp from "./screens/HomeScreenTmp.js";
 import SearchScreen from "./screens/SearchScreen.js";
+import MyPage from "./screens/Mypage.js";
 
 function App() {
   return (
@@ -27,11 +26,10 @@ function App() {
           <Route path="/categories" component={Categories}></Route>
           <Route path="/test" component={HomeScreenTmp}></Route>
           <Route path="/search" component={SearchScreen}></Route>
+          <Route path="/mypage" component={MyPage}></Route>
         </main>
       </div>
 
-      <Login />
-      <Logout />
     </BrowserRouter>
   );
 }
