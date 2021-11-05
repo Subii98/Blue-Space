@@ -11,6 +11,7 @@ import CreatePlatform from "./screens/CreatePlatform.js";
 import QuizScoreScreen from "./components/QuizScore.js";
 import Categories from "./components/CategoriesCard/Categories.js"
 import HomeScreenTmp from "./screens/HomeScreenTmp.js";
+import SearchScreen from "./screens/SearchScreen.js";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>
           <Route path="/categories" component={Categories}></Route>
           <Route path="/test" component={HomeScreenTmp}></Route>
+          <Route path="/search" component={SearchScreen}></Route>
         </main>
       </div>
 

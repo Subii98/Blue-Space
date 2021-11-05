@@ -9,6 +9,7 @@ import userRouter from "./routers/userRouter.js";
 import { exec } from "child_process";
 import questionRouter from "./routers/questionRouter.js";
 import platformRouter from "./routers/platformRouter.js";
+import searchRouter from "./routers/searchRouter.js";
 
 env(); // set enviornment variables
 const app = express();
@@ -56,6 +57,8 @@ app.use(
   })
 );
 
+
+
 app.use("/", function (req, res, next) {
   //localhost:3000/api/v1/request
   if (req.path.indexOf("api") != -1) return next();
@@ -74,6 +77,7 @@ app.use("/api/quizzes", quizRouter);
 app.use("/api/questions", questionRouter);
 app.use("/api/platform", platformRouter);
 app.use("/api/v1", userRouter);
+app.use("/api/search", searchRouter);
 app.get("/", (req, res) => {
   res.send("Server is Ready");
 });
