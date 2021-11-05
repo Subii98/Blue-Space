@@ -25,8 +25,9 @@ platformRouter.get('/test/select', expressAsyncHandler(async(req, res)=> {
 platformRouter.post("/insert", expressAsyncHandler(async(req, res)=> {
     try{
         const {
-            userId ,
-            name,
+            // userId ,
+            userName,
+            title,
             description,
             subscriber,
             icon,
@@ -41,8 +42,10 @@ platformRouter.post("/insert", expressAsyncHandler(async(req, res)=> {
             quizId,
         } = req.body;
         const createdPlatform = await Platform.insertMany([{
-            userId  : userId ,
-            name : name,
+            // userId  : userId ,
+            userName: userName,
+            // name : name,
+            title: title,
             description : description,
             subscriber : subscriber,
             icon : icon,
@@ -73,8 +76,8 @@ platformRouter.get("/:userId", expressAsyncHandler(async (req, res)=> {
     }
 }));
 
-platformRouter.get("/name/:name", expressAsyncHandler(async (req, res)=> {
-    const platform = await Platform.find({ name : req.params.name }) 
+platformRouter.get("/name/:userName", expressAsyncHandler(async (req, res)=> {
+    const platform = await Platform.find({ userName : req.params.userName }) 
     if(platform){
         res.send(platform)
     }
