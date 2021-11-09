@@ -77,7 +77,7 @@ function Header(props) {
               <Link to="/categories">
                 <button type="button">CATEGORIES</button>
               </Link>
-              <Link to="create">
+              <Link to="/createplatform">
                 <button type="button">CREATE</button>
               </Link>
               <Link to="leaderboard">

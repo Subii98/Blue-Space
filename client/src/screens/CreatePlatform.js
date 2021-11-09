@@ -70,7 +70,7 @@ function CreatePlatform(props) {
             // fontFamily : fontFamily,
             // titleFontSize : titleFontSize,
             // descFontSize : descFontSize,
-            // fontColor : fontColor,
+            fontColor : fontColor,
             tag1 : tag1,
             tag2 : tag2,
             tag3 : tag3,
@@ -103,12 +103,12 @@ function CreatePlatform(props) {
                     </div>
                     <div className="platform_insert_box-data">
                         <span>description</span>
-                        <input value={description} onChange={(e)=>setDescription(e.target.value)} />
+                        <input value={description}onChange={(e)=>setDescription(e.target.value)} />
                     </div>
-                    {/* <div className="platform_insert_box-data">
-                        <span>subscriber</span>
-                        <input value={subscriber} onChange={(e)=>setSubscriber(e.target.value)} />
-                    </div> */}
+                    <div className="platform_insert_box-data">
+                        <span>font color</span>
+                        <input type="color" value={fontColor} onChange={(e)=>setFontColor(e.target.value)} />
+                    </div>
                     <div className="platform_insert_box-data">
                         <span>tag1</span>
                         <input value={tag1} onChange={(e)=>setTag1(e.target.value)} />
