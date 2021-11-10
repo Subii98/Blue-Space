@@ -17,7 +17,6 @@ function PlatformScreen(props) {
   const [error, setError] = useState(false);
   const [platform, setPlatform] = useState()
   const isMounted = useIsMounted();
-  isMounted.current = true
   //const platform = data.platforms.find( x => x._id === props.match.params._id)
   /*
   if (!platform) {

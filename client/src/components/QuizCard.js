@@ -20,7 +20,7 @@ function QuizCard(props) {
       <CardMedia
         component="img"
         height="140"
-        image={"./images/sample.jpeg"}
+        image={"/images/sample.jpeg"}
         alt="quizPreview"
       />
       <CardContent>

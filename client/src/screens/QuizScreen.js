@@ -21,11 +21,11 @@ function QuizScreen(props) {
 
   //use react hooks to set data (empty array by default)
   const [quiz, setQuiz] = useState([])
-  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const isMounted = useIsMounted();
 
+  /*
   useEffect( () => {
     const fetchData = async () => {
       try{
@@ -41,7 +41,34 @@ function QuizScreen(props) {
     fetchData().then(data => {
       if (isMounted.current) { setQuestions(data); }
     });
-  }, [])
+  }, [])*/
+
+  useEffect(() => {
+    isMounted.current = true
+    fetchQuiz()
+    return () => {isMounted.current = false}
+}, []);
+
+  function fetchQuiz(){
+    axios
+         .get('/api/quizzes')
+         .then((res) => {
+            setLoading(true)
+            if (isMounted.current){
+              const data = res?.data
+              setQuiz(data.find( x => x._id === props.match.params.id))
+              setLoading(false)
+              return
+            } 
+         })
+         .catch((error) => {
+           setError(
+             "Error loading quiz"
+           );
+           setLoading(false)
+   console.log("Error loading quiz");
+         });
+  }
 
 
   return(
@@ -52,9 +79,7 @@ function QuizScreen(props) {
         <MessageModal variant="danger">{error}</MessageModal>
       ) : (
         <div className="platformQuiz">
-          <Tags/>
-          <PostArea/>
-          <Question question = {questions}></Question>
+          {quiz && <Question question = {quiz.questions}></Question>}
         </div>
       )}
     </div>

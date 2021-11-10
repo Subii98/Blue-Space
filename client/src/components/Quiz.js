@@ -49,6 +49,7 @@ function Quiz(props){
           <MessageModal variant="danger">{error}</MessageModal>
         ) : (
           <div>
+            <p>Quiz</p>
             {quizzes.map( (quiz) => (
               <QuizCard quiz={quiz}/>
             ))}
