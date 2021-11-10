@@ -28,7 +28,7 @@ function HomeScreen(props) {
 
   useEffect(() => {
     axios
-         .get('/api/platform')
+         .get('/api/platforms')
          .then((res) => {
              setPlatforms(res?.data)
              setLoading(false)
@@ -36,10 +36,10 @@ function HomeScreen(props) {
          })
          .catch((error) => {
            setError(
-             "Sth wrong happened"
+             "Error loading home page"
            );
            setLoading(false)
-   console.log("Sth wrong happened");
+   console.log("Error loading home page");
          });
 }, []);
 

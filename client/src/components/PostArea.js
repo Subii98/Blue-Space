@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-function PostArea() {
+function PostArea(props) {
+  const [platform, setPlatform] = useState()
+
+  useEffect( () => {
+    setPlatform(props.platform)
+    console.log(platform)
+  }, [])
+
     return (
       <div className="postArea">
         <div className="banner">
-          <img src="./images/banner.jpg" />
+          <img src={platform.banner} />
         </div>
         <div className="platformInfoArea">
-          <img src="./images/platformprofile.jpg" alt="platformprofile" />
+          <img src="/images/platformprofile.jpg" alt="platformprofile" />
           <div className="platformInfo">
             <div className="platformTop">
               <a href="">70s & 80s Rock</a>

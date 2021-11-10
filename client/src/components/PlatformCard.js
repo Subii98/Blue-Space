@@ -13,13 +13,11 @@ function PlatformCard(props) {
             {props.user}
           </Typography>
     */
-   console.log("name: ", props.platform.name);
-   console.log("description", props.platform.description);
-   console.log('props: ', props)
+    
     return (
         <div>
             <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea component={Link} to={'/quiz'}>
+            <CardActionArea component={Link} to={`/platform/${props.platform._id}`}>
             <CardMedia
               component="img"
               height="140"

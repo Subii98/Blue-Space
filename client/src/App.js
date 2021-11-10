@@ -15,9 +15,9 @@ function App() {
       <div className="grid-container">
         <Header />
         <main>
-          <Route path="/quiz" component={QuizScreen}></Route>
+          <Route path="/quiz/:_id" component={QuizScreen}></Route>
           <Route path="/quizCreate" component={createQuiz}></Route>
-          <Route path="/platform" component={PlatformScreen}></Route>
+          <Route path="/platform/:id" component={PlatformScreen}></Route>
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>
           <Route path="/categories" component={Categories}></Route>
           <Route path="/" component={HomeScreen} exact></Route>

@@ -28,7 +28,7 @@ function CreatePlatform(props) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const { data } = await axios.get("/api/platform/name/"+name);
+                const { data } = await axios.get("/api/platforms/name/"+name);
                 setLoading(false);
                 setPlatforms(data);
             } catch (err) {
