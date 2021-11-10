@@ -55,8 +55,6 @@ function CreatePlatform(props) {
                 {platforms && platforms.map((raw,idx)=>{
                     return (
                         <div key={"Platform" + idx}>
-                            {/* <div>{idx+1}</div>
-                            <div>{raw.title}</div> */}
                             <CardContent>
                                 <Typography >
                                     {idx+1}
