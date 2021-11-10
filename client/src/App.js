@@ -15,7 +15,7 @@ function App() {
       <div className="grid-container">
         <Header />
         <main>
-          <Route path="/quiz/:_id" component={QuizScreen}></Route>
+          <Route path="/quiz/:id" component={QuizScreen}></Route>
           <Route path="/quizCreate" component={createQuiz}></Route>
           <Route path="/platform/:id" component={PlatformScreen}></Route>
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>

@@ -7,11 +7,12 @@ import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
 import PlatformListArea from "../components/PlatformListArea.js";
 import { useIsMounted } from "../components/useIsMounted.js";
+import Quiz from "../components/Quiz.js";
 
 
 function PlatformScreen(props) {
   //to check quiz _id matches _id of the url /quiz/_id
-  const [questions, setQuestions] = useState([]);
+  const [quizId, setQuizId] = useState(["001", "002"]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [platform, setPlatform] = useState()
@@ -47,6 +48,12 @@ function PlatformScreen(props) {
   */
 
   useEffect(() => {
+    isMounted.current = true
+    fetchPlatform()
+    return () => {isMounted.current = false}
+}, []);
+
+  function fetchPlatform(){
     axios
          .get('/api/platforms')
          .then((res) => {
@@ -54,7 +61,7 @@ function PlatformScreen(props) {
               setLoading(true)
               setPlatform(res?.data.find( x => x._id === props.match.params.id))
               setLoading(false)
-              return ()=> {isMounted.current = false};
+              return
             }
             
          })
@@ -65,7 +72,7 @@ function PlatformScreen(props) {
            setLoading(false)
    console.log("Error loading platform");
          });
-});
+  }
 
   return (
     <div>
@@ -77,6 +84,7 @@ function PlatformScreen(props) {
         <div>
           <Tags />
           {platform && <PostArea platform={platform}/>}
+          <Quiz quizId={quizId}/>
         </div>
       )}
     </div>

@@ -49,7 +49,10 @@ function HomeScreen(props) {
       ) : error ? (
         <MessageModal variant="danger">{error}</MessageModal>
       ) : (
+        <div className="trendingPlatform">
+          <p>Trending Platforms</p>
           <Platform platforms = {platforms}></Platform>
+        </div>
       )}
     </div>
   )

@@ -23,6 +23,7 @@ function CreatePlatform(props) {
     const[title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [banner, setBanner] = useState("")
+    const [bannerURL, setBannerURL] = useState("")
     
     const [subscriber, setSubscriber] = useState("");
     // const [banner, setBanner] = useState("");
@@ -81,6 +82,7 @@ function CreatePlatform(props) {
         alert("platform created!")
     };
 
+
     return (
         <div>
             <div>
@@ -105,7 +107,8 @@ function CreatePlatform(props) {
                     </div>
                     <div className="platform_insert_box-data">
                         <span>banner</span>
-                        <input value={banner} onChange={(e)=>setBanner(e.target.value)} />
+                        <input type="file" name="bannerImage" onChange={(e)=> setBannerURL(URL.createObjectURL(e.target.files[0]))} />
+                        <img src={bannerURL} width="10%"></img>
                     </div>
                     <div className="platform_insert_box-data">
                         <span>font color</span>
