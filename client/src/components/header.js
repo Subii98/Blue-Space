@@ -34,14 +34,14 @@ function Header(props) {
       <header>
         <div className="all">
           <img
-            src="./images/hamburger.png"
+            src="/images/hamburger.png"
             className="hamburger"
             alt="hamburger"
             width="25"
           />
           <a href="/">
             <img
-              src="./images/logo11.png"
+              src="/images/logo11.png"
               className="logo"
               alt="logo"
               width="85"

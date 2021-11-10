@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 function PostArea(props) {
-  const [platform, setPlatform] = useState()
-
-  useEffect( () => {
-    setPlatform(props.platform)
-    console.log(platform)
-  }, [])
+  const [platform, setPlatform] = useState(props.platform)
 
     return (
       <div className="postArea">
@@ -17,11 +12,11 @@ function PostArea(props) {
           <img src="/images/platformprofile.jpg" alt="platformprofile" />
           <div className="platformInfo">
             <div className="platformTop">
-              <a href="">70s & 80s Rock</a>
+              <a href="">{platform.title}</a>
               <span>john_1234</span>
             </div>
             <div className="platformBottom">
-              <span>The ultimate old time Rock & Roll quiz</span>
+              <span>{platform.description}</span>
               <button type="button">SUBSCRIBE</button>
             </div>
           </div>

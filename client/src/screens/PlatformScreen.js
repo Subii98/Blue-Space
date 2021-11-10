@@ -6,6 +6,7 @@ import PostArea from "../components/PostArea.js";
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
 import PlatformListArea from "../components/PlatformListArea.js";
+import { useIsMounted } from "../components/useIsMounted.js";
 
 
 function PlatformScreen(props) {
@@ -14,6 +15,8 @@ function PlatformScreen(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [platform, setPlatform] = useState()
+  const isMounted = useIsMounted();
+  isMounted.current = true
   //const platform = data.platforms.find( x => x._id === props.match.params._id)
   /*
   if (!platform) {
@@ -37,7 +40,9 @@ function PlatformScreen(props) {
         setLoading(false);
       }
     };
-    fetchData();
+    fetchData().then(data => {
+      if (isMounted.current) { setPlatform(data.find( x => x._id === props.match.params.id))}
+    });
   }, []);
   */
 
@@ -45,10 +50,13 @@ function PlatformScreen(props) {
     axios
          .get('/api/platforms')
          .then((res) => {
-            setLoading(true)
-            setPlatform(res?.data.find( x => x._id === props.match.params.id))
-            setLoading(false)
-            return res.data;
+            if (isMounted.current){
+              setLoading(true)
+              setPlatform(res?.data.find( x => x._id === props.match.params.id))
+              setLoading(false)
+              return ()=> {isMounted.current = false};
+            }
+            
          })
          .catch((error) => {
            setError(
@@ -57,7 +65,7 @@ function PlatformScreen(props) {
            setLoading(false)
    console.log("Error loading platform");
          });
-}, []);
+});
 
   return (
     <div>
@@ -68,7 +76,7 @@ function PlatformScreen(props) {
       ) : (
         <div>
           <Tags />
-          <PostArea platform={platform}/>
+          {platform && <PostArea platform={platform}/>}
         </div>
       )}
     </div>

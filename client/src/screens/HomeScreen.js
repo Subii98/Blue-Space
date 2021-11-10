@@ -24,7 +24,6 @@ function HomeScreen(props) {
   const [platforms, setPlatforms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const isMounted = useIsMounted();
 
   useEffect(() => {
     axios
