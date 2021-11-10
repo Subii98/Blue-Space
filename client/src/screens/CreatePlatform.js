@@ -22,6 +22,7 @@ function CreatePlatform(props) {
     // const [name, setName] = useState(store.username);
     const[title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [banner, setBanner] = useState("")
     
     const [subscriber, setSubscriber] = useState("");
     // const [banner, setBanner] = useState("");
@@ -39,7 +40,7 @@ function CreatePlatform(props) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const { data } = await axios.get("/api/platform");
+                const { data } = await axios.get("/api/platforms");
                 setLoading(false);
                 setPlatforms(JSON.stringify(data));
             } catch (err) {
@@ -58,7 +59,7 @@ function CreatePlatform(props) {
     },[store]);
 
     const onClickSubmit = async () => {
-        let res = await FetchApiPost("/api/platform/insert", {
+        let res = await FetchApiPost("/api/platforms/insert", {
             // userId : userId,
             userName : userName,
             // name : name,
@@ -66,7 +67,7 @@ function CreatePlatform(props) {
             description : description,
             // subscriber : subscriber,
             // icon : icon,
-            // banner : banner,
+            banner : banner,
             // fontFamily : fontFamily,
             // titleFontSize : titleFontSize,
             // descFontSize : descFontSize,
@@ -82,9 +83,6 @@ function CreatePlatform(props) {
 
     return (
         <div>
-            <Tags />
-            <PostArea />
-
             <div>
                 {loading && <LoadingModal />}
                 {error && <MessageModal variant="danger">{error}</MessageModal>}
@@ -104,6 +102,10 @@ function CreatePlatform(props) {
                     <div className="platform_insert_box-data">
                         <span>description</span>
                         <input value={description}onChange={(e)=>setDescription(e.target.value)} />
+                    </div>
+                    <div className="platform_insert_box-data">
+                        <span>banner</span>
+                        <input value={banner} onChange={(e)=>setBanner(e.target.value)} />
                     </div>
                     <div className="platform_insert_box-data">
                         <span>font color</span>
