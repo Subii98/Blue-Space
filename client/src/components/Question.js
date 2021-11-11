@@ -8,6 +8,8 @@ function Question(props) {
     const [question, setQuestion] = useState(questions[0])
     const [checked, setChecked] = useState(false)
     const [disable, setDisable] = useState(false)
+    const [disableNext, setDisableNext] = useState(true)
+    const [disableBack, setDisableBack] = useState(true)
     const [endQuiz, setEndQuiz] = useState(false);
     const [option, setOption] = useState("");
     const [first, setFirst] = useState(question.first)
@@ -27,12 +29,18 @@ function Question(props) {
 
     const onSaveClickCheckAnswer = (e) => {
         e.preventDefault()
-        setDisable(true)
         document.getElementById("result").innerHTML = "";
         var ele = document.getElementsByTagName('input');
         for (var i = 0; i < ele.length; i++) {
-            if (ele[i].type = "radio") {
+            if (ele[i].type == "radio") {
                 if (ele[i].checked && ele[i].value == question.answer){
+                    console.log(index)
+                    setDisableBack(false)
+                    if (index <= 0){
+                        setDisableBack(true)
+                    }
+                    setDisable(true)
+                    setDisableNext(false)
                     document.getElementById("result").innerHTML += "Correct!"
                     setChecked(true)
                     setCorrect(correct+1)
@@ -51,6 +59,12 @@ function Question(props) {
                     }
                 }  
                 else if (ele[i].checked){
+                    setDisable(true)
+                    setDisableNext(false)
+                    setDisableBack(false)
+                    if (index <= 0){
+                        setDisableBack(true)
+                    }
                     document.getElementById("result").innerHTML
                             += "Wrong<br>Answer: " + question.option[question.answer-1] + "<br>";
                     setChecked(true)
@@ -79,9 +93,10 @@ function Question(props) {
                 setIndex(index+1)
                 document.getElementById("result").innerHTML = ""
                 setChecked(false)
+                setDisableNext(true)
             }
             else if (index == questions.length-1){
-                console.log(index)
+                setDisableBack(true)
                 setEndQuiz(true)
             }
         }            
@@ -92,7 +107,11 @@ function Question(props) {
         if (index > 0) {
             setIndex(index-1)
             document.getElementById("result").innerHTML = ""
-        }            
+            console.log("index: ", index)
+        }
+        if (index <= 1){
+            setDisableBack(true)
+        }
     }
     if (!endQuiz){
         return(
@@ -131,9 +150,11 @@ function Question(props) {
                            : []} 
                     </div>
                     <div className = "questionButtons">
-                        <button id="save" disabled = {disable} type="submit" onClick = {(e)=> {onSaveClickCheckAnswer(e)}}>SAVE</button>
-                        <button onClick = {(e)=>{onNextClick(e)}}>NEXT</button>
-                        <button onClick = {(e)=>{onBackClick(e)}}>BACK</button>
+                        <button className="save" disabled = {disable} type="submit" onClick = {(e)=> {onSaveClickCheckAnswer(e)}}>SAVE</button>
+                        <div className="questionArrow">
+                            <button disabled = {disableBack} onClick = {(e)=>{onBackClick(e)}}><i className="arrow left"></i></button>
+                            <button disabled = {disableNext} onClick = {(e)=>{onNextClick(e)}}><i className="arrow right"></i></button>
+                        </div>
                     </div>
                 </form>
                 <div className="result" id = "result"></div>
