@@ -48,7 +48,7 @@ function SearchScreen() {
       return (
       <div>
         {data.map((elem) => (
-          <PlatformCard category={elem} />
+          <PlatformCard platform={elem} />
         ))} 
       </div>
     );

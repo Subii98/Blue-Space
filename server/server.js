@@ -75,7 +75,7 @@ mongoose
 
 app.use("/api/quizzes", quizRouter);
 app.use("/api/questions", questionRouter);
-app.use("/api/platform", platformRouter);
+app.use("/api/platforms", platformRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/search", searchRouter);
 app.get("/", (req, res) => {

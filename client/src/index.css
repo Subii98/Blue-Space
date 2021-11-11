@@ -73,6 +73,14 @@ img.hamburger{
   flex-direction: row;
 }
 
+.loginButton{
+  cursor:pointer;
+}
+
+.logoutButton{
+  cursor:pointer;
+}
+
 .login a{
   text-decoration: none;
   font-size: 1.5rem;
@@ -234,7 +242,8 @@ img.hamburger{
   margin-top: 4rem;
   margin-bottom: 4rem;
 }
-.questions button{
+
+.save{
   margin-top: 2rem;
   background-color: transparent;
   border: 1px solid #00aeef;
@@ -244,16 +253,58 @@ img.hamburger{
 
 .questionButtons{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
 }
 
 .questionButtons button{
+  margin-bottom: 2rem
+}
+
+.save button{
   margin-right: 1rem
 }
 
 .questionButtons button:disabled{
   color: #929292;
   border-color: #929292;
+}
+
+.arrow {
+  border: solid #00aeef;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  width: 30%;
+  height: 30%
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.questionArrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.questionArrow button{
+  border: none;
+  background: none;
+  opacity: 100%;
+}
+
+.questionArrow button:disabled{
+  border: none;
+  background: none;
+  opacity: 0;
 }
 
 .sectionTitle {
@@ -292,3 +343,4 @@ top: 69rem;
   display: flex;
   flex-direction: row;
 }
+

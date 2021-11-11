@@ -28,7 +28,7 @@ function CreatePlatform(props) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const { data } = await axios.get("/api/platform/name/"+name);
+                const { data } = await axios.get("/api/platforms/name/"+name);
                 setLoading(false);
                 setPlatforms(data);
             } catch (err) {
@@ -55,8 +55,6 @@ function CreatePlatform(props) {
                 {platforms && platforms.map((raw,idx)=>{
                     return (
                         <div key={"Platform" + idx}>
-                            {/* <div>{idx+1}</div>
-                            <div>{raw.title}</div> */}
                             <CardContent>
                                 <Typography >
                                     {idx+1}

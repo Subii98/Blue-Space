@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { GlobalStoreContext } from "../store";
 import LoginComponent from "./Login";
@@ -7,6 +7,7 @@ import LogoutComponent from "./Logout";
 
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
+    const [data, setData] = useState();
     //console.log(GlobalStoreContext);
     let history = useHistory();
     //const loginData = localStorage.getItem('data');
@@ -27,6 +28,7 @@ function Header(props) {
 
     const handleSubmit = (event) => {
       event.preventDefault();
+      store.setSearch(data);
       console.log("printing search query: ", store.search);
       history.push("/search");
     }
@@ -35,14 +37,14 @@ function Header(props) {
       <header>
         <div className="all">
           <img
-            src="./images/hamburger.png"
+            src="/images/hamburger.png"
             className="hamburger"
             alt="hamburger"
             width="25"
           />
-          <a href="index1.html">
+          <a href="/">
             <img
-              src="./images/logo11.png"
+              src="/images/logo11.png"
               className="logo"
               alt="logo"
               width="85"
@@ -58,7 +60,7 @@ function Header(props) {
                     className="searchInput"
                     placeholder="search categories"
                     id="searchInput"
-                    onChange={(e) => store.setSearch(e.target.value)}
+                    onChange={(e) => setData(e.target.value)}
                   />
                   <button type="submit">
                     <img src="./images/magnifyingglass.png" width="13" />
@@ -79,7 +81,7 @@ function Header(props) {
               <Link to="/categories">
                 <button type="button">CATEGORIES</button>
               </Link>
-              <Link to="create">
+              <Link to="/createplatform">
                 <button type="button">CREATE</button>
               </Link>
               <Link to="leaderboard">
