@@ -59,6 +59,29 @@ function CreatePlatform(props) {
             <div>
                 {loading && <LoadingModal />}
                 {error && <MessageModal variant="danger">{error}</MessageModal>}
+                
+                {/* {platforms && platforms.map((raw,idx)=>{ */}
+                    {/* return (
+                        // <div key={"Platform" + idx}>
+                        //     <CardContent>
+                        //         <Typography >
+                        //             {idx+1}
+                        //         </Typography>
+                        //         <Typography gutterBottom variant="h5" component="div">
+                        //             {raw.title}
+                        //         </Typography>     
+                        //     </CardContent>
+                            
+                        // </div>
+                        <div className>
+                            <p style={{textAlign: "center", color: "#929292"}}>Owned Platforms</p>
+                            <Platform platforms = {platforms}></Platform>
+                            {/* <PlatformCard platform={platforms}></PlatformCard>) */}
+                        {/* </div>  */}
+                    {/* ); */}
+                {/* })} */}
+                
+                
                 <div className>
                     <p style={{textAlign: "center", color: "#929292"}}>Owned Platforms</p>
                     <Platform platforms = {platforms}></Platform>
