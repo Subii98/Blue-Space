@@ -14,9 +14,9 @@ function PlatformCard(props) {
     */
    //props.category.route
    //{props.category.image}
-  console.log("name: ", props.category.name);
-  console.log("description", props.category.description);
-  console.log("props: ", props);
+  //console.log("title: ", props.category.title);
+  //console.log("description", props.category.description);
+  //console.log("props: ", props);
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
@@ -29,7 +29,7 @@ function PlatformCard(props) {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {props.category.name}
+              {props.category.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {props.category.description}

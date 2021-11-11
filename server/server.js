@@ -18,7 +18,7 @@ const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
 const MONGODB_URL = process.env.MONGODB_URL
   ? process.env.MONGODB_URL
   : "mongodb://localhost/bluespace";
-
+//console.log("Mongodb url: ", MONGODB_URL);
 //just gets current user
 app.get("/me", async (req, res) => {
   res.status(200);

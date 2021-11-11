@@ -90,11 +90,11 @@ export const useGlobalStore = () => {
       },
     });
   }
-  store.searchQuery = function (data) {
+  store.setSearch = function (data) {
     storeReducer({
       type: GlobalStoreActionType.SEARCH,
       payload: {
-        search: data.search
+        search: data
       },
     });
   }

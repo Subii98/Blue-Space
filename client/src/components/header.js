@@ -1,14 +1,15 @@
 import React from 'react'
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { GlobalStoreContext } from "../store";
 import LoginComponent from "./Login";
 import LogoutComponent from "./Logout";
 
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
-    console.log(GlobalStoreContext);
-    const loginData = localStorage.getItem('data');
+    //console.log(GlobalStoreContext);
+    let history = useHistory();
+    //const loginData = localStorage.getItem('data');
     /*
     if (loginData){
       if (!store.loggedIn){
@@ -22,12 +23,12 @@ function Header(props) {
     if (store.loggedIn){
       userName = store.username;
     }
-    console.log('username for header: ', userName);
+    //console.log('username for header: ', userName);
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      store.searchQuery(event.target.search);
       console.log("printing search query: ", store.search);
+      history.push("/search");
     }
 
     return (
@@ -57,10 +58,11 @@ function Header(props) {
                     className="searchInput"
                     placeholder="search categories"
                     id="searchInput"
+                    onChange={(e) => store.setSearch(e.target.value)}
                   />
-                    <button type="submit">
-                      <img src="./images/magnifyingglass.png" width="13" />
-                    </button>
+                  <button type="submit">
+                    <img src="./images/magnifyingglass.png" width="13" />
+                  </button>
                 </form>
               </div>
               <div className="login">
