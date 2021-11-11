@@ -23,7 +23,7 @@ function App() {
           <Route path="/" component={HomeScreen} exact></Route>
           <Route path="/mypage" component={MyPage}></Route>
           <Route path="/search" component={Search}></Route>
-          <Route path="/createQuiz" component={CreateQuiz}></Route>
+          <Route path="/createQuiz/:id" component={CreateQuiz}></Route>
         </main>
       </div>
 

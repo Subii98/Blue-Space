@@ -7,6 +7,10 @@ import PostArea from "../components/PostArea.js";
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
 import { FetchApiGet } from "../utils/Network";
+import Platform from '../components/Platform.js';
+import PlatformCard from '../components/PlatformCard.js'
+
+
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -22,18 +26,18 @@ function CreatePlatform(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [name, setName] = useState("");
-    const [platforms, setPlatforms] = useState();
+    const [platforms, setPlatforms] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
                 const { data } = await axios.get("/api/platforms/name/"+name);
-                console.log("??",data)
                 console.log("name " ,name)
                 console.log("store", store)
                 setLoading(false);
                 setPlatforms(data);
+                console.log("data???", data)
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
@@ -55,21 +59,10 @@ function CreatePlatform(props) {
             <div>
                 {loading && <LoadingModal />}
                 {error && <MessageModal variant="danger">{error}</MessageModal>}
-                {platforms && platforms.map((raw,idx)=>{
-                    return (
-                        <div key={"Platform" + idx}>
-                            <CardContent>
-                                <Typography >
-                                    {idx+1}
-                                </Typography>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {raw.title}
-                                </Typography>     
-                            </CardContent>
-                            
-                        </div>
-                    );
-                })}
+                <div className>
+                    <p style={{textAlign: "center", color: "#929292"}}>Owned Platforms</p>
+                    <Platform platforms = {platforms}></Platform>
+                </div> 
             </div>
         </div>
     );

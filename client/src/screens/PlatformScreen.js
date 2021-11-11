@@ -60,6 +60,7 @@ function PlatformScreen(props) {
               setLoading(true)
               setPlatform(res?.data.find( x => x._id === props.match.params.id))
               setLoading(false)
+
               return
             }
             

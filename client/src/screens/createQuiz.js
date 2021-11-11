@@ -6,6 +6,7 @@ import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
+import { useIsMounted } from "../components/useIsMounted.js";
 import { FetchApiGet, FetchApiPost } from "../utils/Network";
 
 
@@ -15,8 +16,9 @@ function CreateQuiz(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [name, setName] = useState("");
-    const [platforms, setPlatforms] = useState();
+    const [platform, setPlatform] = useState()
     const [id, setId] = useState("")
+    const isMounted = useIsMounted();
 
     const [text, setText] = useState("")
     const [option, setOption] = useState([])
@@ -26,20 +28,42 @@ function CreateQuiz(props) {
     const [optionThree, setOptionThree] = useState("")
     const [optionFour, setOptionFour] = useState("")
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const { data } = await axios.get("/api/platforms/platformid/"+ id);
-                setLoading(false);
-                setPlatforms(data);
-            } catch (err) {
-                setError(err.message);
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const { data } = await axios.get("/api/platforms/platformid/"+ id);
+    //             setLoading(false);
+    //             setPlatforms(data);
+    //         } catch (err) {
+    //             setError(err.message);
+    //             setLoading(false);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
+
+    function fetchPlatform(){
+        axios
+             .get('/api/platforms')
+             .then((res) => {
+                if (isMounted.current){
+                  setLoading(true)
+                  setPlatform(res?.data.find( x => x._id === props.match.params.id))
+                  console.log("????",props.match.params.id)
+                  setLoading(false)
+                  return
+                }
+                
+             })
+             .catch((error) => {
+               setError(
+                 "Error loading platform"
+               );
+               setLoading(false)
+       console.log("Error loading platform");
+             });
+      }
     
     const onClickSubmit = async () => {
         let res = await FetchApiPost("/api/questions/insert",{

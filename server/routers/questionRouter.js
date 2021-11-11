@@ -33,13 +33,15 @@ questionRouter.post("/insert", expressAsyncHandler(async(req, res)=> {
             answer
         } = req.body;
         const createdQuestion = await Question.insertMany([{
+            // platformId: ,
+            // quizId: ,
             text: text,
             option: option,
             answer: answer,
             first: 0,
             second: 0,
             third: 0,
-            fourth: 0
+            fourth: 0,
         }]);
         res.send(createdQuestion);
     } catch(err){
