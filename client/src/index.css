@@ -344,3 +344,8 @@ top: 69rem;
   flex-direction: row;
 }
 
+.homeItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

@@ -8,6 +8,7 @@ import MessageModal from '../components/MessageModal.js';
 import { load } from 'dotenv';
 import { useIsMounted } from '../components/useIsMounted.js';
 import Platform from '../components/Platform.js';
+import QuizCard from '../components/QuizCard.js';
 
 
 function HomeScreen(props) {   
@@ -22,6 +23,7 @@ function HomeScreen(props) {
 
   //use react hooks to set data (empty array by default)
   const [platforms, setPlatforms] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -40,6 +42,21 @@ function HomeScreen(props) {
            setLoading(false)
    console.log("Error loading home page");
          });
+    axios
+         .get('/api/quizzes')
+         .then((res) => {
+           setLoading(true)
+           setQuizzes(res?.data)
+           setLoading(false)
+           return res?.data
+         })
+         .catch((error) => {
+          setError(
+            "Error loading home page"
+          );
+          setLoading(false)
+  console.log("Error loading home page");
+        });
 }, []);
 
   return(
@@ -49,9 +66,17 @@ function HomeScreen(props) {
       ) : error ? (
         <MessageModal variant="danger">{error}</MessageModal>
       ) : (
-        <div className="trendingPlatform">
-          <p>Trending Platforms</p>
-          <Platform platforms = {platforms}></Platform>
+        <div className="homeItems">
+          <div className="latestQuiz">
+            <p>Latest Quizzes</p>
+            {quizzes.map( (quiz) => (
+              <QuizCard quiz={quiz}/>
+            ))}
+          </div>
+          <div className="trendingPlatform">
+            <p>Trending Platforms</p>
+            <Platform platforms = {platforms}></Platform>
+          </div>
         </div>
       )}
     </div>
