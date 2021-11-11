@@ -1,4 +1,3 @@
-import "../PlatformScreen.css";
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalStoreContext } from "../store";
 import axios from "axios";
@@ -9,15 +8,6 @@ import MessageModal from "../components/MessageModal.js";
 import { FetchApiGet } from "../utils/Network";
 import Platform from '../components/Platform.js';
 import PlatformCard from '../components/PlatformCard.js'
-
-
-
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 
 function CreatePlatform(props) {
@@ -37,7 +27,7 @@ function CreatePlatform(props) {
                 console.log("store", store)
                 setLoading(false);
                 setPlatforms(data);
-                console.log("data???", data)
+                console.log("data", data)
             } catch (err) {
                 setError(err.message);
                 setLoading(false);

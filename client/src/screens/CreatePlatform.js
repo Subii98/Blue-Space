@@ -1,4 +1,3 @@
-import "../PlatformScreen.css";
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalStoreContext } from "../store";
 import axios from "axios";

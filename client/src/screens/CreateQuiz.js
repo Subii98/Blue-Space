@@ -1,111 +1,62 @@
-import "../PlatformScreen.css";
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalStoreContext } from "../store";
 import axios from "axios";
 import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
-import LoadingModal from "../components/LoadingModal.js";
-import MessageModal from "../components/MessageModal.js";
 import { useIsMounted } from "../components/useIsMounted.js";
 import { FetchApiGet, FetchApiPost } from "../utils/Network";
+import { Button, Typography, TextField } from "@mui/material";
 
 
 function CreateQuiz(props) {
-    const { store } = useContext(GlobalStoreContext);
     //use react hooks to set data (empty array by default)
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [name, setName] = useState("");
-    const [platform, setPlatform] = useState()
-    const [id, setId] = useState("")
-    const isMounted = useIsMounted();
-
-    const [text, setText] = useState("")
-    const [option, setOption] = useState([])
-    const [answer, setAnswer] = useState()
-    const [optionOne, setOptionOne] = useState("")
-    const [optionTwo, setOptionTwo] = useState("")
-    const [optionThree, setOptionThree] = useState("")
-    const [optionFour, setOptionFour] = useState("")
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             setLoading(true);
-    //             const { data } = await axios.get("/api/platforms/platformid/"+ id);
-    //             setLoading(false);
-    //             setPlatforms(data);
-    //         } catch (err) {
-    //             setError(err.message);
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
-
-    function fetchPlatform(){
-        axios
-             .get('/api/platforms')
-             .then((res) => {
-                if (isMounted.current){
-                  setLoading(true)
-                  setPlatform(res?.data.find( x => x._id === props.match.params.id))
-                  console.log("????",props.match.params.id)
-                  setLoading(false)
-                  return
-                }
-                
-             })
-             .catch((error) => {
-               setError(
-                 "Error loading platform"
-               );
-               setLoading(false)
-       console.log("Error loading platform");
-             });
-      }
-    
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    console.log(props.match.params);
     const onClickSubmit = async () => {
-        let res = await FetchApiPost("/api/questions/insert",{
-            text: text,
-            option: [optionOne, optionTwo, optionThree, optionFour],
-            answer: answer
+        let res = await FetchApiPost("/api/quizzes/insert", {
+            title,
+            description,
+            platformId: props.match.params.platformId,
         });
-        alert("question added")
+        alert("quiz added");
     };
-    return(
-        <div>
+    return (
+        <div className="createquiz-main-container">
             {/* <Tags/> */}
             {/* <PostArea/>             */}
-            <div style={{margin : 4+'em'}}>
-                <label>Question: </label>
-                <div style={{margin : 1 +'em'}}>
-                <input value={text} onChange={(e)=>setText(e.target.value)} type="text" style={{width : 60 + 'em', height : 2 + 'em'}}></input>
+            <Typography fontSize="30px" marginBottom="24px">
+                Create Quiz Screen
+            </Typography>
+            <div className="createquiz-content">
+                <div className="createquiz-content-block">
+                    <div className="createquiz-content-block-label">TITLE :</div>
+                    <TextField
+                        onChange={e => setTitle(e.target.value)}
+                        value={title}
+                        label="Title"
+                        style={{ minWidth: "300px" }}
+                        inputProps={{ style: { fontSize: "14px" } }}
+                        InputLabelProps={{ style : {fontSize : "12px"}}}
+                    />
                 </div>
-                <label>Answers: </label>
-                <div style={{margin : 1+'em'}}>
-                <input type="text" value={optionOne} onChange={(e)=>setOptionOne(e.target.value)}></input>
+                <div className="createquiz-content-block">
+                    <div className="createquiz-content-block-label">DESC :</div>
+                    <TextField
+                        onChange={e => setDescription(e.target.value)}
+                        value={description}
+                        label="Description"
+                        style={{ minWidth: "300px" }}
+                        inputProps={{ style: { fontSize: "14px" } }}
+                        InputLabelProps={{ style : {fontSize : "12px"}}}
+                    />
                 </div>
-                <div style={{margin : 1+'em'}}>
-                <input type="text" value={optionTwo} onChange={(e)=>setOptionTwo(e.target.value)}></input>
-                </div>
-                <div style={{margin : 1 +'em'}}>
-                <input type="text" value={optionThree} onChange={(e)=>setOptionThree(e.target.value)}></input>
-                </div>
-                <div style={{margin : 1 +'em'}}>
-                <input type="text" value={optionFour} onChange={(e)=>setOptionFour(e.target.value)}></input>
-                </div>
-                <div style={{margin : 1 +'em'}}>
-                <label>Correct Answers: </label>
-                <input type="text" value={answer} onChange={(e)=>setAnswer(e.target.value)}></input>
-                </div>
-                <div style={{margin : 2+'em'}}>
-                <button type="button" onClick={onClickSubmit}>Create</button>
-                <button type="button">Cancel</button>
-                </div>
+                <Button style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit}>
+                    SUBMIT
+                </Button>
             </div>
         </div>
-    )
+    );
 }
 
-export default CreateQuiz
+export default CreateQuiz;

@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 const questionSchema = new mongoose.Schema({
     // _id: String,
-    platformId: String,
     quizId: String,
     text: String,
     option: [String],
