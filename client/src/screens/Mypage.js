@@ -29,6 +29,9 @@ function CreatePlatform(props) {
             try {
                 setLoading(true);
                 const { data } = await axios.get("/api/platforms/name/"+name);
+                
+                console.log("name " ,name)
+                console.log("store", store)
                 setLoading(false);
                 setPlatforms(data);
             } catch (err) {
@@ -47,8 +50,8 @@ function CreatePlatform(props) {
 
     return (
         <div>
-            <Tags />
-            <PostArea />
+            {/* <Tags />
+            <PostArea /> */}
             <div>
                 {loading && <LoadingModal />}
                 {error && <MessageModal variant="danger">{error}</MessageModal>}

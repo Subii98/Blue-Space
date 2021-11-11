@@ -86,6 +86,16 @@ platformRouter.get("/name/:userName", expressAsyncHandler(async (req, res)=> {
     }
 }));
 
+platformRouter.get("/platformid/:_id", expressAsyncHandler(async (req, res)=> {
+    const platform = await Platform.findById(req.params._id)
+    if(platform){
+        res.send(platform)
+    }
+    else{
+        res.status(404).send({message: 'Platform Not Found'})
+    }
+}));
+
 platformRouter.delete("/delete/:userId", expressAsyncHandler(async (req, res)=> {
     const platform = await Platform.findById(req.params.userId)
     if(platform){

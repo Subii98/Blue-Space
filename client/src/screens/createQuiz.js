@@ -3,11 +3,36 @@ import axios from 'axios';
 import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
 
-function createQuiz(props) {
+function CreateQuiz(props) {
+    // const { store } = useContext(GlobalStoreContext);
+    //use react hooks to set data (empty array by default)
+    // const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState(false);
+    // const [name, setName] = useState("");
+    // const [platforms, setPlatforms] = useState();
+    // const [id, setId] = useState("")
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const { data } = await axios.get("/api/platforms/platformid/"+id);
+    //             console.log("name " ,name)
+    //             console.log("store", store)
+    //             setLoading(false);
+    //             setPlatforms(data);
+    //         } catch (err) {
+    //             setError(err.message);
+    //             setLoading(false);
+    //         }
+    //     };
+    //     if(name && name.length > 0)
+    //         fetchData();
+    // }, [ name ]);
     return(
         <div>
             <Tags/>
-            <PostArea/>
+            {/* <PostArea/> */}
             <div style={{margin : 4+'em'}}>
                 <label>Question: </label>
                 <div style={{margin : 1 +'em'}}>
@@ -38,4 +63,4 @@ function createQuiz(props) {
     )
 }
 
-export default createQuiz
+export default CreateQuiz
