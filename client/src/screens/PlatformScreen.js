@@ -87,11 +87,7 @@ function PlatformScreen(props) {
         </div>
       )}
     </div>
-  );
-  
-
-  //use react hooks to set data (empty array by default)
-  
+  );  
 }
 
 export default PlatformScreen;

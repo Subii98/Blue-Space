@@ -42,6 +42,7 @@ function CreatePlatform(props) {
             try {
                 setLoading(true);
                 const { data } = await axios.get("/api/platforms");
+                console.log(data)
                 setLoading(false);
                 setPlatforms(JSON.stringify(data));
             } catch (err) {

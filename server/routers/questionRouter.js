@@ -25,4 +25,27 @@ questionRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     }
 }))
 
+questionRouter.post("/insert", expressAsyncHandler(async(req, res)=> {
+    try{
+        const{
+            text,
+            option,
+            answer
+        } = req.body;
+        const createdQuestion = await Question.insertMany([{
+            text: text,
+            option: option,
+            answer: answer,
+            first: 0,
+            second: 0,
+            third: 0,
+            fourth: 0
+        }]);
+        res.send(createdQuestion);
+    } catch(err){
+        console.log(err);
+        res.send(err);
+    }
+}));
+
 export default questionRouter

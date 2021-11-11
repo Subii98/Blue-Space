@@ -29,7 +29,7 @@ function CreatePlatform(props) {
             try {
                 setLoading(true);
                 const { data } = await axios.get("/api/platforms/name/"+name);
-                
+                console.log("??",data)
                 console.log("name " ,name)
                 console.log("store", store)
                 setLoading(false);
