@@ -39,14 +39,12 @@ body{
   height: 100%
 }
 header{
-  grid-area: header;
+  grid-area: 'header';
   position: relative;
-  margin-left: 10%;
-  margin-right: 10%
 
 }
 main{
-  grid-area: main;
+  grid-area: 'main';
   background-color: #ffffff;
   margin-left: 10%;
   margin-right: 10%;
@@ -65,7 +63,7 @@ img.hamburger{
 
 .topLine {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
 .login {
@@ -90,7 +88,10 @@ img.hamburger{
 
 .searchBar{
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
+  min-height: 4rem;
+  min-width: 1fr;
 }
 
 .searchInput{
@@ -98,9 +99,9 @@ img.hamburger{
   border-width: 1px;
   border-color: #D2D2D2;
   border-radius: 5px 0px 0px 5px;
-  width: 60rem;
-  height: 3rem;
+  min-width: 50rem
 }
+
 .searchInput::placeholder{
   padding: 5px;
   font-size: 1.3rem;
@@ -110,17 +111,17 @@ img.hamburger{
 }
 /*searchbar magnifying glass button*/
 .all button{
-  border-style: 2px solid;
+  border-style: 1px solid;
   border-color: #00aeef;
   background-color: transparent;
   border-radius: 5px;
 }
+
 .searchBar button{
   border-style: solid;
   border-color: #00aeef;
   background-color: #00aeef;
   border-radius: 0px 5px 5px 0px;
-  width: 4rem;
 }
 
 .headerItems{
