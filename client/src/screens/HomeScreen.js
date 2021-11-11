@@ -9,6 +9,7 @@ import { load } from 'dotenv';
 import { useIsMounted } from '../components/useIsMounted.js';
 import Platform from '../components/Platform.js';
 import QuizCard from '../components/QuizCard.js';
+import { textAlign } from '@mui/system';
 
 
 function HomeScreen(props) {   
@@ -68,13 +69,15 @@ function HomeScreen(props) {
       ) : (
         <div className="homeItems">
           <div className="latestQuiz">
-            <p>Latest Quizzes</p>
+            <p style={{textAlign: "center", color: "#929292"}}>Latest Quizzes</p>
+            <div className="line"/>
             {quizzes.map( (quiz) => (
               <QuizCard quiz={quiz}/>
             ))}
           </div>
           <div className="trendingPlatform">
-            <p>Trending Platforms</p>
+            <p style={{textAlign: "center", color: "#929292"}}>Trending Platforms</p>
+            <div className="line"/>
             <Platform platforms = {platforms}></Platform>
           </div>
         </div>
