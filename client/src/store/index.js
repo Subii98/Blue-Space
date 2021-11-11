@@ -43,6 +43,7 @@ export const useGlobalStore = () => {
           username: payload.username,
           email: payload.email,
           actualName: payload.actualName,
+          search : store.search,
         });
       }
       // SIGNOUT
@@ -52,6 +53,7 @@ export const useGlobalStore = () => {
           username: null,
           email: null,
           actualName: null,
+          search: store.search,
         });
       }
       case GlobalStoreActionType.SEARCH: {
