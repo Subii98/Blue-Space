@@ -34,6 +34,7 @@ function PlatformCard(props) {
             </CardContent>
           </CardActionArea>
           </Card>
+          <br/>
         </div>
     )
 }

@@ -80,8 +80,8 @@ function PlatformScreen(props) {
       ) : error ? (
         <MessageModal variant="danger">{error}</MessageModal>
       ) : (
-        <div>
-          <Tags />
+        <div className="platform">
+          {platform && <Tags platform={platform}/>}
           {platform && <PostArea platform={platform}/>}
           <Quiz quizId={quizId}/>
         </div>
