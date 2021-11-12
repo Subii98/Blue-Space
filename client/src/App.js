@@ -10,7 +10,7 @@ import MyPage from "./screens/Mypage.js";
 import Search from "./screens/SearchScreen.js";
 import CreateQuiz from "./screens/CreateQuiz.js";
 import CreateQuestion from "./screens/CreateQuestion.js";
-
+import EditPlatform from "./screens/EditPlatform.js";
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
           <Route path="/search" component={Search}></Route>
           <Route path="/CreateQuiz/:platformId" component={CreateQuiz}></Route>
           <Route path="/CreateQuestion/:quizId" component={CreateQuestion}></Route>
+          <Route path="/EditPlatform/:platformId" component={EditPlatform}></Route>
         </main>
       </div>
 

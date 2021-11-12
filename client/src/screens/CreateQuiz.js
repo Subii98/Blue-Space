@@ -5,6 +5,7 @@ import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
 import { FetchApiGet, FetchApiPost } from "../utils/Network";
 import { Button, Typography, TextField } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 
 function CreateQuiz(props) {
@@ -50,8 +51,11 @@ function CreateQuiz(props) {
                         InputLabelProps={{ style : {fontSize : "12px"}}}
                     />
                 </div>
-                <Button style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit}>
+                <Button style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit} component={Link} to={`/platform/${props.match.params.platformId}`}>
                     SUBMIT
+                </Button>
+                <Button style={{ width: "10%", marginTop: "12px" }} component={Link} to={`/platform/${props.match.params.platformId}`}>
+                    CANCEL
                 </Button>
             </div>
         </div>

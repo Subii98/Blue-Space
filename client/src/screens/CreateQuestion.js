@@ -8,10 +8,14 @@ import MessageModal from "../components/MessageModal.js";
 import { useIsMounted } from "../components/useIsMounted.js";
 import { FetchApiGet, FetchApiPost } from "../utils/Network";
 import { Button, Typography, TextField } from "@mui/material";
+import { set } from "mongoose";
+import { Link } from 'react-router-dom';
+
 
 function CreateQuestion(props) {
+    console.log(props)
     const [text, setText] = useState("");
-    const [answer, setAnswer] = useState();
+    const [answer, setAnswer] = useState("");
     const [optionOne, setOptionOne] = useState("");
     const [optionTwo, setOptionTwo] = useState("");
     const [optionThree, setOptionThree] = useState("");
@@ -25,7 +29,36 @@ function CreateQuestion(props) {
             quizId : props.match.params.quizId
         });
         alert("question added");
+        setText("")
+        setAnswer("")
+        setOptionOne("")
+        setOptionTwo("")
+        setOptionThree("")
+        setOptionFour("")
     };
+
+    // const platform = async() =>{
+    //     // const { data } = await axios.get("/api/platforms/name/"+name);
+    //     let quiz = await FetchApiGet("api/quizzes/get_quiz" + props.match.params.quizId)
+    //     console.log(quiz)
+    // }
+    // console.log(props.match.params.quizId)
+    // const { data } =  axios.get("api/quizzes/get_quiz" + props.match.params.quizId)
+    // console.log(data)
+
+    // useEffect(() => {
+    //     axios
+    //          .get("/api/quizzes/get_quiz/" + props.match.params.quizId)
+    //          .then(res => {
+    //              console.log()
+    //              console.log("???", res.data)
+    //          })
+    //          .catch((error) => {
+               
+    //    console.log("Error loading home page");
+    //          });
+    // }, []);
+
     return (
         <div className="createquiz-main-container">
             {/* <Tags/> */}
@@ -103,6 +136,7 @@ function CreateQuestion(props) {
                 <Button style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit}>
                     SUBMIT
                 </Button>
+                
             </div>
         </div>
     );
