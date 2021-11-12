@@ -18,14 +18,38 @@ quizRouter.get('/seed',
     })
 )
 
-quizRouter.get('/:id', expressAsyncHandler(async (req, res) => {
-    const quiz = await Quiz.findById(req.params.id)
-    if (quiz){
-        res.send(quiz)
-    }else{
-        res.status(404).send({message: 'Quiz Not Found'})
-    }
-}))
+quizRouter.get(
+    '/get_quiz/:id', 
+    expressAsyncHandler(async (req, res) => {
+        const quiz = await Quiz.findById(req.params.id)
+        if (quiz){
+            res.send(quiz)
+        }else{
+            res.status(404).send({message: 'Quiz Not Found'})
+        }
+    })
+);
+
+quizRouter.post(
+    "/insert",
+    expressAsyncHandler(async (req, res) => {
+        try{
+            const { title, description, platformId } = req.body;
+            const createdQuiz = await Quiz.insertMany([
+                {
+                    platformId,
+                    // quizId: ,
+                    title,
+                    description
+                },
+            ]);
+            res.send(createdQuiz);
+        } catch (err){
+            console.log(err);
+            res.send(err);
+        }
+    })
+);
 
 //quizRouter.put('/quiz/:id', QuizCtrl.updateQuiz)
 //quizRouter.get('/quiz/:nid', QuizCtrl.getQuizById)

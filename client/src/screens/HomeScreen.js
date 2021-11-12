@@ -8,6 +8,8 @@ import MessageModal from '../components/MessageModal.js';
 import { load } from 'dotenv';
 import { useIsMounted } from '../components/useIsMounted.js';
 import Platform from '../components/Platform.js';
+import QuizCard from '../components/QuizCard.js';
+import { textAlign } from '@mui/system';
 
 
 function HomeScreen(props) {   
@@ -22,6 +24,7 @@ function HomeScreen(props) {
 
   //use react hooks to set data (empty array by default)
   const [platforms, setPlatforms] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -40,6 +43,21 @@ function HomeScreen(props) {
            setLoading(false)
    console.log("Error loading home page");
          });
+    axios
+         .get('/api/quizzes')
+         .then((res) => {
+           setLoading(true)
+           setQuizzes(res?.data)
+           setLoading(false)
+           return res?.data
+         })
+         .catch((error) => {
+          setError(
+            "Error loading home page"
+          );
+          setLoading(false)
+  console.log("Error loading home page");
+        });
 }, []);
 
   return(
@@ -49,9 +67,19 @@ function HomeScreen(props) {
       ) : error ? (
         <MessageModal variant="danger">{error}</MessageModal>
       ) : (
-        <div className="trendingPlatform">
-          <p>Trending Platforms</p>
-          <Platform platforms = {platforms}></Platform>
+        <div className="homeItems">
+          <div className="latestQuiz">
+            <p style={{textAlign: "center", color: "#929292"}}>Latest Quizzes</p>
+            <div className="line"/>
+            {quizzes.map( (quiz) => (
+              <QuizCard quiz={quiz}/>
+            ))}
+          </div>
+          <div className="trendingPlatform">
+            <p style={{textAlign: "center", color: "#929292"}}>Trending Platforms</p>
+            <div className="line"/>
+            <Platform platforms = {platforms}></Platform>
+          </div>
         </div>
       )}
     </div>

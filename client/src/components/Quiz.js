@@ -4,6 +4,8 @@ import QuizCard from './QuizCard.js'
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
 import { useIsMounted } from "../components/useIsMounted.js";
+import { Link } from "react-router-dom";
+
 
 function Quiz(props){
     const [quizId, setQuizId] = useState(props.quizId)
@@ -48,8 +50,14 @@ function Quiz(props){
         ) : error ? (
           <MessageModal variant="danger">{error}</MessageModal>
         ) : (
-          <div>
-            <p>Quiz</p>
+          <div className="platformQuiz">
+            <div className="quizHeader">
+              <p>Quiz</p>
+              <Link to="/createQuiz/:id">
+              <button>Create</button>
+              </Link>
+              <div className="line"/>
+            </div>
             {quizzes.map( (quiz) => (
               <QuizCard quiz={quiz}/>
             ))}

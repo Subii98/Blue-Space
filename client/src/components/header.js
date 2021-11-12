@@ -63,7 +63,7 @@ function Header(props) {
                     onChange={(e) => setData(e.target.value)}
                   />
                   <button type="submit">
-                    <img src="./images/magnifyingglass.png" width="13" />
+                    <img src="/images/magnifyingglass.png" width="13" />
                   </button>
                 </form>
               </div>

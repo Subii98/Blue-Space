@@ -60,6 +60,7 @@ function PlatformScreen(props) {
               setLoading(true)
               setPlatform(res?.data.find( x => x._id === props.match.params.id))
               setLoading(false)
+
               return
             }
             
@@ -80,18 +81,14 @@ function PlatformScreen(props) {
       ) : error ? (
         <MessageModal variant="danger">{error}</MessageModal>
       ) : (
-        <div>
-          <Tags />
+        <div className="platform">
+          {platform && <Tags platform={platform}/>}
           {platform && <PostArea platform={platform}/>}
           <Quiz quizId={quizId}/>
         </div>
       )}
     </div>
-  );
-  
-
-  //use react hooks to set data (empty array by default)
-  
+  );  
 }
 
 export default PlatformScreen;

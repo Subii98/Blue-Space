@@ -32,14 +32,8 @@ app.use("/githubwebhook", (req, res) => {
   res.status(200);
 });
 
-app.use(
-  "/static",
-  express.static(path.join(__dirname, "./client/build/static"))
-);
-app.use(
-  "/images",
-  express.static(path.join(__dirname, "./client/build/images"))
-);
+app.use("/static",express.static(path.join(__dirname, "./client/build/static")));
+app.use("/images", express.static(path.join(__dirname, "./client/build/images")));
 app.use(express.json({ limit: "50mb" }));
 app.use(
   express.urlencoded({
@@ -56,8 +50,6 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
-
-
 
 app.use("/", function (req, res, next) {
   //localhost:3000/api/v1/request

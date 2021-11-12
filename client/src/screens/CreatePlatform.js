@@ -1,4 +1,3 @@
-import "../PlatformScreen.css";
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalStoreContext } from "../store";
 import axios from "axios";
@@ -42,6 +41,7 @@ function CreatePlatform(props) {
             try {
                 setLoading(true);
                 const { data } = await axios.get("/api/platforms");
+                console.log(data)
                 setLoading(false);
                 setPlatforms(JSON.stringify(data));
             } catch (err) {
