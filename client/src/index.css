@@ -299,7 +299,7 @@ img.hamburger{
 .questionArrow button{
   border: none;
   background: none;
-  opacity: 100%;
+  opacity: 90%;
 }
 
 .questionArrow button:disabled{
