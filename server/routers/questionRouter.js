@@ -59,4 +59,37 @@ questionRouter.post(
     })
 );
 
+questionRouter.post(
+    "/edit",
+    expressAsyncHandler(async (req, res) => {
+        const {
+            quizId,
+            text,
+            option,
+            answer,
+            first,
+            second,
+            third,
+            fourth,
+            questionId
+        } = req.body;
+
+        const editQuestion = await Question.updateOne(
+            { _id: questionId },
+            {
+                $set: {
+                    quizId: quizId,
+                    text: text,
+                    option: option,
+                    answer: answer,
+                    first: first,
+                    second: second,
+                    third: third,
+                    fourth: fourth
+                },
+            }
+        );
+        res.send(editQuestion)
+    })
+)
 export default questionRouter;
