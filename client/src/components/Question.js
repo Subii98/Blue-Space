@@ -74,7 +74,7 @@ function Question(props) {
                     }
                     setDisable(true);
                     setDisableNext(false);
-                    document.getElementById("result").innerHTML += "Correct!";
+                    document.getElementById("result").innerHTML += "Correct!<br><br>";
                     setChecked(true);
                     setCorrect(correct + 1);
                     const option = ele[i].value;
@@ -97,7 +97,7 @@ function Question(props) {
                         setDisableBack(true);
                     }
                     document.getElementById("result").innerHTML +=
-                        "Wrong<br>Answer: " + question.option[question.answer - 1] + "<br>";
+                        "Wrong<br>Answer: " + question.option[question.answer - 1] + "<br><br>";
                     setChecked(true);
                     const option = ele[i].value;
                     if (option == "1") {
@@ -109,10 +109,23 @@ function Question(props) {
                     } else if (option == "4") {
                         setFourth(fourth + 1);
                     }
+
                 }
-            }
-            
+            }            
         }
+        if (question.answer == 1)
+            document.getElementById("result").innerHTML +=
+                Math.round(( first / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+        else if (question.answer == 2)
+            document.getElementById("result").innerHTML +=
+                Math.round(( second / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+        else if (question.answer == 3)
+            document.getElementById("result").innerHTML +=
+                Math.round(( third / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+        else
+            document.getElementById("result").innerHTML +=
+                Math.round(( fourth / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+        
     };
 
     const onNextClick = async e => {
