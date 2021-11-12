@@ -17,7 +17,25 @@ function Question(props) {
     const [third, setThird] = useState("");
     const [fourth, setFourth] = useState("");
     const [correct, setCorrect] = useState(0);
+    const [platformId, setPlatformId] = useState();
+    const [error, setError] = useState(false);
+
     //const question = questions[index]
+
+    useEffect(() => {
+        axios
+            .get("/api/quizzes")
+            .then(res => {
+                const data = res?.data;
+                setPlatformId((data.find( x => x._id === props.question[0].quizId).platformId))
+                return;
+            })
+            .catch(error => {
+                setError("Error finding quiz");
+                console.log("Error finding quiz");
+            });
+    }, [])
+
     useEffect(() => {
         if(props.question && props.question.length > 0){
             setQuestions(props.question);
@@ -121,7 +139,7 @@ function Question(props) {
     if (!endQuiz) {
         return (
             <div className="quizArea">
-                <p>Question {question.text}</p>
+                <p>Question {index+1}</p>
                 <form className="questions">
                     <span key={question._id} className="question">
                         {question.text}
@@ -216,7 +234,7 @@ function Question(props) {
             </div>
         );
     } else {
-        return <QuizScore questions={questions} correct={correct} />;
+        return <QuizScore questions={questions} correct={correct} platformId={platformId}/>;
     }
 }
 

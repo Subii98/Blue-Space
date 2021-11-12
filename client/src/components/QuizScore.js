@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom";
 
 function QuizScore(props){
     const [questions, setQuestions] = useState(props.questions)
+    const [platformId, setPlatformId] = useState(props.platformId)
 
     const onCloseClick = () => {
         console.log("back to platform page")
@@ -17,7 +19,7 @@ function QuizScore(props){
             <p>Points Earned</p>
             <p>Lv.</p>
             <p>Rate this quiz!</p>
-            <button id="close" onClick={onCloseClick}>CLOSE</button>
+            <Link to={`/platform/${platformId}`}>CLOSE</Link>
         </div>
     )
 }
