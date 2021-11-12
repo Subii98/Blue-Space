@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from "react-router-dom";
 
 function PostArea(props) {
-    const [platform, setPlatform] = useState(props.platform);
-    console.log("????", platform._id)
+    const history = useHistory();
+    const [platform, setPlatform] = useState();
+
+    useEffect(() => {
+        if (props.platform) setPlatform(props.platform);
+    }, [props.platform]);
+
+    const onClickEdit = () => {
+        history.push("/EditPlatform/" + platform._id);
+    };
+
+    if (platform == undefined) return <div>LOADING..</div>;
+    console.log(platform)
     return (
         <div className="postArea">
             <div className="banner">
@@ -22,11 +32,11 @@ function PostArea(props) {
                         <button type="button">SUBSCRIBE</button>
                     </div>
                     <div className="platformBottom">
-                        <span>{platform.description}</span>
-        
-                        {/* <Link to={`/platform/${props.match.params.platformId}`}>
-                          <button type="button">EDIT</button>
-                        </Link> */}
+                        <span></span>
+
+                        <button type="button" onClick={onClickEdit}>
+                            EDIT
+                        </button>
                     </div>
                 </div>
             </div>

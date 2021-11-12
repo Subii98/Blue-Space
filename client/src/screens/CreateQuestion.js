@@ -1,18 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { GlobalStoreContext } from "../store";
-import axios from "axios";
-import Tags from "../components/Tags.js";
-import PostArea from "../components/PostArea.js";
-import LoadingModal from "../components/LoadingModal.js";
-import MessageModal from "../components/MessageModal.js";
-import { useIsMounted } from "../components/useIsMounted.js";
 import { FetchApiGet, FetchApiPost } from "../utils/Network";
 import { Button, Typography, TextField } from "@mui/material";
-import { set } from "mongoose";
-import { Link } from 'react-router-dom';
-
+import { useHistory } from "react-router-dom";
 
 function CreateQuestion(props) {
+    const history = useHistory();
     console.log(props)
     const [text, setText] = useState("");
     const [answer, setAnswer] = useState("");
@@ -135,6 +127,9 @@ function CreateQuestion(props) {
                 </div>
                 <Button style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit}>
                     SUBMIT
+                </Button>
+                <Button style={{ width: "10%", marginTop: "12px" }} onClick={()=>history.goBack()} >
+                    CANCEL
                 </Button>
                 
             </div>
