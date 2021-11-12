@@ -45,13 +45,18 @@ function SearchScreen() {
     if (isLoading){
       return <span> loading platforms</span>;
     } else {
-      return (
-      <div>
-        {data.map((elem) => (
-          <PlatformCard platform={elem} />
-        ))} 
-      </div>
-    );
+      if (data.length == 0){
+          return <span> No results</span>
+      }
+      else {
+        return (
+          <div>
+            {data.map((elem) => (
+              <PlatformCard platform={elem} />
+            ))}
+          </div>
+        );
+      }
 
         }
 }

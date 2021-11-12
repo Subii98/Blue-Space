@@ -13,7 +13,12 @@ searchRouter.post("/", async (req, res) => {
     console.log('request to search router', req.body);
   var test = "/.*" + req.body.search + ".*/";
   console.log(test);
-    Platform.find({ title: { $regex: '.*' + req.body.search + '.*', $options: "i" } }, (err, item) => {
+    Platform.find({$or: [
+        {title: { $regex: '.*' + req.body.search + '.*', $options: "i" }},
+        {tag1: { $regex: '.*' + req.body.search + '.*', $options: "i" }},
+        {tag2: { $regex: '.*' + req.body.search + '.*', $options: "i" }},
+        {tag3: { $regex: '.*' + req.body.search + '.*', $options: "i" }},
+      ]}, (err, item) => {
       if (err) {
         res.send(err);
       }
@@ -31,7 +36,7 @@ searchRouter.post("/", async (req, res) => {
         message: "User updated!",
       });
     });
-  
+    
     
 });
 
