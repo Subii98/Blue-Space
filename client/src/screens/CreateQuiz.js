@@ -3,7 +3,6 @@ import { GlobalStoreContext } from "../store";
 import axios from "axios";
 import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
-import { useIsMounted } from "../components/useIsMounted.js";
 import { FetchApiGet, FetchApiPost } from "../utils/Network";
 import { Button, Typography, TextField } from "@mui/material";
 

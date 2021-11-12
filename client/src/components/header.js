@@ -19,7 +19,7 @@ function Header(props) {
       }
     } */
   
-    let userName = "hello";
+    let userName = "";
     console.log(store)
     if (store.loggedIn){
       userName = store.username;

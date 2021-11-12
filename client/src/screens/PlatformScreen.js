@@ -18,33 +18,7 @@ function PlatformScreen(props) {
   const [platform, setPlatform] = useState()
   const isMounted = useIsMounted();
   //const platform = data.platforms.find( x => x._id === props.match.params._id)
-  /*
-  if (!platform) {
-    return <div> Platform Not Found </div>
-  }
-  else{*/
-/*
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get("/api/platforms");
-        setPlatform(data.find( x => x._id === props.match.params.id))
-        const questionsArray = await platform.findById(data.find( x => x._id === props.match.params.id).quizId)
-        setLoading(false);
-        console.log(questionsArray)
-        //setQuestions(data);
-        setQuestions(questionsArray)
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-    fetchData().then(data => {
-      if (isMounted.current) { setPlatform(data.find( x => x._id === props.match.params.id))}
-    });
-  }, []);
-  */
+
 
   useEffect(() => {
     isMounted.current = true
@@ -58,9 +32,9 @@ function PlatformScreen(props) {
          .then((res) => {
             if (isMounted.current){
               setLoading(true)
-              setPlatform(res?.data.find( x => x._id === props.match.params.id))
+              console.log(props.match.params.id)
+              setPlatform(res.data.find( x => x._id === props.match.params.id))
               setLoading(false)
-
               return
             }
             
@@ -76,17 +50,17 @@ function PlatformScreen(props) {
 
   return (
     <div>
-      {loading ? (
-        <LoadingModal></LoadingModal>
-      ) : error ? (
-        <MessageModal variant="danger">{error}</MessageModal>
-      ) : (
-        <div className="platform">
-          {platform && <Tags platform={platform}/>}
-          {platform && <PostArea platform={platform}/>}
-          <Quiz quizId={quizId}/>
-        </div>
-      )}
+        {loading ? (
+            <LoadingModal></LoadingModal>
+        ) : error ? (
+            <MessageModal variant="danger">{error}</MessageModal>
+        ) : (
+            <div className="platform">
+                {platform && <Tags platform={platform} />}
+                {platform && <PostArea platform={platform} />}
+                <Quiz platformId={platform ? platform._id : null} />
+            </div>
+        )}
     </div>
   );  
 }
