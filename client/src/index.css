@@ -333,6 +333,8 @@ top: 69rem;
   text-align: center;
 }
 
+
+/*start of QuizScore page*/
 .score {
   display: flex;
   flex-direction: column;
@@ -340,10 +342,21 @@ top: 69rem;
   justify-content: center;
 }
 
+.score button{
+  color: #00aeef;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #00aeef;
+  background: none;
+  border-radius: 5px;
+}
+
 .questionsCorrect {
   display: flex;
   flex-direction: row;
 }
+
+/*end of QuizScore page*/
 
 .homeItems {
   display: flex;
