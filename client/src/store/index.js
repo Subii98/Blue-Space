@@ -25,7 +25,7 @@ export const useGlobalStore = () => {
   // THESE ARE ALL THE THINGS OUR DATA STORE WILL MANAGE
   const [store, setStore] = useState({
     loggedIn: false,
-    username: "hello",
+    username: "",
     email: null,
     actualName: null,
     search: "",

@@ -73,6 +73,7 @@ function CreatePlatform(props) {
                 
                 
                 <div className>
+                    {name}
                     <p style={{textAlign: "center", color: "#929292"}}>Owned Platforms</p>
                     <Platform platforms = {platforms}></Platform>
                 </div> 

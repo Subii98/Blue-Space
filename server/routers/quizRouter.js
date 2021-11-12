@@ -19,6 +19,14 @@ quizRouter.get('/seed',
 )
 
 quizRouter.get(
+    "/:id",
+    expressAsyncHandler(async (req, res) => {
+        const quizzes = await Quiz.find({ platformId : req.params.id });
+        res.send(quizzes);
+    })
+);
+
+quizRouter.get(
     '/get_quiz/:id', 
     expressAsyncHandler(async (req, res) => {
         const quiz = await Quiz.findById(req.params.id)

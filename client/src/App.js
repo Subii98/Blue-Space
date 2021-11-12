@@ -10,6 +10,8 @@ import MyPage from "./screens/Mypage.js";
 import Search from "./screens/SearchScreen.js";
 import CreateQuiz from "./screens/CreateQuiz.js";
 import Help from "./screens/Help.js";
+import CreateQuestion from "./screens/CreateQuestion.js";
+import EditPlatform from "./screens/EditPlatform.js";
 
 function App() {
   return (
@@ -17,7 +19,7 @@ function App() {
       <div className="grid-container">
         <Header />
         <main>
-          <Route path="/quiz/:id" component={QuizScreen}></Route>
+          <Route path="/quiz/:quizId" component={QuizScreen}></Route>
           <Route path="/platform/:id" component={PlatformScreen}></Route>
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>
           <Route path="/categories" component={Categories}></Route>
@@ -25,7 +27,9 @@ function App() {
           <Route path="/mypage" component={MyPage}></Route>
           <Route path="/search" component={Search}></Route>
           <Route path="/help" component={Help}></Route>
-          <Route path="/CreateQuiz/:id" component={CreateQuiz}></Route>
+          <Route path="/CreateQuiz/:platformId" component={CreateQuiz}></Route>
+          <Route path="/CreateQuestion/:quizId" component={CreateQuestion}></Route>
+          <Route path="/EditPlatform/:platformId" component={EditPlatform}></Route>
         </main>
       </div>
     </BrowserRouter>

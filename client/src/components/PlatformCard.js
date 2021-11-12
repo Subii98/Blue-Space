@@ -7,16 +7,10 @@ import { CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 function PlatformCard(props) {
-
-    /*
-<Typography variant="subtitle1" color="text.secondary" component="div">
-            {props.user}
-          </Typography>
-    */
-    
-    return (
-        <div>
-            <Card sx={{ maxWidth: 345 }}>
+  console.log(props.platform)
+  return (
+    <div>
+        <Card sx={{ maxWidth: 345 }}>
             <CardActionArea component={Link} to={`/platform/${props.platform._id}`}>
             <CardMedia
               component="img"
@@ -39,4 +33,4 @@ function PlatformCard(props) {
     )
 }
 
-export default PlatformCard
+export default PlatformCard;

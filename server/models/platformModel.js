@@ -15,7 +15,7 @@ const platformSchema = new mongoose.Schema({
     fontColor: String,
     tag1: String,
     tag2: String,
-    tag3: String
+    tag3: String,
 });
 
 const Platform = mongoose.model('Platform', platformSchema)

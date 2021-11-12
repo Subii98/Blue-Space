@@ -2,11 +2,13 @@ import express from 'express'
 import expressAsyncHandler from 'express-async-handler';
 import Platform from '../models/platformModel.js';
 import data from '../data.js';
+import QuizModel from "../models/quizModel.js";
 
 
 const platformRouter = express.Router()
 
-platformRouter.get('/', 
+platformRouter.get(
+    '/', 
     expressAsyncHandler(async(req, res)=>{
         const platform = await Platform.find({}); // db select
         res.send(platform);
@@ -20,14 +22,16 @@ platformRouter.get('/test/insert',
     })
 );
 
-platformRouter.get('/test/select', 
+platformRouter.get(
+    '/test/select', 
     expressAsyncHandler(async(req, res)=> {
-    const platform = await Platform.find({ userName : {$eq : "subinpark22"} }); // db select
-    res.send(platform)
+        const platform = await Platform.find({ userName : {$eq : "subinpark22"} }); // db select
+        res.send(platform)
     })
 );
 
-platformRouter.post("/insert", 
+platformRouter.post(
+    "/insert", 
     expressAsyncHandler(async(req, res)=> {
         try{
             const {
@@ -64,8 +68,8 @@ platformRouter.post("/insert",
                 tag1 : tag1,
                 tag2 : tag2,
                 tag3 : tag3,
-                quizId : quizId
-            }
+                quizId : quizId,
+            },
         ]); 
         res.send(createdPlatform);
     } catch(err){
@@ -75,7 +79,8 @@ platformRouter.post("/insert",
     })
 );
 
-platformRouter.get("/:userId", 
+platformRouter.get(
+    "/:userId", 
     expressAsyncHandler(async (req, res)=> {
         const platform = await Platform.findById(req.params.userId)
         if(platform){
@@ -87,7 +92,8 @@ platformRouter.get("/:userId",
     })
 );
 
-platformRouter.get("/name/:userName", 
+platformRouter.get(
+    "/name/:userName", 
     expressAsyncHandler(async (req, res)=> {
         const platform = await Platform.find({ userName : req.params.userName }) 
         if(platform){
@@ -99,7 +105,8 @@ platformRouter.get("/name/:userName",
     })
 );
 
-platformRouter.get("/platformid/:_id", 
+platformRouter.get(
+    "/platformid/:_id", 
     expressAsyncHandler(async (req, res)=> {
         const platform = await Platform.findById(req.params._id)
         if(platform){
@@ -111,7 +118,8 @@ platformRouter.get("/platformid/:_id",
     })
 );
 
-platformRouter.delete("/delete/:userId", 
+platformRouter.delete(
+    "/delete/:userId", 
     expressAsyncHandler(async (req, res)=> {
         const platform = await Platform.findById(req.params.userId)
         if(platform){
@@ -124,7 +132,8 @@ platformRouter.delete("/delete/:userId",
     })
 );
 
-platformRouter.put("/update/:userId", 
+platformRouter.put(
+    "/update/:userId", 
     expressAsyncHandler(async (req, res)=> {
         const platform = await Platform.findById(req.params.userId)
         if(platform){
