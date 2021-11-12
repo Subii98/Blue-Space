@@ -217,7 +217,7 @@ function Question(props) {
                                     onBackClick(e);
                                 }}
                             >
-                                <i className="arrow left"></i>
+                                <img src="/images/leftArrow.png" width="5%"/>
                             </button>
                             <button
                                 disabled={disableNext}
@@ -225,7 +225,7 @@ function Question(props) {
                                     onNextClick(e);
                                 }}
                             >
-                                <i className="arrow right"></i>
+                                <img src="/images/rightArrow.png" width="5%"/>
                             </button>
                         </div>
                     </div>
