@@ -9,6 +9,7 @@ import Categories from "./components/CategoriesCard/Categories.js"
 import MyPage from "./screens/Mypage.js";
 import Search from "./screens/SearchScreen.js";
 import CreateQuiz from "./screens/CreateQuiz.js";
+import Help from "./screens/Help.js";
 
 function App() {
   return (
@@ -23,10 +24,10 @@ function App() {
           <Route path="/" component={HomeScreen} exact></Route>
           <Route path="/mypage" component={MyPage}></Route>
           <Route path="/search" component={Search}></Route>
+          <Route path="/help" component={Help}></Route>
           <Route path="/CreateQuiz/:id" component={CreateQuiz}></Route>
         </main>
       </div>
-
     </BrowserRouter>
   );
 }

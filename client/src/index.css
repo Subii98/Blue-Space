@@ -382,9 +382,10 @@ div.flex-container {
   display: -moz-flex;
   display: -webkit-flex;
   display: flex;
+  align-items: center;
 
 }
-div.cards {
+div.wrap {
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
 
@@ -392,6 +393,19 @@ div.cards {
 .flex-item{
   padding: 5px;
   margin: 10px;
-  width: 50%;
-  flex:1;
+  margin-bottom: 40px;
+  width: 345px;
+  
+  
+}
+
+/* add media query for growing and shrinking */
+@media (max-width: 600px) {
+  .flex-container {
+    flex: 1 1 auto;
+  }
+}
+
+.contact {
+  border-bottom: 1px solid #e4e8eb
 }
