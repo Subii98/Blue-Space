@@ -21,7 +21,7 @@ questionRouter.get(
         res.send({ createdQuestions });
     })
 );
-
+//.sort({questionNum: asc})
 questionRouter.get(
     "/get_question/:id",
     expressAsyncHandler(async (req, res) => {
@@ -38,10 +38,11 @@ questionRouter.post(
     "/insert",
     expressAsyncHandler(async (req, res) => {
         try {
-            const { text, option, answer, quizId } = req.body;
+            const { text, option, answer, quizId, questionNum } = req.body;
             const createdQuestion = await Question.insertMany([
                 {
                     quizId,
+                    questionNum: questionNum,
                     text: text,
                     option: option,
                     answer: answer,
@@ -59,4 +60,58 @@ questionRouter.post(
     })
 );
 
+questionRouter.post(
+    "/upsert",
+    expressAsyncHandler(async (req, res) => {
+        try {
+            const { text, option, answer, quizId, questionNum } = req.body;
+            const questionRes = Question.findOne({questionNum:questionNum}, function (error, question) {
+    if (!error) {
+      // If the document doesn't exist
+      if (!question) {
+        question = new Question({quizId,
+                    questionNum: questionNum,
+                    text: text,
+                    option: option,
+                    answer: answer,
+                    first: 0,
+                    second: 0,
+                    third: 0,
+                    forth: 0,});
+      } else {
+        question.questionNum = questionNum;
+        question.text = text;
+        question.option = option;
+        question.answer = answer;
+      }
+      // Save the document
+      question
+        .save()
+        .then(() => {
+          return res.status(200).json({
+            success: true,
+            message: "Question Updated!",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          return res.status(404).json({
+            error,
+            testQuestion: question,
+            message: "Question not updated!",
+          });
+        });
+
+    }
+  });
+            //res.send(questionRes);
+        } catch (err) {
+            console.log(err);
+            res.send(err);
+        }
+    })
+);
+
+
+  
 export default questionRouter;
