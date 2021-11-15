@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const questionSchema = new mongoose.Schema({
     // _id: String,
     quizId: String,
+    questionNum: Number,
     text: String,
     option: [String],
     answer: Number,

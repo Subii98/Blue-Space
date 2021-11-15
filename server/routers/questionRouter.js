@@ -60,36 +60,55 @@ questionRouter.post(
 );
 
 questionRouter.post(
-    "/edit",
-    expressAsyncHandler(async (req, res) => {
-        const {
-            quizId,
-            text,
-            option,
-            answer,
-            first,
-            second,
-            third,
-            fourth,
-            questionId
-        } = req.body;
+  "/upsert",
+  expressAsyncHandler(async (req, res) => {
+      try {
+          const { text, option, answer, quizId, questionNum } = req.body;
+          const questionRes = Question.findOne({questionNum:questionNum}, function (error, question) {
+  if (!error) {
+    // If the document doesn't exist
+    if (!question) {
+      question = new Question({quizId,
+                  questionNum: questionNum,
+                  text: text,
+                  option: option,
+                  answer: answer,
+                  first: 0,
+                  second: 0,
+                  third: 0,
+                  forth: 0,});
+    } else {
+      question.questionNum = questionNum;
+      question.text = text;
+      question.option = option;
+      question.answer = answer;
+    }
+    // Save the document
+    question
+      .save()
+      .then(() => {
+        return res.status(200).json({
+          success: true,
+          message: "Question Updated!",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(404).json({
+          error,
+          testQuestion: question,
+          message: "Question not updated!",
+        });
+      });
 
-        const editQuestion = await Question.updateOne(
-            { _id: questionId },
-            {
-                $set: {
-                    quizId: quizId,
-                    text: text,
-                    option: option,
-                    answer: answer,
-                    first: first,
-                    second: second,
-                    third: third,
-                    fourth: fourth
-                },
-            }
-        );
-        res.send(editQuestion)
-    })
-)
+  }
+});
+          //res.send(questionRes);
+      } catch (err) {
+          console.log(err);
+          res.send(err);
+      }
+  })
+);
+
 export default questionRouter;
