@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import QuizScore from "./QuizScore.js";
+import { FetchApiPost } from "../utils/Network";
 
 function Question(props) {
     const [index, setIndex] = useState(0);
@@ -11,11 +12,11 @@ function Question(props) {
     const [disableNext, setDisableNext] = useState(true);
     const [disableBack, setDisableBack] = useState(true);
     const [endQuiz, setEndQuiz] = useState(false);
-    const [option, setOption] = useState("");
-    const [first, setFirst] = useState("");
-    const [second, setSecond] = useState("");
-    const [third, setThird] = useState("");
-    const [fourth, setFourth] = useState("");
+    //const [option, setOption] = useState("");
+    const [first, setFirst] = useState();
+    const [second, setSecond] = useState();
+    const [third, setThird] = useState();
+    const [fourth, setFourth] = useState();
     const [correct, setCorrect] = useState(0);
     const [platformId, setPlatformId] = useState();
     const [error, setError] = useState(false);
@@ -40,16 +41,20 @@ function Question(props) {
         if(props.question && props.question.length > 0){
             setQuestions(props.question);
             setQuestion(props.question[0]);
+            setFirst(props.question[0].first)
+            setSecond(props.question[0].second)
+            setThird(props.question[0].third)
+            setFourth(props.question[0].fourth)
         }
     }, [ props.question ]);
 
     useEffect(() => {
         if(questions){
             setQuestion(questions[index]);
-            setFirst(questions[index].option[0]);
-            setSecond(questions[index].option[1]);
-            setThird(questions[index].option[2]);
-            setFourth(questions[index].option[3]);
+            setFirst(question.first);
+            setSecond(question.second);
+            setThird(question.third);
+            setFourth(question.fourth);
         }
     }, [index]);
 
@@ -68,10 +73,10 @@ function Question(props) {
                     }
                     setDisable(true);
                     setDisableNext(false);
-                    document.getElementById("result").innerHTML += "Correct!";
+                    document.getElementById("result").innerHTML += "Correct!<br><br>";
                     setChecked(true);
                     setCorrect(correct + 1);
-                    setOption(ele[i].value);
+                    const option = ele[i].value;
                     if (option == "1") {
                         setFirst(first + 1);
                     } else if (option == "2") {
@@ -89,12 +94,43 @@ function Question(props) {
                         setDisableBack(true);
                     }
                     document.getElementById("result").innerHTML +=
-                        "Wrong<br>Answer: " + question.option[question.answer - 1] + "<br>";
+                        "Wrong<br>Answer: " + question.option[question.answer - 1] + "<br><br>";
                     setChecked(true);
-                    setOption(ele[i].value);
+                    const option = ele[i].value;
+                    if (option == "1") {
+                        setFirst(first + 1);
+                    } else if (option == "2") {
+                        setSecond(second + 1);
+                    } else if (option == "3") {
+                        setThird(third + 1);
+                    } else if (option == "4") {
+                        setFourth(fourth + 1);
+                    }
+
                 }
-            }
+            }            
         }
+
+        if (first+second+third+fourth == 0 || isNaN(first+second+third+fourth)){
+            document.getElementById("result").innerHTML +=
+                "0% of users got this question right<br>";
+        }
+        else{
+            if (question.answer == 1)
+                document.getElementById("result").innerHTML +=
+                    Math.round(( first / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+            else if (question.answer == 2)
+                document.getElementById("result").innerHTML +=
+                    Math.round(( second / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+            else if (question.answer == 3)
+                document.getElementById("result").innerHTML +=
+                    Math.round(( third / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+            else
+                document.getElementById("result").innerHTML +=
+                    Math.round(( fourth / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+        }
+        
+        
     };
 
     const onNextClick = async e => {
@@ -102,16 +138,18 @@ function Question(props) {
         setDisable(false);
         if (checked) {
             console.log("next question");
-            try {
-                const res = await axios.put(`/:id/question/${question._id}`, { //????
-                    first: first,
-                    second: second,
-                    third: third,
-                    fourth: fourth,
-                });
-            } catch (err) {
-                console.log(err);
-            }
+            let res = await FetchApiPost("/api/questions/edit", {
+                questionId: question._id,
+                quizId: question.quizId,
+                text: question.text,
+                option: question.option,
+                first: first,
+                second: second,
+                third: third,
+                fourth: fourth,
+                questionNum: question.questionNum
+            });
+
             if (index < questions.length - 1) {
                 setIndex(index + 1);
                 document.getElementById("result").innerHTML = "";
