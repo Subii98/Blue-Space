@@ -79,9 +79,7 @@ function Question(props) {
                     setCorrect(correct + 1);
                     const option = ele[i].value;
                     if (option == "1") {
-                        console.log("f: ", first)
                         setFirst(first + 1);
-                        console.log("f2: ", first)
                     } else if (option == "2") {
                         setSecond(second + 1);
                     } else if (option == "3") {
@@ -113,18 +111,25 @@ function Question(props) {
                 }
             }            
         }
-        if (question.answer == 1)
+        if (first+second+third+fourth == 0 || isNaN(first+second+third+fourth)){
             document.getElementById("result").innerHTML +=
-                Math.round(( first / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
-        else if (question.answer == 2)
-            document.getElementById("result").innerHTML +=
-                Math.round(( second / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
-        else if (question.answer == 3)
-            document.getElementById("result").innerHTML +=
-                Math.round(( third / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
-        else
-            document.getElementById("result").innerHTML +=
-                Math.round(( fourth / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+                "0% of users got this question right<br>";
+        }
+        else{
+            if (question.answer == 1)
+                document.getElementById("result").innerHTML +=
+                    Math.round(( first / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+            else if (question.answer == 2)
+                document.getElementById("result").innerHTML +=
+                    Math.round(( second / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+            else if (question.answer == 3)
+                document.getElementById("result").innerHTML +=
+                    Math.round(( third / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+            else
+                document.getElementById("result").innerHTML +=
+                    Math.round(( fourth / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
+        }
+        
         
     };
 
@@ -143,8 +148,6 @@ function Question(props) {
                 third: third,
                 fourth: fourth,
             });
-            console.log(question.quizId)
-            console.log(first)
 
             if (index < questions.length - 1) {
                 setIndex(index + 1);
