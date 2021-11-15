@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FetchApiGet, FetchApiPost } from "../utils/Network";
+import { FetchApiGet, FetchApiPost , FetchApiDelete} from "../utils/Network";
 import { Button, Typography, TextField } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -17,6 +17,7 @@ function CreateQuestion(props) {
     const [nextDisabled, setNextDisabled] = useState(true);
     const [backDisabled, setBackDisabled] = useState(true);
     const [questionDisabled, setQuestionDisabled] = useState(true);
+    const [deleteDisabled, setDeleteDisabled] = useState(true);
     const [max, setMax] = useState(0);
     const [index, setIndex] = useState(0);
 
@@ -67,19 +68,31 @@ function CreateQuestion(props) {
         if (index == max){
             setQuestionDisabled(true);
             setNextDisabled(true);
+            setDeleteDisabled(true);
         } else {
             setQuestionDisabled(false);
             setNextDisabled(false);
+            setDeleteDisabled(false);
         }
     }, [index,max]);
 
     const onBackClick = e => {
         e.preventDefault();
-        console.log("back not pressed, index: ", index);
         if (index > 0) {
             setIndex(index - 1);
         }
         
+    };
+    const onDeleteClick = async (e) => {
+        e.preventDefault();
+        let res = await FetchApiDelete("/api/questions/delete", {
+            questionNum: questionID,
+        });
+        alert('Question deleted');
+        if (index != 0){
+            setIndex(index-1);
+        }
+        setUpdate(true);
     };
     const onNextClick = e => {
         e.preventDefault();
@@ -93,7 +106,7 @@ function CreateQuestion(props) {
     const onClickSubmit = async () => {
         if (index == max) {
             console.log("create new question");
-            let res = await FetchApiPost("/api/questions/insert", {
+            let res = await FetchApiPost("/api/questions/upsert", {
                 text: text,
                 option: [optionOne, optionTwo, optionThree, optionFour],
                 answer: answer,
@@ -131,7 +144,7 @@ function CreateQuestion(props) {
             .get("/api/questions/get_question/" + props.match.params.quizId)
             .then(res => {
                 //setLoading(true);
-                const data = res.data;
+                const data = res?.data;
                 setMax(data.length);
                 console.log("quiz data", data);
                 setQuiz(data);
@@ -178,7 +191,7 @@ function CreateQuestion(props) {
             {/* <Tags/> */}
             {/* <PostArea/>             */}
             <Typography fontSize="30px" marginBottom="24px">
-                Quiz
+                Edit Quiz Screen
             </Typography>
             <div className="createquiz-content">
                 <div className="createquiz-content-block">
@@ -250,17 +263,10 @@ function CreateQuestion(props) {
                 <Button style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit}>
                     SUBMIT
                 </Button>
-                <Button
-                    style={{ width: "10%", marginTop: "12px" }}
-                    onClick={() => history.goBack()}
-                >
-                    CANCEL
+                <Button style={{ width: "10%", marginTop: "12px" }} onClick={() => history.goBack()}> 
+                CANCEL
                 </Button>
-                <Button
-                    disabled={backDisabled}
-                    style={{ width: "10%", marginTop: "12px" }}
-                    onClick={onBackClick}
-                >
+                <Button disabled={backDisabled} style={{ width: "10%", marginTop: "12px" }} onClick={onBackClick}>
                     Back
                 </Button>
                 <Button
@@ -276,6 +282,9 @@ function CreateQuestion(props) {
                     onClick={addQuestion}
                 >
                     Add Question
+                </Button>
+                <Button disabled={deleteDisabled} style={{ width: "10%", marginTop: "12px" }} onClick={onDeleteClick}>
+                    Delete
                 </Button>
             </div>
         </div>

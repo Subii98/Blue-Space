@@ -111,4 +111,33 @@ questionRouter.post(
   })
 );
 
+questionRouter.delete(
+  "/delete",
+  expressAsyncHandler(async (req, res) => {
+      try {
+        const { questionNum } = req.body;
+        const questionRes = await Question.findOneAndDelete(
+          { questionNum: questionNum },
+          (err, question) => {
+            if (err) {
+              return res.status(400).json({ success: false, error: err });
+            }
+
+            if (!question) {
+              return res
+                .status(404)
+                .json({ success: false, error: `Question not found` });
+            }
+
+            return res.status(200).json({ success: true, data: question });
+          }
+        ).catch((err) => console.log(err));
+      } catch (err) {
+        console.log(err);
+        res.send(err);
+      }
+}
+  
+));
+
 export default questionRouter;
