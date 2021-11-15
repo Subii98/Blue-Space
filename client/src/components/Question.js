@@ -55,7 +55,6 @@ function Question(props) {
             setSecond(question.second);
             setThird(question.third);
             setFourth(question.fourth);
-            console.log(first)
         }
     }, [index]);
 
@@ -111,6 +110,7 @@ function Question(props) {
                 }
             }            
         }
+
         if (first+second+third+fourth == 0 || isNaN(first+second+third+fourth)){
             document.getElementById("result").innerHTML +=
                 "0% of users got this question right<br>";
@@ -147,6 +147,7 @@ function Question(props) {
                 second: second,
                 third: third,
                 fourth: fourth,
+                questionNum: question.questionNum
             });
 
             if (index < questions.length - 1) {

@@ -10,7 +10,7 @@ const questionSchema = new mongoose.Schema({
     first: Number,
     second: Number,
     third: Number,
-    forth: Number
+    fourth: Number
 })
 
 const Question = mongoose.model('Question', questionSchema)
