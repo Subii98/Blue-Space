@@ -85,7 +85,7 @@ questionRouter.post(
                     first: 0,
                     second: 0,
                     third: 0,
-                    forth: 0,
+                    fourth: 0,
                 },
             ]);
             res.send(createdQuestion);
@@ -113,7 +113,7 @@ questionRouter.post(
                     first: 0,
                     second: 0,
                     third: 0,
-                    forth: 0,});
+                    fourth: 0,});
       } else {
         question.questionNum = questionNum;
         question.text = text;
