@@ -63,3 +63,27 @@ export const FetchApiGet = async (url, params) => {
         alert(error)
     }
 };
+
+export const FetchApiDelete = async (url, params) => {
+    try {
+
+        if (params == undefined) params = {};
+
+        const response = await axios({
+            method: "Delete",
+            url: url,
+            data: params,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+            },
+            withCredentials: true,
+        });
+        if (response.status != 200) {
+            throw response.result;
+        }
+
+        return response.data;
+    } catch (error) {
+        alert(error);
+    }
+};
