@@ -9,11 +9,9 @@ const userSchema = new mongoose.Schema({
   expire: {
     type: Date,
   },
-  /*
-    point: {
-        type: Number
-    }, 
-    */
+  points: {
+    type: Number,
+  },
   email: {
     type: String,
     //unique: true,
@@ -21,10 +19,17 @@ const userSchema = new mongoose.Schema({
   uniqueId: {
     type: Number,
   },
+  subscribedPlatforms: {
+    type: [String]
+  },
+  exp:{
+    type: Number,
+  },
+  quizPlayed:{
+    type: Number,
+  }
 });
 
+const User = mongoose.model("User", userSchema);
 
-
-const User = mongoose.model("User", userSchema)
-
-export default User
+export default User;
