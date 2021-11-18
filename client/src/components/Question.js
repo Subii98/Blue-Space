@@ -13,6 +13,7 @@ function Question(props) {
     const [checked, setChecked] = useState(false);
     const [disable, setDisable] = useState(false);
     const [addTimeDisable, setAddTimeDisable] = useState(false)
+    const [hintDisable, setHintDisable] = useState(false)
     const [disableNext, setDisableNext] = useState(true);
     const [disableBack, setDisableBack] = useState(true);
     const [endQuiz, setEndQuiz] = useState(false);
@@ -27,6 +28,8 @@ function Question(props) {
     const [timeOut, setTimeOut] = useState(false)
     const [correct, setCorrect] = useState(false)
     const [defaultTime, setDefaultTime] = useState(10)
+    const [hintCount, setHintCount] = useState(0)
+    
 
     //const question = questions[index]
 
@@ -56,6 +59,7 @@ function Question(props) {
             setTimeOut(false)
             setDefaultTime(10)
             setAddTimeDisable(false)
+            setHintDisable(false)
         }
     }, [ props.question ]);
 
@@ -70,6 +74,8 @@ function Question(props) {
             setTimeOut(false)
             setDefaultTime(10)
             setAddTimeDisable(false)
+            setHintDisable(false)
+            setHintCount(0)
         }
     }, [index]);
 
@@ -82,11 +88,14 @@ function Question(props) {
                 setDisableBack(true);
             setDisableNext(false);
             setAddTimeDisable(timeOut)
+            setHintDisable(timeOut)
+            setHintCount(0)
     }, [timeOut])
 
     useEffect(()=> {
-
-    }, [checked, addTimeDisable])
+        if (hintCount == 3)
+            setHintDisable(true)
+    }, [checked, addTimeDisable, hintCount])
 
     const onClickSaveCheckAnswer = e => {
         console.log(question)
@@ -188,6 +197,34 @@ function Question(props) {
         setTimeOut(false)
     }
 
+    const onClickHint = e => {
+        e.preventDefault()
+        setHintCount(hintCount+1)
+        var ele = document.getElementsByTagName("input");
+        console.log(ele)
+        var i = Math.floor(Math.random() * (ele.length - 1) + 1)
+        console.log(i)
+        console.log(ele[i])
+        if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
+            ele[i].disabled = true
+        }
+        else{
+            while (true){
+                i = Math.floor(Math.random() * (ele.length - 1) + 0)
+                console.log(i)
+                if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
+                    ele[i].disabled = true
+                    return
+                }
+                else{
+                    continue
+                }
+            }
+                
+        }
+
+    }
+
     if(question == undefined) return ( <div>LOADING..</div>)
     if (!endQuiz) {
         return (
@@ -267,6 +304,7 @@ function Question(props) {
                             SAVE
                         </button>
                         <button className="addTime" disabled={addTimeDisable} onClick={e => { onClickAddTime(e)}}>Add Time</button>
+                        <button className= "hint" disabled={hintDisable} onClick={e => {onClickHint(e)}}>Hint</button>
                         <div className="questionArrow">
                             <button
                                 disabled={disableBack}

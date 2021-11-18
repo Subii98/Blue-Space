@@ -337,9 +337,17 @@ left: 15rem;
 top: 69rem;
 }
 
+/*start of Statistics component*/
+
 .result {
   text-align: center;
 }
+
+.result p{
+  font-size: 1.6rem;
+}
+
+/*end of Statistics component*/
 
 
 /*start of QuizScore page*/
