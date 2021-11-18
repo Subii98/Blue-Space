@@ -211,4 +211,39 @@ userRouter.put("/createuser", async (req, res) => {
   }
 });
 
+userRouter.get(
+  "/test/idget",
+  expressAsyncHandler(async (req, res)=> {
+    const user = await User.find({ _id: "61957c03a4e8b287fc962577"})
+    const updateuser = await User.updateOne(
+      {  _id: "61957c03a4e8b287fc962577" },
+      {$push: {subscribedPlatforms: "abcde"}}
+    )
+    res.send(updateuser);
+  })
+)
+
+// userRouter.post(
+//   "/subscribe",
+//   expressAsyncHandler(async (req, res)=> {
+//     const updateuser = await User.updateOne(
+//       {  _id: },
+//       {$push: {subscribedPlatforms: req.params._id}}
+//     )
+//     res.send(updateuser);
+//   })
+// )
+
+userRouter.get(
+  "/test/iddelete",
+  expressAsyncHandler(async (req, res)=> {
+    const user = await User.find({ _id: "61957c03a4e8b287fc962577"})
+    const updateuser = await User.updateOne(
+      {  _id: "61957c03a4e8b287fc962577" },
+      {$pull: {subscribedPlatforms: "abcde"}}
+    )
+    res.send(updateuser);
+  })
+)
+
 export default userRouter;
