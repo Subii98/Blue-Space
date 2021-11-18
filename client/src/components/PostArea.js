@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import "../index.css";
+import { FetchApiPost } from "../utils/Network";
 
 function PostArea(props) {
     const history = useHistory();
     const [platform, setPlatform] = useState();
+
+    const subscribe = async () => {
+        let res = await FetchApiPost("/api/v1/subscribe",{})
+    }
 
     useEffect(() => {
         if (props.platform) setPlatform(props.platform);
@@ -12,9 +18,10 @@ function PostArea(props) {
     const onClickEdit = () => {
         history.push("/EditPlatform/" + platform._id);
     };
+    
 
     if (platform == undefined) return <div>LOADING..</div>;
-    console.log(platform)
+    console.log(platform);
     return (
         <div className="postArea">
             <div className="banner">
@@ -28,8 +35,9 @@ function PostArea(props) {
                         <span>{platform.userName}</span>
                     </div>
                     <div className="platformBottom">
+                        {/* <span Style={{color:"red"}}>{platform.description}</span> */}
                         <span>{platform.description}</span>
-                        <button type="button">SUBSCRIBE</button>
+                        <button type="button" onClick={subscribe}>SUBSCRIBE</button>
                     </div>
                     <div className="platformBottom">
                         <span></span>

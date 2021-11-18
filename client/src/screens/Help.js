@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Button from "@mui/material/Button";
+import FeedbackModal from "../components/FeedbackModal";
 
 function Help() {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <div>
       <h2 className="contact">Contact Us</h2>
@@ -31,7 +35,8 @@ function Help() {
           <Typography>1234 Red Circle, Stonybrook, NY</Typography>
         </Grid>
       </Grid>
-
+      <Button onClick={() => setOpenModal(true)} >Send Feedback</Button>
+        {openModal && <FeedbackModal closeModal={setOpenModal}/>}
       <h2 className="contact">Platform</h2>
       <h3>How many platforms can users create</h3>
       <p>Any amount as long as they are logged in.</p>
