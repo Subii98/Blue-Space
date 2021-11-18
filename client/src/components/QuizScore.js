@@ -15,7 +15,7 @@ function QuizScore(props){
         <div className="score">
             <p>Score</p>
             <div className="questionsCorrect">
-                <p>Questions Correct {props.correct}/{questions.length}</p>
+                <p>Questions Correct {props.count}/{questions.length}</p>
             </div>
             <p>Points Spent</p>
             <p>Points Earned</p>

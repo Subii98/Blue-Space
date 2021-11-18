@@ -229,12 +229,20 @@ img.hamburger{
   background-color: transparent;
   padding: 1px 1.2rem;
 }
+
+/*Question Component*/
 .quizArea {
   border: 1px solid #d2d2d2;
 }
 .quizArea p{
   margin: 2rem;
   font-size: 2rem;
+}
+
+.quizHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .questions {
   display: flex;
