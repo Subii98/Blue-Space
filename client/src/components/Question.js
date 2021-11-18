@@ -4,6 +4,7 @@ import QuizScore from "./QuizScore.js";
 import { FetchApiPost } from "../utils/Network";
 import Timer from "../components/Timer.js";
 import Statistics from "./Statistics.js";
+import { set } from "mongoose";
 
 function Question(props) {
     const [index, setIndex] = useState(0);
@@ -11,6 +12,7 @@ function Question(props) {
     const [question, setQuestion] = useState();
     const [checked, setChecked] = useState(false);
     const [disable, setDisable] = useState(false);
+    const [addTimeDisable, setAddTimeDisable] = useState(false)
     const [disableNext, setDisableNext] = useState(true);
     const [disableBack, setDisableBack] = useState(true);
     const [endQuiz, setEndQuiz] = useState(false);
@@ -24,6 +26,7 @@ function Question(props) {
     const [error, setError] = useState(false);
     const [timeOut, setTimeOut] = useState(false)
     const [correct, setCorrect] = useState(false)
+    const [defaultTime, setDefaultTime] = useState(10)
 
     //const question = questions[index]
 
@@ -51,6 +54,8 @@ function Question(props) {
             setFourth(props.question[0].fourth)
             setChecked(false)
             setTimeOut(false)
+            setDefaultTime(10)
+            setAddTimeDisable(false)
         }
     }, [ props.question ]);
 
@@ -63,6 +68,8 @@ function Question(props) {
             setFourth(question.fourth);
             setChecked(false)
             setTimeOut(false)
+            setDefaultTime(10)
+            setAddTimeDisable(false)
         }
     }, [index]);
 
@@ -74,11 +81,12 @@ function Question(props) {
             if (index <= 0) 
                 setDisableBack(true);
             setDisableNext(false);
+            setAddTimeDisable(timeOut)
     }, [timeOut])
 
     useEffect(()=> {
 
-    }, [checked])
+    }, [checked, addTimeDisable])
 
     const onClickSaveCheckAnswer = e => {
         console.log(question)
@@ -97,6 +105,7 @@ function Question(props) {
                     setChecked(true);
                     setCount(count + 1);
                     setCorrect(true)
+                    setAddTimeDisable(true)
                     const option = ele[i].value;
                     if (option == "1") {
                         setFirst(first + 1);
@@ -166,20 +175,26 @@ function Question(props) {
         e.preventDefault();
         if (index > 0) {
             setIndex(index - 1);
-            document.getElementById("result").innerHTML = "";
             console.log("index: ", index);
         }
         if (index <= 1) {
             setDisableBack(true);
         }
     };
+
+    const onClickAddTime = e => {
+        e.preventDefault()
+        setDefaultTime(defaultTime + 5)
+        setTimeOut(false)
+    }
+
     if(question == undefined) return ( <div>LOADING..</div>)
     if (!endQuiz) {
         return (
             <div className="quizArea">
                 <div className= "quizHeader">
                     <p>Question {index+1}</p>
-                    <Timer time={10} timeOut={timeOut} setTimeOut={setTimeOut}/>
+                    <Timer time={defaultTime} timeOut={timeOut} setTimeOut={setTimeOut} setDefaultTime={setDefaultTime}/>
                 </div>
                 <form className="questions">
                     <span key={question._id} className="question">
@@ -251,6 +266,7 @@ function Question(props) {
                         >
                             SAVE
                         </button>
+                        <button className="addTime" disabled={addTimeDisable} onClick={e => { onClickAddTime(e)}}>Add Time</button>
                         <div className="questionArrow">
                             <button
                                 disabled={disableBack}

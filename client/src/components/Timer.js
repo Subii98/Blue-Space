@@ -1,3 +1,4 @@
+import { set } from 'mongoose';
 import React from 'react'
 import { useState, useEffect } from 'react';
 
@@ -8,11 +9,13 @@ function Timer(props) {
     const [seconds, setSeconds ] = useState(initialSeconds);
     const setTimeOut = props.setTimeOut
     const timeOut = props.timeOut
+    const setCurrentTime = props.setDefaultTime
 
     useEffect(()=>{
         let myInterval = setInterval(() => {
             if (seconds > 0) {
                 setSeconds(seconds - 1);
+                setCurrentTime(seconds - 1)
             }
             if (seconds === 0) {
                 if (minutes === 0) {
@@ -22,6 +25,7 @@ function Timer(props) {
                 } else {
                     setMinutes(minutes - 1);
                     setSeconds(59);
+                    setCurrentTime(seconds - 1)
                 }
             } 
         }, 1000)
@@ -34,6 +38,12 @@ function Timer(props) {
         if (!timeOut)
             setSeconds(initialSeconds)
     }, [timeOut])
+
+    useEffect(() => {
+        setSeconds(props.time)
+    }, [props.time])
+
+    
 
     return (
         <div>
