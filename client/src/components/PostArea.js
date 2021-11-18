@@ -8,8 +8,8 @@ function PostArea(props) {
     const [platform, setPlatform] = useState();
 
     const subscribe = async () => {
-        let res = await FetchApiPost("/api/v1/subscribe",{})
-    }
+        let res = await FetchApiPost("/api/v1/subscribe", {});
+    };
 
     useEffect(() => {
         if (props.platform) setPlatform(props.platform);
@@ -18,7 +18,6 @@ function PostArea(props) {
     const onClickEdit = () => {
         history.push("/EditPlatform/" + platform._id);
     };
-    
 
     if (platform == undefined) return <div>LOADING..</div>;
     console.log(platform);
@@ -31,13 +30,16 @@ function PostArea(props) {
                 <img src="/images/platformprofile.jpg" alt="platformprofile" />
                 <div className="platformInfo">
                     <div className="platformTop">
-                        <a href="">{platform.title}</a>
+                        <a href="" Style={"color:" + platform.fontColor}>{platform.title}</a>
                         <span>{platform.userName}</span>
                     </div>
                     <div className="platformBottom">
-                        {/* <span Style={{color:"red"}}>{platform.description}</span> */}
+                        {/* <span Style={"color:#e52424"}>{platform.description}</span> */}
                         <span>{platform.description}</span>
-                        <button type="button" onClick={subscribe}>SUBSCRIBE</button>
+                        {/* <span>{platform.description}</span> */}
+                        <button type="button" onClick={subscribe}>
+                            SUBSCRIBE
+                        </button>
                     </div>
                     <div className="platformBottom">
                         <span></span>
