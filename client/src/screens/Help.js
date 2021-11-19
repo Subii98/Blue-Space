@@ -4,49 +4,58 @@ import Typography from "@mui/material/Typography";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useContext, useEffect, useState } from "react";
+import CollapsibleContent from "../components/HelpPage/CollapsibleContent.js";
+import ContactHelp from "../components/HelpPage/ContactHelp.js";
+import PlatformHelp from "../components/HelpPage/PlatformHelp.js";
+import QuizHelp from "../components/HelpPage/QuizHelp.js";
+
 
 function Help() {
-  return (
-    <div>
-      <h2 className="contact">Contact Us</h2>
-      <Grid container sx={{ color: "text.primary" }}>
-        <Grid item xs={4}>
-          <EmailIcon />
-        </Grid>
-        <Grid item xs={8}>
-          <Typography>support_blue@bluespace.com</Typography>
-        </Grid>
-
-        <Grid item xs={4}>
-          <PhoneAndroidIcon />
-        </Grid>
-        <Grid item xs={8}>
-          <Typography>1 631.123.1234</Typography>
-        </Grid>
-
-        <Grid item xs={4}>
-          <LocationOnIcon />
-        </Grid>
-        <Grid item xs={8}>
-          <Typography>1234 Red Circle, Stonybrook, NY</Typography>
-        </Grid>
-      </Grid>
-
-      <h2 className="contact">Platform</h2>
-      <h3>How many platforms can users create</h3>
-      <p>Any amount as long as they are logged in.</p>
-      <h3>How many platforms can users subscribe to?</h3>
-      <p>Any amount as long as they are logged in.</p>
-      <h3>How can users create their own platform?</h3>
-      <p>After logging in, they can tap on the Create button in order to create a new platform/</p>
-
-      <h2 className="contact">Quizzes</h2>
-      <h3>How many quizzes can users create?</h3>
-      <p>Any amount they want but, they have to be a platform owner</p>
-      <h3>How many answers can a question have?</h3>
-      <p>Only up to 4.</p>
-    </div>
-  );
+    const [selected, setSelected] = useState(0);
+    
+    
+    
+  const handleClick = (e) => {
+      setSelected(e);
+      console.log("value of e: ", e);
+   }
+    return (
+        <div>
+            <Grid container sx={{ color: "text.primary" }}>
+                <Grid item xs={2}>
+                    <h2 className={`helpTitle ${selected==0 ? 'selected' : ''}`} onClick={() => handleClick(0)}>
+                        Platform
+                    </h2>
+                </Grid>
+                <Grid item xs={2}>
+                    <h2 className={`helpTitle ${selected==1 ? 'selected' : ''}`} onClick={() => handleClick(1)}>
+                        Quiz
+                    </h2>
+                </Grid>
+                <Grid item xs={2}>
+                    <h2 className={`helpTitle ${selected==2 ? 'selected' : ''}`} onClick={() => handleClick(2)}>
+                        Leaderboard
+                    </h2>
+                </Grid>
+                <Grid item xs={2}>
+                    <h2 className={`helpTitle ${selected==3 ? 'selected' : ''}`} onClick={() => handleClick(3)}>
+                        Store
+                    </h2>
+                </Grid>
+                <Grid item xs={2}>
+                    <h2 className={`helpTitle ${selected==4 ? 'selected' : ''}`} onClick={() => handleClick(4)}>
+                        Contact
+                    </h2>
+                </Grid>
+            </Grid>
+            {selected == 0 ? [<PlatformHelp></PlatformHelp>] : []}
+            {selected == 1 ? [<QuizHelp></QuizHelp>] : []}
+            {selected == 2 ? [] : []}
+            {selected == 3 ? [] : []}
+            {selected == 4 ? [<ContactHelp> </ContactHelp>] : []}
+        </div>
+    );
 }
 
 export default Help;

@@ -422,3 +422,26 @@ div.wrap {
 .contact {
   border-bottom: 1px solid #e4e8eb
 }
+
+.helpTitle {
+  border-bottom: 1px solid  #e4e8eb;
+  font-family: Oswald;
+  font-weight: 300;
+
+}
+.selected {
+  border-bottom: 1px solid #00AEEF;
+  color: #00AEEF;
+  font-family: Oswald;
+  font-weight: 300;
+}
+
+.panel .panel-collapse {
+	 max-height: 0;
+	 overflow: hidden;
+	 transition: max-height 0.5s cubic-bezier(0.525, 0.66, 0.495, 1.4);
+}
+ .panel.is-expanded .panel-collapse {
+	 max-height: 200px;
+}
+ 
