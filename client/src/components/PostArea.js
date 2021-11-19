@@ -4,19 +4,26 @@ import "../index.css";
 import { FetchApiPost } from "../utils/Network";
 import axios from "axios";
 
-
 function PostArea(props) {
     const history = useHistory();
     const [platform, setPlatform] = useState();
     const [user, setUser] = useState();
     const [error, setError] = useState(false);
+    const [buttonOne, setButtonOne] = useState(true);
+    const [buttonTwo, setButtonTwo] = useState(false);
 
     const subscribe = async () => {
-        let res = await FetchApiPost("/api/v1/subscribe", {userId:user._id, platformId: platform._id});
+        let res = await FetchApiPost("/api/v1/subscribe", {
+            userId: user._id,
+            platformId: platform._id,
+        });
     };
 
     const unsubscribe = async () => {
-        let res = await FetchApiPost("/api/v1/unsubscribe", {userId:user._id, platformId: platform._id});
+        let res = await FetchApiPost("/api/v1/unsubscribe", {
+            userId: user._id,
+            platformId: platform._id,
+        });
     };
 
     useEffect(() => {
@@ -29,14 +36,27 @@ function PostArea(props) {
         userData = JSON.parse(userData);
         axios
             .get("/api/v1/get_user?user_id=" + userData.id)
-            .then((res) => setUser(res.data))
-            .catch((error) => {
-                setError(
-                    "No userdata"
-                );
-            })
+            .then(res => setUser(res.data))
+            .catch(error => {
+                setError("No userdata");
+            });
     }
 
+    useEffect(()=> {
+        if(user){
+            console.log("!!!!", user.subscribedPlatforms)
+            console.log("!!!!", platform._id)
+            if(user.subscribedPlatforms.indexOf(platform._id) != -1){
+                setButtonOne(false)
+                setButtonTwo(true)
+            }
+            else{
+                setButtonOne(true)
+                setButtonTwo(false)
+            }
+        }
+    },[user])
+    
     const onClickEdit = () => {
         history.push("/EditPlatform/" + platform._id);
     };
@@ -59,15 +79,17 @@ function PostArea(props) {
                         <span>{platform.userName}</span>
                     </div>
                     <div className="platformBottom">
-                        {/* <span Style={"color:#e52424"}>{platform.description}</span> */}
                         <span>{platform.description}</span>
-                        {/* <span>{platform.description}</span> */}
-                        <button type="button" onClick={subscribe}>
-                            SUBSCRIBE
-                        </button>
-                        <button type="button" onClick={unsubscribe}>
-                            UNSUBSCRIBE
-                        </button>
+                        {buttonOne ? (
+                            <button type="button" onClick={subscribe}>
+                                SUBSCRIBE
+                            </button>
+                        ) : null}
+                        {buttonTwo ? (
+                            <button type="button" onClick={unsubscribe}>
+                                UNSUBSCRIBE
+                            </button>
+                        ) : null}
                     </div>
                     <div className="platformBottom">
                         <span></span>

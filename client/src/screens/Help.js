@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import CollapsibleContent from "../components/HelpPage/CollapsibleContent.js";
 import ContactHelp from "../components/HelpPage/ContactHelp.js";
 import PlatformHelp from "../components/HelpPage/PlatformHelp.js";

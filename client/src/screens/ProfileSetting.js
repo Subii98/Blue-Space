@@ -8,10 +8,8 @@ import MessageModal from "../components/MessageModal.js";
 import { FetchApiGet } from "../utils/Network";
 import Platform from "../components/Platform.js";
 import PlatformCard from "../components/PlatformCard.js";
-import { Link } from "react-router-dom";
 
-
-function CreatePlatform(props) {
+function ProfileSetting(props) {
     const { store } = useContext(GlobalStoreContext);
     //use react hooks to set data (empty array by default)
     const [loading, setLoading] = useState(false);
@@ -76,6 +74,7 @@ function CreatePlatform(props) {
     useEffect(() => {
         if (store && store.username) setName(store.username);
     }, [store]);
+
     return (
         <div>
             {/* <Tags />
@@ -106,10 +105,7 @@ function CreatePlatform(props) {
                 {/* })} */}
 
                 <div className>
-                    {name}
-                    
-                    {/* <button component={Link} to={`/ProfileSetting/${user._id}`}>edit</button> */}
-                    
+                    <input type="text" value={name} />
                     <p style={{ textAlign: "center", color: "#929292" }}>Owned Platforms</p>
                     <Platform platforms={platforms}></Platform>
                     <p style={{ textAlign: "center", color: "#929292" }}>Subscribing Platforms</p>
@@ -120,4 +116,4 @@ function CreatePlatform(props) {
     );
 }
 
-export default CreatePlatform;
+export default ProfileSetting;

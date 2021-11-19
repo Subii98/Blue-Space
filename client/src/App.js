@@ -12,6 +12,7 @@ import CreateQuiz from "./screens/CreateQuiz.js";
 import Help from "./screens/Help.js";
 import CreateQuestion from "./screens/CreateQuestion.js";
 import EditPlatform from "./screens/EditPlatform.js";
+import ProfileSetting from "./screens/ProfileSetting.js";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/CreateQuiz/:platformId" component={CreateQuiz}></Route>
           <Route path="/CreateQuestion/:quizId" component={CreateQuestion}></Route>
           <Route path="/EditPlatform/:platformId" component={EditPlatform}></Route>
+          <Route path="/ProfileSetting/:userId" component={ProfileSetting}></Route>
         </main>
       </div>
     </BrowserRouter>
