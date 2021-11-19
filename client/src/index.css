@@ -323,8 +323,8 @@ img.hamburger{
 }
 
 .pointButtons button:disabled{
-  color: #929292;
-  border-color: #929292;
+  color: #c3c3c3;
+  border-color: #c3c3c3;
 }
 
 .questionArrow {
