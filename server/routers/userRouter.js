@@ -111,7 +111,7 @@ userRouter.post("/auth/google", async (req, res) => {
           expire: new Date(),
           email: email,
           uniqueId: currentUserCounter,
-          points: 0,
+          points: 100,
           subscribedPlatforms: [],
           exp: 0,
           quizPlayed: 0
@@ -223,16 +223,29 @@ userRouter.get(
   })
 )
 
-// userRouter.post(
-//   "/subscribe",
-//   expressAsyncHandler(async (req, res)=> {
-//     const updateuser = await User.updateOne(
-//       {  _id: },
-//       {$push: {subscribedPlatforms: req.params._id}}
-//     )
-//     res.send(updateuser);
-//   })
-// )
+userRouter.post(
+  "/subscribe",
+  expressAsyncHandler(async (req, res)=> {
+    const {userId, platformId} = req.body
+    const updateuser = await User.updateOne(
+      {  _id: userId},
+      {$addToSet: { subscribedPlatforms: platformId}}
+    )
+    res.send(updateuser);
+  })
+)
+
+userRouter.post(
+  "/unsubscribe",
+  expressAsyncHandler(async (req, res)=> {
+    const {userId, platformId} = req.body
+    const updateuser = await User.updateOne(
+      {  _id: userId},
+      {$pull: { subscribedPlatforms: platformId}}
+    )
+    res.send(updateuser);
+  })
+)
 
 userRouter.get(
   "/test/iddelete",
@@ -243,6 +256,15 @@ userRouter.get(
       {$pull: {subscribedPlatforms: "abcde"}}
     )
     res.send(updateuser);
+  })
+)
+
+userRouter.get(
+  "/get_user",
+  expressAsyncHandler(async (req, res) => {
+    const { user_id } = req.query;
+    const user = await User.findOne({ _id: user_id});
+    res.send(user);
   })
 )
 

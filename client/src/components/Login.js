@@ -67,7 +67,7 @@ function Login() {
   
   if (res.status == 200){
       localStorage.setItem("signed-in", true);
-      localStorage.setItem("data", data);
+      localStorage.setItem("data", JSON.stringify(data));
       store.logIn(data);
   }
   
