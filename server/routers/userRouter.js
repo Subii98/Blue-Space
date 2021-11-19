@@ -9,15 +9,13 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 const userRouter = express.Router();
-const clientId = '506755665568-6jjmmjkcpuc4of62a2s5idulrbuebr69.apps.googleusercontent.com';
+const clientId =
+  "506755665568-6jjmmjkcpuc4of62a2s5idulrbuebr69.apps.googleusercontent.com";
 userRouter.use(cookieParser());
 //authenthication
 
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(clientId);
-
-
-
 
 userRouter.post("/auth/google", async (req, res) => {
   console.log("entered auth google");
@@ -26,13 +24,13 @@ userRouter.post("/auth/google", async (req, res) => {
     idToken: token,
     audience: clientId,
   });
-  const {name, email, picture} = ticket.getPayload();
+  const { name, email, picture } = ticket.getPayload();
   const payload = ticket.getPayload;
-  console.log('payload: ', payload)
+  console.log("payload: ", payload);
   console.log(ticket);
   console.log(req.body);
-  console.log('email: ', email);
-  console.log('name: ', name);
+  console.log("email: ", email);
+  console.log("name: ", name);
 
   // Setup stuff
   console.log(req.params.email);
@@ -42,32 +40,29 @@ userRouter.post("/auth/google", async (req, res) => {
   //req.session.email = email;
   // Find the document
   var currentUserCounter = 0;
-const userCounter = Counter.findOne(
-  { name: "user" },
-  function (error, userCnt) {
-    if (!error) {
-      if (!userCnt) {
-        //create a new counter
-        userCnt = new Counter({ name: "user", counter: 0 });
-      }
-      currentUserCounter = userCnt.counter;
+  const userCounter = Counter.findOne(
+    { name: "user" },
+    function (error, userCnt) {
+      if (!error) {
+        if (!userCnt) {
+          //create a new counter
+          userCnt = new Counter({ name: "user", counter: 0 });
+        }
+        currentUserCounter = userCnt.counter;
 
-      userCnt
-        .save()
-        .then(() => {
-          //console.log("new user cnt: ", currentUserCounter);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        userCnt
+          .save()
+          .then(() => {
+            //console.log("new user cnt: ", currentUserCounter);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
-  }
-);
-  
+  );
+
   const loggedUser = User.findOne(query, function (error, user) {
-    
-    
-    
     /*
     const userCounter = Counter.findOne(
       { name: "user" },
@@ -109,9 +104,18 @@ const userCounter = Counter.findOne(
         randomName = randomName.replace(/\s+/g, "");
         randomName += Math.floor(Math.random() * 100 + 1);
         console.log("randomname: ", randomName);
-        
+
         console.log("current user cnt is: ", currentUserCounter);
-        user = new User({ username: randomName, expire: new Date(), email: email, uniqueId: currentUserCounter, });
+        user = new User({
+          username: randomName,
+          expire: new Date(),
+          email: email,
+          uniqueId: currentUserCounter,
+          points: 100,
+          subscribedPlatforms: [],
+          exp: 0,
+          quizPlayed: 0
+        });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
         console.log("email: ", user.email);
@@ -189,12 +193,7 @@ const userCounter = Counter.findOne(
         const updateUser = 
       } */
     //console.log("logged user var: ", loggedUser);
-    
   });
-
-  
-  
-  
 });
 userRouter.delete("/auth/logout", async (req, res) => {
   //await req.session.destroy();
@@ -206,12 +205,87 @@ userRouter.delete("/auth/logout", async (req, res) => {
 
 userRouter.put("/createuser", async (req, res) => {
   console.log("entered create user");
-  if (!req.session.email){
+  if (!req.session.email) {
     await req.session.destroy();
-    res.redirect('/');
+    res.redirect("/");
   }
-  
-
 });
+
+userRouter.get(
+  "/test/idget",
+  expressAsyncHandler(async (req, res)=> {
+    const user = await User.find({ _id: "61957c03a4e8b287fc962577"})
+    const updateuser = await User.updateOne(
+      {  _id: "61957c03a4e8b287fc962577" },
+      {$push: {subscribedPlatforms: "abcde"}}
+    )
+    res.send(updateuser);
+  })
+)
+
+userRouter.post(
+  "/subscribe",
+  expressAsyncHandler(async (req, res)=> {
+    const {userId, platformId} = req.body
+    const updateuser = await User.updateOne(
+      {  _id: userId},
+      {$addToSet: { subscribedPlatforms: platformId}}
+    )
+    res.send(updateuser);
+  })
+)
+
+userRouter.post(
+  "/unsubscribe",
+  expressAsyncHandler(async (req, res)=> {
+    const {userId, platformId} = req.body
+    const updateuser = await User.updateOne(
+      {  _id: userId},
+      {$pull: { subscribedPlatforms: platformId}}
+    )
+    res.send(updateuser);
+  })
+)
+
+userRouter.get(
+  "/test/iddelete",
+  expressAsyncHandler(async (req, res)=> {
+    const user = await User.find({ _id: "61957c03a4e8b287fc962577"})
+    const updateuser = await User.updateOne(
+      {  _id: "61957c03a4e8b287fc962577" },
+      {$pull: {subscribedPlatforms: "abcde"}}
+    )
+    res.send(updateuser);
+  })
+)
+
+userRouter.get(
+  "/get_user",
+  expressAsyncHandler(async (req, res) => {
+    const { user_id } = req.query;
+    const user = await User.findOne({ _id: user_id});
+    res.send(user);
+  })
+)
+
+userRouter.post(
+  "/editPoints",
+  expressAsyncHandler(async (req, res) => {
+      const {
+          points,
+          userId
+      } = req.body;
+
+      const editUser = await User.updateOne(
+          { _id: userId },
+          {
+              $set: {
+                  points: points
+              },
+          }
+      );
+      res.send(editUser)
+  })
+)
 
 export default userRouter;

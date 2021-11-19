@@ -2,13 +2,19 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import QuizScore from "./QuizScore.js";
 import { FetchApiPost } from "../utils/Network";
+import Timer from "../components/Timer.js";
+import Statistics from "./Statistics.js";
+import { set } from "mongoose";
 
 function Question(props) {
+    const [user, setUser] = useState()
     const [index, setIndex] = useState(0);
     const [questions, setQuestions] = useState();
     const [question, setQuestion] = useState();
     const [checked, setChecked] = useState(false);
     const [disable, setDisable] = useState(false);
+    const [addTimeDisable, setAddTimeDisable] = useState(false)
+    const [hintDisable, setHintDisable] = useState(false)
     const [disableNext, setDisableNext] = useState(true);
     const [disableBack, setDisableBack] = useState(true);
     const [endQuiz, setEndQuiz] = useState(false);
@@ -17,9 +23,15 @@ function Question(props) {
     const [second, setSecond] = useState();
     const [third, setThird] = useState();
     const [fourth, setFourth] = useState();
-    const [correct, setCorrect] = useState(0);
+    const [count, setCount] = useState(0);
     const [platformId, setPlatformId] = useState();
     const [error, setError] = useState(false);
+    const [timeOut, setTimeOut] = useState(false)
+    const [correct, setCorrect] = useState(false)
+    const [defaultTime, setDefaultTime] = useState(10)
+    const [hintCount, setHintCount] = useState(0)
+    const [usedPoints, setUsedPoints] = useState(0)
+    
 
     //const question = questions[index]
 
@@ -35,16 +47,23 @@ function Question(props) {
                 setError("Error finding quiz");
                 console.log("Error finding quiz");
             });
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/v1/get_user?user_id=" + userData.id)
+            .then((res) => setUser(res.data))
+            .catch((error) => {
+                setError(
+                    "No userdata"
+                );
+            })
     }, [])
 
     useEffect(() => {
+        setUsedPoints(0)
         if(props.question && props.question.length > 0){
             setQuestions(props.question);
             setQuestion(props.question[0]);
-            setFirst(props.question[0].first)
-            setSecond(props.question[0].second)
-            setThird(props.question[0].third)
-            setFourth(props.question[0].fourth)
         }
     }, [ props.question ]);
 
@@ -55,27 +74,51 @@ function Question(props) {
             setSecond(question.second);
             setThird(question.third);
             setFourth(question.fourth);
+            setChecked(false)
+            setTimeOut(false)
+            setDefaultTime(10)
+            setAddTimeDisable(false)
+            setHintDisable(false)
+            setHintCount(0)
         }
     }, [index]);
 
-    const onSaveClickCheckAnswer = e => {
+    useEffect(() => {
+        if (timeOut)
+            setChecked(true)
+            setDisable(timeOut)
+            setDisableBack(false);
+            if (index <= 0) 
+                setDisableBack(true);
+            setDisableNext(false);
+            setAddTimeDisable(timeOut)
+            setHintDisable(timeOut)
+            setHintCount(0)
+    }, [timeOut])
+
+    useEffect(()=> {
+        if (hintCount == 3)
+            setHintDisable(true)
+    }, [checked, addTimeDisable, hintCount])
+
+    const onClickSaveCheckAnswer = e => {
         console.log(question)
         e.preventDefault();
-        document.getElementById("result").innerHTML = "";
+        setTimeOut(true)
         var ele = document.getElementsByTagName("input");
         for (var i = 0; i < ele.length; i++) {
             if (ele[i].type == "radio") {
                 if (ele[i].checked && ele[i].value == question.answer) {
-                    console.log(index);
                     setDisableBack(false);
                     if (index <= 0) {
                         setDisableBack(true);
                     }
                     setDisable(true);
                     setDisableNext(false);
-                    document.getElementById("result").innerHTML += "Correct!<br><br>";
                     setChecked(true);
-                    setCorrect(correct + 1);
+                    setCount(count + 1);
+                    setCorrect(true)
+                    setAddTimeDisable(true)
                     const option = ele[i].value;
                     if (option == "1") {
                         setFirst(first + 1);
@@ -93,8 +136,6 @@ function Question(props) {
                     if (index <= 0) {
                         setDisableBack(true);
                     }
-                    document.getElementById("result").innerHTML +=
-                        "Wrong<br>Answer: " + question.option[question.answer - 1] + "<br><br>";
                     setChecked(true);
                     const option = ele[i].value;
                     if (option == "1") {
@@ -110,27 +151,6 @@ function Question(props) {
                 }
             }            
         }
-
-        if (first+second+third+fourth == 0 || isNaN(first+second+third+fourth)){
-            document.getElementById("result").innerHTML +=
-                "0% of users got this question right<br>";
-        }
-        else{
-            if (question.answer == 1)
-                document.getElementById("result").innerHTML +=
-                    Math.round(( first / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
-            else if (question.answer == 2)
-                document.getElementById("result").innerHTML +=
-                    Math.round(( second / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
-            else if (question.answer == 3)
-                document.getElementById("result").innerHTML +=
-                    Math.round(( third / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
-            else
-                document.getElementById("result").innerHTML +=
-                    Math.round(( fourth / (first+second+third+fourth)) * 100) + " % of users got this question right<br>";
-        }
-        
-        
     };
 
     const onNextClick = async e => {
@@ -152,11 +172,13 @@ function Question(props) {
 
             if (index < questions.length - 1) {
                 setIndex(index + 1);
-                document.getElementById("result").innerHTML = "";
                 setChecked(false);
                 setDisableNext(true);
+                setTimeOut(false)
+                setCorrect(false)
             } else if (index == questions.length - 1) {
                 setDisableBack(true);
+                setCorrect(false)
                 setEndQuiz(true);
             }
         }
@@ -166,18 +188,57 @@ function Question(props) {
         e.preventDefault();
         if (index > 0) {
             setIndex(index - 1);
-            document.getElementById("result").innerHTML = "";
             console.log("index: ", index);
         }
         if (index <= 1) {
             setDisableBack(true);
         }
     };
+
+    const onClickAddTime = e => {
+        e.preventDefault()
+        setDefaultTime(defaultTime + 5)
+        setTimeOut(false)
+        setUsedPoints(usedPoints + 50)
+    }
+
+    const onClickHint = e => {
+        e.preventDefault()
+        setHintCount(hintCount+1)
+        setUsedPoints(usedPoints + 50)
+        var ele = document.getElementsByTagName("input");
+        console.log(ele)
+        var i = Math.floor(Math.random() * (ele.length - 1) + 1)
+        console.log(i)
+        console.log(ele[i])
+        if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
+            ele[i].disabled = true
+        }
+        else{
+            while (true){
+                i = Math.floor(Math.random() * (ele.length - 1) + 0)
+                console.log(i)
+                if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
+                    ele[i].disabled = true
+                    return
+                }
+                else{
+                    continue
+                }
+            }
+                
+        }
+
+    }
+
     if(question == undefined) return ( <div>LOADING..</div>)
     if (!endQuiz) {
         return (
             <div className="quizArea">
-                <p>Question {index+1}</p>
+                <div className= "quizHeader">
+                    <p>Question {index+1}</p>
+                    <Timer time={defaultTime} timeOut={timeOut} setTimeOut={setTimeOut} setDefaultTime={setDefaultTime}/>
+                </div>
                 <form className="questions">
                     <span key={question._id} className="question">
                         {question.text}
@@ -243,11 +304,15 @@ function Question(props) {
                             disabled={disable}
                             type="submit"
                             onClick={e => {
-                                onSaveClickCheckAnswer(e);
+                                onClickSaveCheckAnswer(e);
                             }}
                         >
                             SAVE
                         </button>
+                        <div className="pointButtons">
+                            <button className="addTime" disabled={addTimeDisable} onClick={e => { onClickAddTime(e)}}><img src="/images/timer.png"/>5s</button>
+                            <button className= "hint" disabled={hintDisable} onClick={e => {onClickHint(e)}}><img src="/images/big-light.png"/>HINT</button>
+                        </div>
                         <div className="questionArrow">
                             <button
                                 disabled={disableBack}
@@ -268,11 +333,11 @@ function Question(props) {
                         </div>
                     </div>
                 </form>
-                <div className="result" id="result"></div>
+                {checked ? <Statistics question={question} correct={correct}/> : null}
             </div>
         );
     } else {
-        return <QuizScore questions={questions} correct={correct} platformId={platformId}/>;
+        return <QuizScore questions={questions} count={count} platformId={platformId} user={user} usedPoints={usedPoints}/>;
     }
 }
 
