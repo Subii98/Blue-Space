@@ -229,6 +229,24 @@ img.hamburger{
   background-color: transparent;
   padding: 1px 1.2rem;
 }
+/*Start of Timer Component*/
+.timer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.timer p{
+  font-size: 2rem;
+
+}
+.timer img{
+  display: block;
+  width: 2rem;
+
+}
+/*end of Timer Component*/
 
 /*Question Component*/
 .quizArea {
@@ -275,6 +293,35 @@ img.hamburger{
 }
 
 .questionButtons button:disabled{
+  color: #929292;
+  border-color: #929292;
+}
+
+.pointButtons img{
+  width: 1.3rem;
+  margin-right: 0.7rem;
+}
+
+.pointButtons{
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  justify-content: space-evenly;
+}
+
+.pointButtons button{
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  background-color: transparent;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  color: #000000;
+  outline: 0;
+  vertical-align: center;
+  padding: 0.2rem 0.7rem 0.2rem 0.7rem;
+}
+
+.pointButtons button:disabled{
   color: #929292;
   border-color: #929292;
 }
@@ -337,9 +384,17 @@ left: 15rem;
 top: 69rem;
 }
 
+/*start of Statistics component*/
+
 .result {
   text-align: center;
 }
+
+.result p{
+  font-size: 1.6rem;
+}
+
+/*end of Statistics component*/
 
 
 /*start of QuizScore page*/
