@@ -15,8 +15,6 @@ function Question(props) {
     const [disable, setDisable] = useState(false);
     const [addTimeDisable, setAddTimeDisable] = useState(false)
     const [hintDisable, setHintDisable] = useState(false)
-    const [disableNext, setDisableNext] = useState(true);
-    const [disableBack, setDisableBack] = useState(true);
     const [endQuiz, setEndQuiz] = useState(false);
     //const [option, setOption] = useState("");
     const [first, setFirst] = useState();
@@ -87,10 +85,6 @@ function Question(props) {
         if (timeOut)
             setChecked(true)
             setDisable(timeOut)
-            setDisableBack(false);
-            if (index <= 0) 
-                setDisableBack(true);
-            setDisableNext(false);
             setAddTimeDisable(timeOut)
             setHintDisable(timeOut)
             setHintCount(0)
@@ -109,12 +103,8 @@ function Question(props) {
         for (var i = 0; i < ele.length; i++) {
             if (ele[i].type == "radio") {
                 if (ele[i].checked && ele[i].value == question.answer) {
-                    setDisableBack(false);
-                    if (index <= 0) {
-                        setDisableBack(true);
-                    }
                     setDisable(true);
-                    setDisableNext(false);
+                    
                     setChecked(true);
                     setCount(count + 1);
                     setCorrect(true)
@@ -131,11 +121,6 @@ function Question(props) {
                     }
                 } else if (ele[i].checked) {
                     setDisable(true);
-                    setDisableNext(false);
-                    setDisableBack(false);
-                    if (index <= 0) {
-                        setDisableBack(true);
-                    }
                     setChecked(true);
                     const option = ele[i].value;
                     if (option == "1") {
@@ -157,7 +142,6 @@ function Question(props) {
         e.preventDefault();
         setDisable(false);
         if (checked) {
-            console.log("next question");
             let res = await FetchApiPost("/api/questions/edit", {
                 questionId: question._id,
                 quizId: question.quizId,
@@ -173,25 +157,12 @@ function Question(props) {
             if (index < questions.length - 1) {
                 setIndex(index + 1);
                 setChecked(false);
-                setDisableNext(true);
                 setTimeOut(false)
                 setCorrect(false)
             } else if (index == questions.length - 1) {
-                setDisableBack(true);
                 setCorrect(false)
                 setEndQuiz(true);
             }
-        }
-    };
-
-    const onBackClick = e => {
-        e.preventDefault();
-        if (index > 0) {
-            setIndex(index - 1);
-            console.log("index: ", index);
-        }
-        if (index <= 1) {
-            setDisableBack(true);
         }
     };
 
@@ -210,13 +181,13 @@ function Question(props) {
         console.log(ele)
         var i = Math.floor(Math.random() * (ele.length - 1) + 1)
         console.log(i)
-        console.log(ele[i])
         if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
             ele[i].disabled = true
         }
         else{
             while (true){
-                i = Math.floor(Math.random() * (ele.length - 1) + 0)
+                console.log("len",ele.length)
+                i = Math.floor(Math.random() * (ele.length - 1) + 1)
                 console.log(i)
                 if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
                     ele[i].disabled = true
@@ -314,22 +285,7 @@ function Question(props) {
                             <button className= "hint" disabled={hintDisable} onClick={e => {onClickHint(e)}}><img src="/images/big-light.png"/>HINT</button>
                         </div>
                         <div className="questionArrow">
-                            <button
-                                disabled={disableBack}
-                                onClick={e => {
-                                    onBackClick(e);
-                                }}
-                            >
-                                <img src="/images/leftArrow.png" width="5%"/>
-                            </button>
-                            <button
-                                disabled={disableNext}
-                                onClick={e => {
-                                    onNextClick(e);
-                                }}
-                            >
-                                <img src="/images/rightArrow.png" width="5%"/>
-                            </button>
+                            <button disabled={!disable} onClick={e => {onNextClick(e)}}>NEXT</button>
                         </div>
                     </div>
                 </form>
