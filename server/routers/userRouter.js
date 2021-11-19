@@ -268,4 +268,24 @@ userRouter.get(
   })
 )
 
+userRouter.post(
+  "/editPoints",
+  expressAsyncHandler(async (req, res) => {
+      const {
+          points,
+          userId
+      } = req.body;
+
+      const editUser = await User.updateOne(
+          { _id: userId },
+          {
+              $set: {
+                  points: points
+              },
+          }
+      );
+      res.send(editUser)
+  })
+)
+
 export default userRouter;

@@ -7,6 +7,7 @@ import Statistics from "./Statistics.js";
 import { set } from "mongoose";
 
 function Question(props) {
+    const [user, setUser] = useState()
     const [index, setIndex] = useState(0);
     const [questions, setQuestions] = useState();
     const [question, setQuestion] = useState();
@@ -29,6 +30,7 @@ function Question(props) {
     const [correct, setCorrect] = useState(false)
     const [defaultTime, setDefaultTime] = useState(10)
     const [hintCount, setHintCount] = useState(0)
+    const [usedPoints, setUsedPoints] = useState(0)
     
 
     //const question = questions[index]
@@ -45,21 +47,23 @@ function Question(props) {
                 setError("Error finding quiz");
                 console.log("Error finding quiz");
             });
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/v1/get_user?user_id=" + userData.id)
+            .then((res) => setUser(res.data))
+            .catch((error) => {
+                setError(
+                    "No userdata"
+                );
+            })
     }, [])
 
     useEffect(() => {
+        setUsedPoints(0)
         if(props.question && props.question.length > 0){
             setQuestions(props.question);
             setQuestion(props.question[0]);
-            setFirst(props.question[0].first)
-            setSecond(props.question[0].second)
-            setThird(props.question[0].third)
-            setFourth(props.question[0].fourth)
-            setChecked(false)
-            setTimeOut(false)
-            setDefaultTime(10)
-            setAddTimeDisable(false)
-            setHintDisable(false)
         }
     }, [ props.question ]);
 
@@ -195,11 +199,13 @@ function Question(props) {
         e.preventDefault()
         setDefaultTime(defaultTime + 5)
         setTimeOut(false)
+        setUsedPoints(usedPoints + 50)
     }
 
     const onClickHint = e => {
         e.preventDefault()
         setHintCount(hintCount+1)
+        setUsedPoints(usedPoints + 50)
         var ele = document.getElementsByTagName("input");
         console.log(ele)
         var i = Math.floor(Math.random() * (ele.length - 1) + 1)
@@ -331,7 +337,7 @@ function Question(props) {
             </div>
         );
     } else {
-        return <QuizScore questions={questions} count={count} platformId={platformId}/>;
+        return <QuizScore questions={questions} count={count} platformId={platformId} user={user} usedPoints={usedPoints}/>;
     }
 }
 
