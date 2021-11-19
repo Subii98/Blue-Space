@@ -8,8 +8,7 @@ import MessageModal from "../components/MessageModal.js";
 import { FetchApiGet } from "../utils/Network";
 import Platform from "../components/Platform.js";
 import PlatformCard from "../components/PlatformCard.js";
-import { Link } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
 
 function CreatePlatform(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -20,6 +19,7 @@ function CreatePlatform(props) {
     const [platforms, setPlatforms] = useState([]);
     const [user, setUser] = useState();
     const [subscribingPlatforms, setSubscribingPlatforms] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         // const fetchData = async () => {
@@ -54,16 +54,16 @@ function CreatePlatform(props) {
                 const { data } = await axios.get("/api/platforms/" + user._id);
                 setLoading(false);
                 setPlatforms(data);
-                console.log("dataaaa",user.subscribedPlatforms)
-                user.subscribedPlatforms.map((raw, idx)=>{
+                console.log("dataaaa", user.subscribedPlatforms);
+                user.subscribedPlatforms.map((raw, idx) => {
                     subscribe(raw);
-                })
-                console.log(subscribingPlatforms)
+                });
+                console.log(subscribingPlatforms);
             };
-            fetchData();   
+            fetchData();
         }
     }, [user]);
-    
+
     function subscribe(id) {
         axios
             .get("/api/platforms/by_id/" + id)
@@ -105,15 +105,22 @@ function CreatePlatform(props) {
                 {/* ); */}
                 {/* })} */}
 
-                <div className>
-                    {name}
-                    
-                    {/* <button component={Link} to={`/ProfileSetting/${user._id}`}>edit</button> */}
-                    
-                    <p style={{ textAlign: "center", color: "#929292" }}>Owned Platforms</p>
-                    <Platform platforms={platforms}></Platform>
-                    <p style={{ textAlign: "center", color: "#929292" }}>Subscribing Platforms</p>
-                    <Platform platforms={subscribingPlatforms}></Platform>
+                <div className="my-page-container">
+                    <div className="name-box">
+                        {name}
+                        <button onClick={()=>history.push(`/ProfileSetting/${user._id}`)}>edit</button>
+                    </div>
+
+                    <div className="platform-container">
+                        <div className="platform-box">
+                            <p>Owned Platforms</p>
+                            <Platform platforms={platforms}></Platform>
+                        </div>
+                        <div className="platform-box">
+                            <p>Subscribing Platforms</p>
+                            <Platform platforms={subscribingPlatforms}></Platform>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

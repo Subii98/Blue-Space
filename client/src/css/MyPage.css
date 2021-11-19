@@ -1,0 +1,30 @@
+.my-page-container { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.name-box{
+    width : 100%;
+    text-align: left;
+}
+
+.platform-container{
+    width : 80%;
+    height : auto;
+    display : flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.platform-box{
+    display : flex;
+    align-items: center;
+    flex-direction: column;
+    height : auto;
+}
+.platform-box > p{
+    text-align: center;
+    color: #929292;
+}

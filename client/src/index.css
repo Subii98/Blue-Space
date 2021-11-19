@@ -2,7 +2,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+@import "./css/PlatformScreen.css";
+@import "./css/MyPage.css";
+@import "./css/ProfileSetting.css";
 @font-face {
   font-family: 'oswald-light';
   src: local('oswald-light'), url(./fonts/Oswald-Light.ttf) format('truetype');

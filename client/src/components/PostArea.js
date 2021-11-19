@@ -3,20 +3,23 @@ import { Link, useHistory } from "react-router-dom";
 import "../index.css";
 import { FetchApiPost } from "../utils/Network";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 function PostArea(props) {
     const history = useHistory();
     const [platform, setPlatform] = useState();
     const [user, setUser] = useState();
     const [error, setError] = useState(false);
-    const [buttonOne, setButtonOne] = useState(true);
-    const [buttonTwo, setButtonTwo] = useState(false);
+    const [isSubscribed, setIsSubscribed] = useState(false);
 
     const subscribe = async () => {
         let res = await FetchApiPost("/api/v1/subscribe", {
             userId: user._id,
             platformId: platform._id,
         });
+        if (res) {
+            setIsSubscribed(true);
+        }
     };
 
     const unsubscribe = async () => {
@@ -24,10 +27,15 @@ function PostArea(props) {
             userId: user._id,
             platformId: platform._id,
         });
+        if (res) {
+            setIsSubscribed(false);
+        }
     };
 
     useEffect(() => {
-        if (props.platform) setPlatform(props.platform);
+        if (props.platform) {
+            setPlatform(props.platform);
+        }
         fetchUser();
     }, [props.platform]);
 
@@ -42,21 +50,15 @@ function PostArea(props) {
             });
     }
 
-    useEffect(()=> {
-        if(user){
-            console.log("!!!!", user.subscribedPlatforms)
-            console.log("!!!!", platform._id)
-            if(user.subscribedPlatforms.indexOf(platform._id) != -1){
-                setButtonOne(false)
-                setButtonTwo(true)
-            }
-            else{
-                setButtonOne(true)
-                setButtonTwo(false)
-            }
+    useEffect(() => {
+        if (user) {
+            console.log("!!!!", user.subscribedPlatforms);
+            console.log("!!!!", platform._id);
+            let _isSubscribed = user.subscribedPlatforms.indexOf(platform._id) != -1;
+            setIsSubscribed(_isSubscribed);
         }
-    },[user])
-    
+    }, [user]);
+
     const onClickEdit = () => {
         history.push("/EditPlatform/" + platform._id);
     };
@@ -80,16 +82,14 @@ function PostArea(props) {
                     </div>
                     <div className="platformBottom">
                         <span>{platform.description}</span>
-                        {buttonOne ? (
-                            <button type="button" onClick={subscribe}>
-                                SUBSCRIBE
-                            </button>
-                        ) : null}
-                        {buttonTwo ? (
-                            <button type="button" onClick={unsubscribe}>
-                                UNSUBSCRIBE
-                            </button>
-                        ) : null}
+                        <Button
+                            style={
+                                isSubscribed ? { backgroundColor: "#00aeef", color: "white" } : {}
+                            }
+                            onClick={isSubscribed ? unsubscribe : subscribe}
+                        >
+                            {isSubscribed ? "UNSUBSCRIBE" : "SUBSCRIBE"}
+                        </Button>
                     </div>
                     <div className="platformBottom">
                         <span></span>

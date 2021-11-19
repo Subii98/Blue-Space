@@ -62,6 +62,10 @@ function Question(props) {
         if(props.question && props.question.length > 0){
             setQuestions(props.question);
             setQuestion(props.question[0]);
+            setFirst(props.question[0].first)
+            setSecond(props.question[0].second)
+            setThird(props.question[0].third)
+            setFourth(props.question[0].fourth)
         }
     }, [ props.question ]);
 
