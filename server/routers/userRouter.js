@@ -114,7 +114,9 @@ userRouter.post("/auth/google", async (req, res) => {
           points: 100,
           subscribedPlatforms: [],
           exp: 0,
-          quizPlayed: 0
+          quizPlayed: 0,
+          badge: "",
+          title: ""
         });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
@@ -301,6 +303,50 @@ userRouter.post(
           }
       );
       res.send(editUser)
+  })
+)
+
+userRouter.post(
+  "/editBadge",
+  expressAsyncHandler(async (req, res) => {
+      const {
+          badge,
+          points,
+          userId
+      } = req.body;
+
+      const editUserBadge = await User.updateOne(
+          { _id: userId },
+          {
+              $set: {
+                  badge: badge,
+                  points: points
+              },
+          }
+      );
+      res.send(editUserBadge)
+  })
+)
+
+userRouter.post(
+  "/editTitle",
+  expressAsyncHandler(async (req, res) => {
+      const {
+          title,
+          points,
+          userId
+      } = req.body;
+
+      const editUserTitle = await User.updateOne(
+          { _id: userId },
+          {
+              $set: {
+                  title: title,
+                  points: points
+              },
+          }
+      );
+      res.send(editUserTitle)
   })
 )
 

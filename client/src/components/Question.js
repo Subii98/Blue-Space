@@ -106,6 +106,7 @@ function Question(props) {
         e.preventDefault();
         setTimeOut(true)
         var ele = document.getElementsByTagName("input");
+        setDisableNext(false);
         for (var i = 0; i < ele.length; i++) {
             if (ele[i].type == "radio") {
                 if (ele[i].checked && ele[i].value == question.answer) {
@@ -114,7 +115,7 @@ function Question(props) {
                         setDisableBack(true);
                     }
                     setDisable(true);
-                    setDisableNext(false);
+                    
                     setChecked(true);
                     setCount(count + 1);
                     setCorrect(true)
@@ -157,7 +158,6 @@ function Question(props) {
         e.preventDefault();
         setDisable(false);
         if (checked) {
-            console.log("next question");
             let res = await FetchApiPost("/api/questions/edit", {
                 questionId: question._id,
                 quizId: question.quizId,
@@ -314,22 +314,8 @@ function Question(props) {
                             <button className= "hint" disabled={hintDisable} onClick={e => {onClickHint(e)}}><img src="/images/big-light.png"/>HINT</button>
                         </div>
                         <div className="questionArrow">
-                            <button
-                                disabled={disableBack}
-                                onClick={e => {
-                                    onBackClick(e);
-                                }}
-                            >
-                                <img src="/images/leftArrow.png" width="5%"/>
-                            </button>
-                            <button
-                                disabled={disableNext}
-                                onClick={e => {
-                                    onNextClick(e);
-                                }}
-                            >
-                                <img src="/images/rightArrow.png" width="5%"/>
-                            </button>
+                            <button disabled={disableBack} onClick={e => {onBackClick(e)}}>BACK</button>
+                            <button disabled={disableNext} onClick={e => {onNextClick(e)}}>NEXT</button>
                         </div>
                     </div>
                 </form>

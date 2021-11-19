@@ -282,6 +282,7 @@ img.hamburger{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .questionButtons button{
@@ -326,25 +327,6 @@ img.hamburger{
   border-color: #929292;
 }
 
-.arrow {
-  border: solid #00aeef;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  width: 30%;
-  height: 30%
-}
-
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-
 .questionArrow {
   display: flex;
   flex-direction: row;
@@ -353,14 +335,14 @@ img.hamburger{
 
 .questionArrow button{
   border: none;
-  background: none;
-  opacity: 90%;
+  color: #000000;
+  background: transparent;
 }
 
 .questionArrow button:disabled{
   border: none;
-  background: none;
-  opacity: 0;
+  color: #c3c3c3;
+  background:transparent
 }
 
 .sectionTitle {
@@ -520,3 +502,104 @@ div.wrap {
 .swiper-wrapper {
   padding-inline-start: 0
 }
+
+/* start of StoreScreen*/
+.storePage{
+  display: flex;
+  flex-direction: column;
+}
+
+.storeHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.userPreview {
+  display: flex;
+  flex-direction: column;
+  border-style: 1px solid #929292;
+}
+
+.userTitle p{
+  font-size: 1.3rem;
+  background-color: rgb(0, 174, 239, 0.15);
+}
+
+.usernameBadge span{
+  font-size: 1.3rem;
+}
+
+.usernameBadge{
+  display: flex;
+  flex-direction: row;
+}
+
+.usernameBadge img{
+  width: 2rem;
+  object-fit: cover;
+  margin-right: 0.5rem;
+  
+}
+
+.badges {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.storeBadges{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.storeBadges input{
+  width: 4rem;
+  padding: 4rem;
+  border: 1px solid #929292;
+  border-radius: 5px;
+}
+
+.storeBadges input:hover{
+  opacity: 50%;
+}
+
+.storeBadges button{
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  color: #929292
+}
+
+.storeBadges button:hover {
+  cursor: pointer;
+}
+.storeTitles button{
+  background-color: rgb(0, 174, 239, 0.15);
+  border: none;
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 0.3rem;
+}
+
+.storeTitles button:hover{
+  cursor: pointer;
+  background-color: rgb(0, 174, 239, 0.05);
+}
+
+.titlePreview button{
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: #929292;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.titlePreview button:hover{
+  cursor: pointer;
+  background: transparent
+}
+/* end of StoreScreen*/
