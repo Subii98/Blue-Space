@@ -35,6 +35,42 @@ questionRouter.get(
 );
 
 questionRouter.post(
+  "/edit",
+  expressAsyncHandler(async (req, res) => {
+      const {
+          quizId,
+          text,
+          option,
+          answer,
+          first,
+          second,
+          third,
+          fourth,
+          questionNum,
+          questionId
+      } = req.body;
+
+      const editQuestion = await Question.updateOne(
+          { _id: questionId },
+          {
+              $set: {
+                  quizId: quizId,
+                  text: text,
+                  option: option,
+                  answer: answer,
+                  first: first,
+                  second: second,
+                  third: third,
+                  fourth: fourth,
+                  questionNum: questionNum
+              },
+          }
+      );
+      res.send(editQuestion)
+  })
+)
+
+questionRouter.post(
     "/insert",
     expressAsyncHandler(async (req, res) => {
         try {
@@ -49,7 +85,7 @@ questionRouter.post(
                     first: 0,
                     second: 0,
                     third: 0,
-                    forth: 0,
+                    fourth: 0,
                 },
             ]);
             res.send(createdQuestion);
@@ -77,7 +113,7 @@ questionRouter.post(
                     first: 0,
                     second: 0,
                     third: 0,
-                    forth: 0,});
+                    fourth: 0,});
       } else {
         question.questionNum = questionNum;
         question.text = text;

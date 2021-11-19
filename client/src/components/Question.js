@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import QuizScore from "./QuizScore.js";
+import { FetchApiPost } from "../utils/Network";
+import Timer from "../components/Timer.js";
+import Statistics from "./Statistics.js";
 
 function Question(props) {
     const [index, setIndex] = useState(0);
@@ -11,14 +14,16 @@ function Question(props) {
     const [disableNext, setDisableNext] = useState(true);
     const [disableBack, setDisableBack] = useState(true);
     const [endQuiz, setEndQuiz] = useState(false);
-    const [option, setOption] = useState("");
-    const [first, setFirst] = useState("");
-    const [second, setSecond] = useState("");
-    const [third, setThird] = useState("");
-    const [fourth, setFourth] = useState("");
-    const [correct, setCorrect] = useState(0);
+    //const [option, setOption] = useState("");
+    const [first, setFirst] = useState();
+    const [second, setSecond] = useState();
+    const [third, setThird] = useState();
+    const [fourth, setFourth] = useState();
+    const [count, setCount] = useState(0);
     const [platformId, setPlatformId] = useState();
     const [error, setError] = useState(false);
+    const [timeOut, setTimeOut] = useState(false)
+    const [correct, setCorrect] = useState(false)
 
     //const question = questions[index]
 
@@ -40,38 +45,59 @@ function Question(props) {
         if(props.question && props.question.length > 0){
             setQuestions(props.question);
             setQuestion(props.question[0]);
+            setFirst(props.question[0].first)
+            setSecond(props.question[0].second)
+            setThird(props.question[0].third)
+            setFourth(props.question[0].fourth)
+            setChecked(false)
+            setTimeOut(false)
         }
     }, [ props.question ]);
 
     useEffect(() => {
         if(questions){
             setQuestion(questions[index]);
-            setFirst(questions[index].option[0]);
-            setSecond(questions[index].option[1]);
-            setThird(questions[index].option[2]);
-            setFourth(questions[index].option[3]);
+            setFirst(question.first);
+            setSecond(question.second);
+            setThird(question.third);
+            setFourth(question.fourth);
+            setChecked(false)
+            setTimeOut(false)
         }
     }, [index]);
 
-    const onSaveClickCheckAnswer = e => {
+    useEffect(() => {
+        if (timeOut)
+            setChecked(true)
+            setDisable(timeOut)
+            setDisableBack(false);
+            if (index <= 0) 
+                setDisableBack(true);
+            setDisableNext(false);
+    }, [timeOut])
+
+    useEffect(()=> {
+
+    }, [checked])
+
+    const onClickSaveCheckAnswer = e => {
         console.log(question)
         e.preventDefault();
-        document.getElementById("result").innerHTML = "";
+        setTimeOut(true)
         var ele = document.getElementsByTagName("input");
         for (var i = 0; i < ele.length; i++) {
             if (ele[i].type == "radio") {
                 if (ele[i].checked && ele[i].value == question.answer) {
-                    console.log(index);
                     setDisableBack(false);
                     if (index <= 0) {
                         setDisableBack(true);
                     }
                     setDisable(true);
                     setDisableNext(false);
-                    document.getElementById("result").innerHTML += "Correct!";
                     setChecked(true);
-                    setCorrect(correct + 1);
-                    setOption(ele[i].value);
+                    setCount(count + 1);
+                    setCorrect(true)
+                    const option = ele[i].value;
                     if (option == "1") {
                         setFirst(first + 1);
                     } else if (option == "2") {
@@ -88,12 +114,20 @@ function Question(props) {
                     if (index <= 0) {
                         setDisableBack(true);
                     }
-                    document.getElementById("result").innerHTML +=
-                        "Wrong<br>Answer: " + question.option[question.answer - 1] + "<br>";
                     setChecked(true);
-                    setOption(ele[i].value);
+                    const option = ele[i].value;
+                    if (option == "1") {
+                        setFirst(first + 1);
+                    } else if (option == "2") {
+                        setSecond(second + 1);
+                    } else if (option == "3") {
+                        setThird(third + 1);
+                    } else if (option == "4") {
+                        setFourth(fourth + 1);
+                    }
+
                 }
-            }
+            }            
         }
     };
 
@@ -102,23 +136,27 @@ function Question(props) {
         setDisable(false);
         if (checked) {
             console.log("next question");
-            try {
-                const res = await axios.put(`/:id/question/${question._id}`, { //????
-                    first: first,
-                    second: second,
-                    third: third,
-                    fourth: fourth,
-                });
-            } catch (err) {
-                console.log(err);
-            }
+            let res = await FetchApiPost("/api/questions/edit", {
+                questionId: question._id,
+                quizId: question.quizId,
+                text: question.text,
+                option: question.option,
+                first: first,
+                second: second,
+                third: third,
+                fourth: fourth,
+                questionNum: question.questionNum
+            });
+
             if (index < questions.length - 1) {
                 setIndex(index + 1);
-                document.getElementById("result").innerHTML = "";
                 setChecked(false);
                 setDisableNext(true);
+                setTimeOut(false)
+                setCorrect(false)
             } else if (index == questions.length - 1) {
                 setDisableBack(true);
+                setCorrect(false)
                 setEndQuiz(true);
             }
         }
@@ -139,7 +177,10 @@ function Question(props) {
     if (!endQuiz) {
         return (
             <div className="quizArea">
-                <p>Question {index+1}</p>
+                <div className= "quizHeader">
+                    <p>Question {index+1}</p>
+                    <Timer time={10} timeOut={timeOut} setTimeOut={setTimeOut}/>
+                </div>
                 <form className="questions">
                     <span key={question._id} className="question">
                         {question.text}
@@ -205,7 +246,7 @@ function Question(props) {
                             disabled={disable}
                             type="submit"
                             onClick={e => {
-                                onSaveClickCheckAnswer(e);
+                                onClickSaveCheckAnswer(e);
                             }}
                         >
                             SAVE
@@ -230,11 +271,11 @@ function Question(props) {
                         </div>
                     </div>
                 </form>
-                <div className="result" id="result"></div>
+                {checked ? <Statistics question={question} correct={correct}/> : null}
             </div>
         );
     } else {
-        return <QuizScore questions={questions} correct={correct} platformId={platformId}/>;
+        return <QuizScore questions={questions} count={count} platformId={platformId}/>;
     }
 }
 
