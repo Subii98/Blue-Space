@@ -96,26 +96,30 @@ function StoreScreen(){
                     </div>
                 </div>
             </div>
-            <p style={{ textAlign: "center"}}>BADGE</p>
-            <div className="badges">
-                {badges.map( (badge, index) => 
-                    <div className="storeBadges">
-                        <p style={{ textAlign: "center", color: "#929292" }}>{badgeNames[index]}</p>
-                        <input type="image" src={badge} alt={index} onClick={ () => onClickBuyBadge(badge)}></input>                        
-                        <button onClick={() => onClickPreviewBadge(badge)}>preview</button>
-                    </div>
-                )}
-            </div>
-            <div className="titles">
-                <p style={{ textAlign: "center"}}>TITLE</p>
-                {titles.map((title) => 
-                    <div className="storeTitles">
-                        <button onClick={() => onClickBuyTitle(title)}>{title}</button>
-                        <div className="titlePreview">
-                            <button onClick={() => onClickPreviewTitle(title)}>preview</button>
+            <div className="storeContent">
+                <p style={{ textAlign: "center"}}>BADGE</p>
+                <div className="line" />
+                <div className="badges">
+                    {badges.map( (badge, index) => 
+                        <div className="storeBadges">
+                            <p style={{ textAlign: "center", color: "#929292" }}>{badgeNames[index]}</p>
+                            <input type="image" src={badge} alt={index} onClick={ () => onClickBuyBadge(badge)}></input>                        
+                            <button onClick={() => onClickPreviewBadge(badge)}>preview</button>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
+                <div className="titles">
+                    <p style={{ textAlign: "center"}}>TITLE</p>
+                    <div className="line" />
+                    {titles.map((title) => 
+                        <div className="storeTitles">
+                            <button onClick={() => onClickBuyTitle(title)}>{title}</button>
+                            <div className="titlePreview">
+                                <button onClick={() => onClickPreviewTitle(title)}>preview</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )
