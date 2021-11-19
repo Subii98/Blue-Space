@@ -269,6 +269,22 @@ userRouter.get(
 )
 
 userRouter.post(
+  "/set_username",
+  expressAsyncHandler(async (req, res) => {
+    const { newName, userId } = req.body;
+    const modifyUser = await User.updateOne(
+      {_id: userId},
+      {
+        $set: {
+          username: newName
+        }
+      }
+    )
+    res.send(modifyUser)
+  })
+)
+
+userRouter.post(
   "/editPoints",
   expressAsyncHandler(async (req, res) => {
       const {

@@ -9,6 +9,8 @@ function PostArea(props) {
     const [platform, setPlatform] = useState();
     const [user, setUser] = useState();
     const [error, setError] = useState(false);
+    const [buttonOne, setButtonOne] = useState(true);
+    const [buttonTwo, setButtonTwo] = useState(false);
 
     const subscribe = async () => {
         let res = await FetchApiPost("/api/v1/subscribe", {
@@ -40,6 +42,21 @@ function PostArea(props) {
             });
     }
 
+    useEffect(()=> {
+        if(user){
+            console.log("!!!!", user.subscribedPlatforms)
+            console.log("!!!!", platform._id)
+            if(user.subscribedPlatforms.indexOf(platform._id) != -1){
+                setButtonOne(false)
+                setButtonTwo(true)
+            }
+            else{
+                setButtonOne(true)
+                setButtonTwo(false)
+            }
+        }
+    },[user])
+    
     const onClickEdit = () => {
         history.push("/EditPlatform/" + platform._id);
     };
@@ -62,15 +79,17 @@ function PostArea(props) {
                         <span>{platform.userName}</span>
                     </div>
                     <div className="platformBottom">
-                        {/* <span Style={"color:#e52424"}>{platform.description}</span> */}
                         <span>{platform.description}</span>
-                            {/* <span>{platform.description}</span> */}
-                                    <button type="button" onClick={subscribe}>
-                            SUBSCRIBE
-                        </button>
-                        <button type="button" onClick={unsubscribe}>
-                            UNSUBSCRIBE
-                        </button>
+                        {buttonOne ? (
+                            <button type="button" onClick={subscribe}>
+                                SUBSCRIBE
+                            </button>
+                        ) : null}
+                        {buttonTwo ? (
+                            <button type="button" onClick={unsubscribe}>
+                                UNSUBSCRIBE
+                            </button>
+                        ) : null}
                     </div>
                     <div className="platformBottom">
                         <span></span>
