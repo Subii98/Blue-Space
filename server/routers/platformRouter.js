@@ -47,7 +47,7 @@ platformRouter.post(
     expressAsyncHandler(async (req, res) => {
         try {
             const {
-                // userId ,
+                userId ,
                 userName,
                 title,
                 description,
@@ -65,7 +65,7 @@ platformRouter.post(
             } = req.body;
             const createdPlatform = await Platform.insertMany([
                 {
-                    // userId  : userId ,
+                    userId  : userId ,
                     userName: userName,
                     // name : name,
                     title: title,
@@ -91,10 +91,22 @@ platformRouter.post(
     })
 );
 
+// platformRouter.get(
+//     "/:userId",
+//     expressAsyncHandler(async (req, res) => {
+//         const platform = await Platform.findById(req.params.userId);
+//         if (platform) {
+//             res.send(platform);
+//         } else {
+//             res.status(404).send({ message: "Platform Not Found" });
+//         }
+//     })
+// );
+
 platformRouter.get(
     "/:userId",
     expressAsyncHandler(async (req, res) => {
-        const platform = await Platform.findById(req.params.userId);
+        const platform = await Platform.find({userId: req.params.userId});
         if (platform) {
             res.send(platform);
         } else {
@@ -114,6 +126,7 @@ platformRouter.get(
         }
     })
 );
+
 
 platformRouter.get(
     "/by_id/:_id",

@@ -4,7 +4,6 @@ import "../index.css";
 import { FetchApiPost } from "../utils/Network";
 import axios from "axios";
 
-
 function PostArea(props) {
     const history = useHistory();
     const [platform, setPlatform] = useState();
@@ -12,11 +11,17 @@ function PostArea(props) {
     const [error, setError] = useState(false);
 
     const subscribe = async () => {
-        let res = await FetchApiPost("/api/v1/subscribe", {userId:user._id, platformId: platform._id});
+        let res = await FetchApiPost("/api/v1/subscribe", {
+            userId: user._id,
+            platformId: platform._id,
+        });
     };
 
     const unsubscribe = async () => {
-        let res = await FetchApiPost("/api/v1/unsubscribe", {userId:user._id, platformId: platform._id});
+        let res = await FetchApiPost("/api/v1/unsubscribe", {
+            userId: user._id,
+            platformId: platform._id,
+        });
     };
 
     useEffect(() => {
@@ -29,12 +34,10 @@ function PostArea(props) {
         userData = JSON.parse(userData);
         axios
             .get("/api/v1/get_user?user_id=" + userData.id)
-            .then((res) => setUser(res.data))
-            .catch((error) => {
-                setError(
-                    "No userdata"
-                );
-            })
+            .then(res => setUser(res.data))
+            .catch(error => {
+                setError("No userdata");
+            });
     }
 
     const onClickEdit = () => {
@@ -61,8 +64,8 @@ function PostArea(props) {
                     <div className="platformBottom">
                         {/* <span Style={"color:#e52424"}>{platform.description}</span> */}
                         <span>{platform.description}</span>
-                        {/* <span>{platform.description}</span> */}
-                        <button type="button" onClick={subscribe}>
+                            {/* <span>{platform.description}</span> */}
+                                    <button type="button" onClick={subscribe}>
                             SUBSCRIBE
                         </button>
                         <button type="button" onClick={unsubscribe}>

@@ -16,7 +16,7 @@ function CreatePlatform(props) {
     const [createPlatform, setCreatePlatform] = useState(null);
 
     // const [id, setId] = useState("0");
-    // const [userId, setUserId] = useState("0");
+    const [userId, setUserId] = useState("0");
     const[userName, setUserName] = useState(store.username);
     // const [name, setName] = useState(store.username);
     const[title, setTitle] = useState("");
@@ -35,6 +35,8 @@ function CreatePlatform(props) {
     const [tag2, setTag2] = useState("");
     const [tag3, setTag3] = useState("");
     // const [quizId, setQuizId] = useState("");
+    const [user, setUser] = useState();
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,11 +58,25 @@ function CreatePlatform(props) {
         console.log(store)
         // setName(store.username)
         setUserName(store.username)
+        fetchUser();
 
     },[store]);
 
+    function fetchUser() {
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/v1/get_user?user_id=" + userData.id)
+            .then(res => setUser(res.data))
+            .catch(error => {
+                setError("No userdata");
+            });
+    }
+
     const onClickSubmit = async () => {
         let res = await FetchApiPost("/api/platforms/insert", {
+
+            userId : user._id,
             // userId : userId,
             userName : userName,
             // name : name,

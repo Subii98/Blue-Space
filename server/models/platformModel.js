@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const platformSchema = new mongoose.Schema({
-    // userId : String,
+    userId : String,
     userName: String,
     // name: String,
     title: String,
