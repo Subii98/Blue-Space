@@ -303,8 +303,10 @@ function Question(props) {
                         >
                             SAVE
                         </button>
-                        <button className="addTime" disabled={addTimeDisable} onClick={e => { onClickAddTime(e)}}>Add Time</button>
-                        <button className= "hint" disabled={hintDisable} onClick={e => {onClickHint(e)}}>Hint</button>
+                        <div className="pointButtons">
+                            <button className="addTime" disabled={addTimeDisable} onClick={e => { onClickAddTime(e)}}><img src="/images/timer.png"/>5s</button>
+                            <button className= "hint" disabled={hintDisable} onClick={e => {onClickHint(e)}}><img src="/images/big-light.png"/>HINT</button>
+                        </div>
                         <div className="questionArrow">
                             <button
                                 disabled={disableBack}

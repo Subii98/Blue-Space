@@ -46,11 +46,12 @@ function Timer(props) {
     
 
     return (
-        <div>
-        { minutes === 0 && seconds === 0
-            ? <h1> 0:00 </h1> 
-            : <h1> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</h1> 
-        }
+        <div className="timer">
+            <img src="/images/timer.png" alt="timer"></img>
+            { minutes === 0 && seconds === 0
+                ? <p> 0:00 </p> 
+                : <p> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</p> 
+            }
         </div>
     )
 }
