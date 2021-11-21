@@ -4,15 +4,17 @@ import QuizScore from "./QuizScore.js";
 import { FetchApiPost } from "../utils/Network";
 import Timer from "../components/Timer.js";
 import Statistics from "./Statistics.js";
+import { set } from "mongoose";
 
 function Question(props) {
+    const [user, setUser] = useState()
     const [index, setIndex] = useState(0);
     const [questions, setQuestions] = useState();
     const [question, setQuestion] = useState();
     const [checked, setChecked] = useState(false);
     const [disable, setDisable] = useState(false);
-    const [disableNext, setDisableNext] = useState(true);
-    const [disableBack, setDisableBack] = useState(true);
+    const [addTimeDisable, setAddTimeDisable] = useState(false)
+    const [hintDisable, setHintDisable] = useState(false)
     const [endQuiz, setEndQuiz] = useState(false);
     //const [option, setOption] = useState("");
     const [first, setFirst] = useState();
@@ -24,6 +26,10 @@ function Question(props) {
     const [error, setError] = useState(false);
     const [timeOut, setTimeOut] = useState(false)
     const [correct, setCorrect] = useState(false)
+    const [defaultTime, setDefaultTime] = useState(10)
+    const [hintCount, setHintCount] = useState(0)
+    const [usedPoints, setUsedPoints] = useState(0)
+    
 
     //const question = questions[index]
 
@@ -39,9 +45,20 @@ function Question(props) {
                 setError("Error finding quiz");
                 console.log("Error finding quiz");
             });
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/v1/get_user?user_id=" + userData.id)
+            .then((res) => setUser(res.data))
+            .catch((error) => {
+                setError(
+                    "No userdata"
+                );
+            })
     }, [])
 
     useEffect(() => {
+        setUsedPoints(0)
         if(props.question && props.question.length > 0){
             setQuestions(props.question);
             setQuestion(props.question[0]);
@@ -49,8 +66,6 @@ function Question(props) {
             setSecond(props.question[0].second)
             setThird(props.question[0].third)
             setFourth(props.question[0].fourth)
-            setChecked(false)
-            setTimeOut(false)
         }
     }, [ props.question ]);
 
@@ -63,6 +78,10 @@ function Question(props) {
             setFourth(question.fourth);
             setChecked(false)
             setTimeOut(false)
+            setDefaultTime(10)
+            setAddTimeDisable(false)
+            setHintDisable(false)
+            setHintCount(0)
         }
     }, [index]);
 
@@ -70,15 +89,15 @@ function Question(props) {
         if (timeOut)
             setChecked(true)
             setDisable(timeOut)
-            setDisableBack(false);
-            if (index <= 0) 
-                setDisableBack(true);
-            setDisableNext(false);
+            setAddTimeDisable(timeOut)
+            setHintDisable(timeOut)
+            setHintCount(0)
     }, [timeOut])
 
     useEffect(()=> {
-
-    }, [checked])
+        if (hintCount == 3)
+            setHintDisable(true)
+    }, [checked, addTimeDisable, hintCount])
 
     const onClickSaveCheckAnswer = e => {
         console.log(question)
@@ -88,15 +107,12 @@ function Question(props) {
         for (var i = 0; i < ele.length; i++) {
             if (ele[i].type == "radio") {
                 if (ele[i].checked && ele[i].value == question.answer) {
-                    setDisableBack(false);
-                    if (index <= 0) {
-                        setDisableBack(true);
-                    }
                     setDisable(true);
-                    setDisableNext(false);
+                    
                     setChecked(true);
                     setCount(count + 1);
                     setCorrect(true)
+                    setAddTimeDisable(true)
                     const option = ele[i].value;
                     if (option == "1") {
                         setFirst(first + 1);
@@ -109,11 +125,6 @@ function Question(props) {
                     }
                 } else if (ele[i].checked) {
                     setDisable(true);
-                    setDisableNext(false);
-                    setDisableBack(false);
-                    if (index <= 0) {
-                        setDisableBack(true);
-                    }
                     setChecked(true);
                     const option = ele[i].value;
                     if (option == "1") {
@@ -135,7 +146,6 @@ function Question(props) {
         e.preventDefault();
         setDisable(false);
         if (checked) {
-            console.log("next question");
             let res = await FetchApiPost("/api/questions/edit", {
                 questionId: question._id,
                 quizId: question.quizId,
@@ -151,35 +161,58 @@ function Question(props) {
             if (index < questions.length - 1) {
                 setIndex(index + 1);
                 setChecked(false);
-                setDisableNext(true);
                 setTimeOut(false)
                 setCorrect(false)
             } else if (index == questions.length - 1) {
-                setDisableBack(true);
                 setCorrect(false)
                 setEndQuiz(true);
             }
         }
     };
 
-    const onBackClick = e => {
-        e.preventDefault();
-        if (index > 0) {
-            setIndex(index - 1);
-            document.getElementById("result").innerHTML = "";
-            console.log("index: ", index);
+    const onClickAddTime = e => {
+        e.preventDefault()
+        setDefaultTime(defaultTime + 5)
+        setTimeOut(false)
+        setUsedPoints(usedPoints + 50)
+    }
+
+    const onClickHint = e => {
+        e.preventDefault()
+        setHintCount(hintCount+1)
+        setUsedPoints(usedPoints + 50)
+        var ele = document.getElementsByTagName("input");
+        console.log(ele)
+        var i = Math.floor(Math.random() * (ele.length - 1) + 1)
+        console.log(i)
+        if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
+            ele[i].disabled = true
         }
-        if (index <= 1) {
-            setDisableBack(true);
+        else{
+            while (true){
+                console.log("len",ele.length)
+                i = Math.floor(Math.random() * (ele.length - 1) + 1)
+                console.log(i)
+                if (ele[i].type == "radio" && ele[i].value != question.answer && ele[i].disabled != true){
+                    ele[i].disabled = true
+                    return
+                }
+                else{
+                    continue
+                }
+            }
+                
         }
-    };
+
+    }
+
     if(question == undefined) return ( <div>LOADING..</div>)
     if (!endQuiz) {
         return (
             <div className="quizArea">
                 <div className= "quizHeader">
                     <p>Question {index+1}</p>
-                    <Timer time={10} timeOut={timeOut} setTimeOut={setTimeOut}/>
+                    <Timer time={defaultTime} timeOut={timeOut} setTimeOut={setTimeOut} setDefaultTime={setDefaultTime}/>
                 </div>
                 <form className="questions">
                     <span key={question._id} className="question">
@@ -251,23 +284,12 @@ function Question(props) {
                         >
                             SAVE
                         </button>
+                        <div className="pointButtons">
+                            <button className="addTime" disabled={addTimeDisable} onClick={e => { onClickAddTime(e)}}><img src="/images/timer.png"/>5s</button>
+                            <button className= "hint" disabled={hintDisable} onClick={e => {onClickHint(e)}}><img src="/images/big-light.png"/>HINT</button>
+                        </div>
                         <div className="questionArrow">
-                            <button
-                                disabled={disableBack}
-                                onClick={e => {
-                                    onBackClick(e);
-                                }}
-                            >
-                                <img src="/images/leftArrow.png" width="5%"/>
-                            </button>
-                            <button
-                                disabled={disableNext}
-                                onClick={e => {
-                                    onNextClick(e);
-                                }}
-                            >
-                                <img src="/images/rightArrow.png" width="5%"/>
-                            </button>
+                            <button disabled={!disable} onClick={e => {onNextClick(e)}}>NEXT</button>
                         </div>
                     </div>
                 </form>
@@ -275,7 +297,7 @@ function Question(props) {
             </div>
         );
     } else {
-        return <QuizScore questions={questions} count={count} platformId={platformId}/>;
+        return <QuizScore questions={questions} count={count} platformId={platformId} user={user} usedPoints={usedPoints}/>;
     }
 }
 

@@ -111,10 +111,12 @@ userRouter.post("/auth/google", async (req, res) => {
           expire: new Date(),
           email: email,
           uniqueId: currentUserCounter,
-          points: 0,
+          points: 100,
           subscribedPlatforms: [],
           exp: 0,
-          quizPlayed: 0
+          quizPlayed: 0,
+          badge: "",
+          title: "",
         });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
@@ -213,37 +215,132 @@ userRouter.put("/createuser", async (req, res) => {
 
 userRouter.get(
   "/test/idget",
-  expressAsyncHandler(async (req, res)=> {
-    const user = await User.find({ _id: "61957c03a4e8b287fc962577"})
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.find({ _id: "61957c03a4e8b287fc962577" });
     const updateuser = await User.updateOne(
-      {  _id: "61957c03a4e8b287fc962577" },
-      {$push: {subscribedPlatforms: "abcde"}}
-    )
+      { _id: "61957c03a4e8b287fc962577" },
+      { $push: { subscribedPlatforms: "abcde" } }
+    );
     res.send(updateuser);
   })
-)
+);
 
-// userRouter.post(
-//   "/subscribe",
-//   expressAsyncHandler(async (req, res)=> {
-//     const updateuser = await User.updateOne(
-//       {  _id: },
-//       {$push: {subscribedPlatforms: req.params._id}}
-//     )
-//     res.send(updateuser);
-//   })
-// )
+userRouter.post(
+  "/subscribe",
+  expressAsyncHandler(async (req, res) => {
+    const { userId, platformId } = req.body;
+    const updateuser = await User.updateOne(
+      { _id: userId },
+      { $addToSet: { subscribedPlatforms: platformId } }
+    );
+    res.send(updateuser);
+  })
+);
+
+userRouter.post(
+  "/unsubscribe",
+  expressAsyncHandler(async (req, res) => {
+    const { userId, platformId } = req.body;
+    const updateuser = await User.updateOne(
+      { _id: userId },
+      { $pull: { subscribedPlatforms: platformId } }
+    );
+    res.send(updateuser);
+  })
+);
 
 userRouter.get(
   "/test/iddelete",
-  expressAsyncHandler(async (req, res)=> {
-    const user = await User.find({ _id: "61957c03a4e8b287fc962577"})
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.find({ _id: "61957c03a4e8b287fc962577" });
     const updateuser = await User.updateOne(
-      {  _id: "61957c03a4e8b287fc962577" },
-      {$pull: {subscribedPlatforms: "abcde"}}
-    )
+      { _id: "61957c03a4e8b287fc962577" },
+      { $pull: { subscribedPlatforms: "abcde" } }
+    );
     res.send(updateuser);
   })
-)
+);
+
+userRouter.get(
+  "/get_user",
+  expressAsyncHandler(async (req, res) => {
+    const { user_id } = req.query;
+    const user = await User.findOne({ _id: user_id });
+    res.send(user);
+  })
+);
+
+userRouter.post(
+  "/set_username",
+  expressAsyncHandler(async (req, res) => {
+    const { newName, userId } = req.body;
+    const existUser = await User.findOne({ username : newName });
+    if(existUser){
+      return res.send({err : "exist user"});
+    }
+    const modifyUser = await User.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          username: newName,
+        },
+      }
+    );
+    res.send({ modifyUser });
+  })
+);
+
+userRouter.post(
+  "/editPoints",
+  expressAsyncHandler(async (req, res) => {
+    const { points, userId } = req.body;
+
+    const editUser = await User.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          points: points,
+        },
+      }
+    );
+    res.send(editUser);
+  })
+);
+
+userRouter.post(
+  "/editBadge",
+  expressAsyncHandler(async (req, res) => {
+    const { badge, points, userId } = req.body;
+
+    const editUserBadge = await User.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          badge: badge,
+          points: points,
+        },
+      }
+    );
+    res.send(editUserBadge);
+  })
+);
+
+userRouter.post(
+  "/editTitle",
+  expressAsyncHandler(async (req, res) => {
+    const { title, points, userId } = req.body;
+
+    const editUserTitle = await User.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          title: title,
+          points: points,
+        },
+      }
+    );
+    res.send(editUserTitle);
+  })
+);
 
 export default userRouter;

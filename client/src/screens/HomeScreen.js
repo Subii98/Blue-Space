@@ -10,7 +10,7 @@ import { useIsMounted } from '../components/useIsMounted.js';
 import Platform from '../components/Platform.js';
 import QuizCard from '../components/QuizCard.js';
 import { textAlign } from '@mui/system';
-
+import SwiperCategories from "../components/SwiperCategories.js";
 
 function HomeScreen(props) {   
   //to check quiz _id matches _id of the url /quiz/_id  
@@ -60,30 +60,35 @@ function HomeScreen(props) {
         });
 }, []);
 
-  return(
-    <div>
-      {loading ? (
-        <LoadingModal></LoadingModal>
-      ) : error ? (
-        <MessageModal variant="danger">{error}</MessageModal>
-      ) : (
-        <div className="homeItems">
-          <div className="latestQuiz">
-            <p style={{textAlign: "center", color: "#929292"}}>Latest Quizzes</p>
-            <div className="line"/>
-            {quizzes.map( (quiz) => (
-              <QuizCard quiz={quiz}/>
-            ))}
-          </div>
-          <div className="trendingPlatform">
-            <p style={{textAlign: "center", color: "#929292"}}>Trending Platforms</p>
-            <div className="line"/>
-            <Platform platforms = {platforms}></Platform>
-          </div>
-        </div>
-      )}
-    </div>
-  )
+  return (
+      <div>
+          {loading ? (
+              <LoadingModal></LoadingModal>
+          ) : error ? (
+              <MessageModal variant="danger">{error}</MessageModal>
+          ) : (
+              <div>
+                  <SwiperCategories></SwiperCategories>
+                  <div className="homeItems">
+                      <div className="latestQuiz">
+                          <p style={{ textAlign: "center", color: "#929292" }}>Latest Quizzes</p>
+                          <div className="line" />
+                          {quizzes.map(quiz => (
+                              <QuizCard quiz={quiz} />
+                          ))}
+                      </div>
+                      <div className="trendingPlatform">
+                          <p style={{ textAlign: "center", color: "#929292" }}>
+                              Trending Platforms
+                          </p>
+                          <div className="line" />
+                          <Platform platforms={platforms}></Platform>
+                      </div>
+                  </div>
+              </div>
+          )}
+      </div>
+  );
 }
 
 export default HomeScreen

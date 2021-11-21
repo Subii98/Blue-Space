@@ -2,18 +2,62 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "../index.css";
 import { FetchApiPost } from "../utils/Network";
+import axios from "axios";
+import { Button } from "@mui/material";
 
 function PostArea(props) {
     const history = useHistory();
     const [platform, setPlatform] = useState();
+    const [user, setUser] = useState();
+    const [error, setError] = useState(false);
+    const [isSubscribed, setIsSubscribed] = useState(false);
 
     const subscribe = async () => {
-        let res = await FetchApiPost("/api/v1/subscribe", {});
+        let res = await FetchApiPost("/api/v1/subscribe", {
+            userId: user._id,
+            platformId: platform._id,
+        });
+        if (res) {
+            setIsSubscribed(true);
+        }
+    };
+
+    const unsubscribe = async () => {
+        let res = await FetchApiPost("/api/v1/unsubscribe", {
+            userId: user._id,
+            platformId: platform._id,
+        });
+        if (res) {
+            setIsSubscribed(false);
+        }
     };
 
     useEffect(() => {
-        if (props.platform) setPlatform(props.platform);
+        if (props.platform) {
+            setPlatform(props.platform);
+        }
+        fetchUser();
     }, [props.platform]);
+
+    function fetchUser() {
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/v1/get_user?user_id=" + userData.id)
+            .then(res => setUser(res.data))
+            .catch(error => {
+                setError("No userdata");
+            });
+    }
+
+    useEffect(() => {
+        if (user) {
+            console.log("!!!!", user.subscribedPlatforms);
+            console.log("!!!!", platform._id);
+            let _isSubscribed = user.subscribedPlatforms.indexOf(platform._id) != -1;
+            setIsSubscribed(_isSubscribed);
+        }
+    }, [user]);
 
     const onClickEdit = () => {
         history.push("/EditPlatform/" + platform._id);
@@ -21,6 +65,7 @@ function PostArea(props) {
 
     if (platform == undefined) return <div>LOADING..</div>;
     console.log(platform);
+    console.log(user);
     return (
         <div className="postArea">
             <div className="banner">
@@ -30,16 +75,21 @@ function PostArea(props) {
                 <img src="/images/platformprofile.jpg" alt="platformprofile" />
                 <div className="platformInfo">
                     <div className="platformTop">
-                        <a href="" Style={"color:" + platform.fontColor}>{platform.title}</a>
+                        <a href="" Style={"color:" + platform.fontColor}>
+                            {platform.title}
+                        </a>
                         <span>{platform.userName}</span>
                     </div>
                     <div className="platformBottom">
-                        {/* <span Style={"color:#e52424"}>{platform.description}</span> */}
                         <span>{platform.description}</span>
-                        {/* <span>{platform.description}</span> */}
-                        <button type="button" onClick={subscribe}>
-                            SUBSCRIBE
-                        </button>
+                        <Button
+                            style={
+                                isSubscribed ? { backgroundColor: "#00aeef", color: "white" } : {}
+                            }
+                            onClick={isSubscribed ? unsubscribe : subscribe}
+                        >
+                            {isSubscribed ? "UNSUBSCRIBE" : "SUBSCRIBE"}
+                        </Button>
                     </div>
                     <div className="platformBottom">
                         <span></span>

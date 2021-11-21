@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
   },
   quizPlayed:{
     type: Number,
+  },
+  badge: {
+    type: String
+  },
+  title: {
+    type: String
   }
 });
 

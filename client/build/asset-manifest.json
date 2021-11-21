@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fc5d25ee.chunk.css",
+    "main.js": "/static/js/main.9171f903.chunk.js",
+    "main.js.map": "/static/js/main.9171f903.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.54bf12ef.js",
+    "runtime-main.js.map": "/static/js/runtime-main.54bf12ef.js.map",
+    "static/css/2.24bd8872.chunk.css": "/static/css/2.24bd8872.chunk.css",
+    "static/js/2.085553f5.chunk.js": "/static/js/2.085553f5.chunk.js",
+    "static/js/2.085553f5.chunk.js.map": "/static/js/2.085553f5.chunk.js.map",
+    "static/js/3.d84586b4.chunk.js": "/static/js/3.d84586b4.chunk.js",
+    "static/js/3.d84586b4.chunk.js.map": "/static/js/3.d84586b4.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.24bd8872.chunk.css.map": "/static/css/2.24bd8872.chunk.css.map",
+    "static/css/main.fc5d25ee.chunk.css.map": "/static/css/main.fc5d25ee.chunk.css.map",
+    "static/js/2.085553f5.chunk.js.LICENSE.txt": "/static/js/2.085553f5.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/Oswald-Light.053299f7.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.54bf12ef.js",
+    "static/css/2.24bd8872.chunk.css",
+    "static/js/2.085553f5.chunk.js",
+    "static/css/main.fc5d25ee.chunk.css",
+    "static/js/main.9171f903.chunk.js"
+  ]
+}
