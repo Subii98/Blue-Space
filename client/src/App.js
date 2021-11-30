@@ -14,6 +14,7 @@ import CreateQuestion from "./screens/CreateQuestion.js";
 import EditPlatform from "./screens/EditPlatform.js";
 import ProfileSetting from "./screens/ProfileSetting.js";
 import StoreScreen from "./screens/StoreScreen.js"
+import LeaderboardScreen from "./screens/LeaderboardScreen.js";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/EditPlatform/:platformId" component={EditPlatform}></Route>
           <Route path="/ProfileSetting/:userId" component={ProfileSetting}></Route>
           <Route path="/store" component={StoreScreen}></Route>
+          <Route path="/leaderboard" component={LeaderboardScreen}></Route>
         </main>
       </div>
     </BrowserRouter>

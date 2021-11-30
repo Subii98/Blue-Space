@@ -17,6 +17,11 @@ userRouter.use(cookieParser());
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(clientId);
 
+userRouter.get('/', expressAsyncHandler(async (req, res) => {
+  const users = await User.find({})
+  res.send(users)
+}))
+
 userRouter.post("/auth/google", async (req, res) => {
   console.log("entered auth google");
   const { token } = req.body;
@@ -117,6 +122,10 @@ userRouter.post("/auth/google", async (req, res) => {
           quizPlayed: 0,
           badge: "",
           title: "",
+          correct: 0,
+          totalQuestions: 0,
+          playCount: 0,
+          level: 1
         });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
@@ -293,13 +302,18 @@ userRouter.post(
 userRouter.post(
   "/editPoints",
   expressAsyncHandler(async (req, res) => {
-    const { points, userId } = req.body;
+    const { points, userId, correct, totalQuestions, playCount, exp, level } = req.body;
 
     const editUser = await User.updateOne(
       { _id: userId },
       {
         $set: {
           points: points,
+          correct: correct,
+          totalQuestions: totalQuestions,
+          playCount: playCount,
+          exp: exp,
+          level: level
         },
       }
     );
