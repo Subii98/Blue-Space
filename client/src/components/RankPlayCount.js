@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import RankLevel from './RankLevel';
-import RankPlayCount from './RankPlayCount';
+import RankAccuracy from './RankAccuracy';
+import { set } from 'mongoose';
 
-function RankAccuracy(props){
+function RankPlayCount(props){
     const [user] = useState(props.user)
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState(props.users);
+
     const [title, setTitle] = useState()
     const [badge, setBadge] = useState()
     const [username, setUsername] = useState()
@@ -17,42 +19,24 @@ function RankAccuracy(props){
     const [level, setLevel] = useState()
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [rankAccuracy, setRankAccuracy] = useState(true)
+    
+    const [rankAccuracy, setRankAccuracy] = useState(false)
     const [rankLevel, setRankLevel] = useState(false)
-    const [rankPlayCount, setRankPlayCount] = useState(false)
-
+    const [rankPlayCount, setRankPlayCount] = useState(true)
 
     useEffect(()=> {
-        axios
-            .get("/api/v1")
-            .then(res => {
-                setLoading(true);
-                setUsers(res.data.sort((b, a) => (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions)));
-                setLoading(false);
-                return;
-            })
-            .catch(error => {
-                setError("Error loading users");
-                setLoading(false);
-                console.log("Error loading users");
-            });
         setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
-        setRankAccuracy(true)
     }, [])
 
     useEffect(() => {
-        if (props.user != undefined){
-            setTitle(props.user.title)
-            setBadge(props.user.badge)
-            setUsername(props.user.username)
-            setCorrect(props.user.correct)
-            setTotalQuestions(props.user.totalQuestions)
-            setPlayCount(props.user.playCount)
-            setLevel(props.user.level)
-            setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
-            setRankAccuracy(true)
-        }
-    }, [props.user, users])
+        setTitle(props.user.title)
+        setBadge(props.user.badge)
+        setUsername(props.user.username)
+        setCorrect(props.user.correct)
+        setTotalQuestions(props.user.totalQuestions)
+        setPlayCount(props.user.playCount)
+        setLevel(props.user.level)
+    }, [props.user, props.users])
 
     const onClickSortLevel = () => {
         setRankPlayCount(false)
@@ -60,13 +44,13 @@ function RankAccuracy(props){
         setRankLevel(true)
     }
 
-    const onClickSortPlayCount = () => {
-        setRankAccuracy(false)
+    const onClickSortAccuracy = () => {
         setRankLevel(false)
-        setRankPlayCount(true)
+        setRankAccuracy(true)
+        setRankPlayCount(false)
     }
 
-    if (rankAccuracy){
+    if (rankPlayCount){
         return(
             <div>
                 <div className="userRank">
@@ -84,13 +68,13 @@ function RankAccuracy(props){
                     <p>{totalQuestions != 0 ? Math.round(( correct / totalQuestions) * 100) : 0}%</p>
                     <p>{playCount}</p>
                 </div>
-                <div className="rankAccuracy">
+                <div className="rankPlayCount">
                     <div className="leaderboardHeader">
                         <p>Rank</p>
                         <p>Username</p>
                         <button disabled={false} onClick={() => onClickSortLevel()}>Level</button>
-                        <button disabled={true}>Accuracy</button>
-                        <button disabled={false} onClick={()=> onClickSortPlayCount()}>Play Count</button>
+                        <button disabled={false} onClick={() => onClickSortAccuracy()}>Accuracy</button>
+                        <button disabled={true}>Play Count</button>
                     </div>
                     {users.map((user, index) => 
                         <div className="userRank">
@@ -112,18 +96,17 @@ function RankAccuracy(props){
             </div>
         )
     }
-    else if (rankPlayCount){
-        return(
-            <RankPlayCount user={props.user} users={users.sort((b, a) => a.playCount - b.playCount)}></RankPlayCount>
-        )
-    }
-    else{
+    else if (rankLevel){
         return(
             <RankLevel user={props.user} users={users.sort((b, a) => a.level - b.level)}></RankLevel>
         )
     }
-    
+    else{
+        return(
+            <RankAccuracy user={props.user}></RankAccuracy>
+        )
+    }
 
 }
 
-export default RankAccuracy
+export default RankPlayCount
