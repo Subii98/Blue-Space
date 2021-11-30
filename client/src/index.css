@@ -623,3 +623,31 @@ div.wrap {
   background: transparent
 }
 /* end of StoreScreen*/
+
+/*start of LeaderboardScreen*/
+.leaderboard{
+  
+}
+.leaderboardHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.userRank{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border: 1px solid #000000
+}
+.userProfile {
+  display: flex;
+  flex-direction: column;
+}
+/*end of LeaderboardScreen*/
+
+/*start of RankAccuracy component*/
+.rankAccuracy{
+  display: flex;
+  flex-direction: column;
+}
+/*end of RankAccuracy component*/

@@ -16,6 +16,9 @@ function QuizScore(props){
         let res = await FetchApiPost("/api/v1/editPoints", {
             userId: user._id,
             points: user.points - props.usedPoints + (props.count * 10),
+            correct: user.correct + props.count,
+            totalQuestions: user.totalQuestions + questions.length,
+            playCount: user.playCount + 1
         });
     }
 
