@@ -215,6 +215,7 @@ img.hamburger{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2%;
 }
 .platformBottom{
   display: flex;
@@ -230,6 +231,7 @@ img.hamburger{
   border-width: 1px;
   background-color: transparent;
   padding: 1px 1.2rem;
+  margin-top: 1%;
 }
 /*Start of Timer Component*/
 .timer{
