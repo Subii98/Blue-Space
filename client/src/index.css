@@ -548,7 +548,6 @@ div.wrap {
 
 .usernameBadge img{
   width: 1.5rem;
-  object-fit: cover;
   margin-right: 0.5rem;
 }
 

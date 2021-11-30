@@ -42,6 +42,9 @@ const userSchema = new mongoose.Schema({
   },
   playCount: {
     type: Number
+  },
+  level: {
+    type: Number
   }
 });
 
