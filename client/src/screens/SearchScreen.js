@@ -2,11 +2,15 @@ import React from 'react'
 import axios from "axios";
 import PlatformCard from "../components/PlatformCard.js";
 import { useContext, useEffect, useState } from "react";
+
+import { useLocation } from "react-router-dom";
 import { GlobalStoreContext } from "../store";
 
 function SearchScreen() {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const url = useLocation().search;
+    const query = new URLSearchParams(url).get("search");
     console.log("data values are ", data);
     //var loaded = false;
     const { store } = useContext(GlobalStoreContext);
@@ -14,8 +18,11 @@ function SearchScreen() {
         search: store.search
     }
 
-    
-
+    /*
+    useEffect(() => {
+        store.setSearch(query);
+    }, []);
+    */
     
     useEffect(() => {
     console.log("store value is ", store.search);

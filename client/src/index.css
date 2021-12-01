@@ -36,7 +36,7 @@ body{
       'header'
       'main'
       'footer';
-  grid-template-columns: 1fr;
+  grid-template-columns:1fr;
   grid-template-rows: 13rem 1fr 5rem; /*header body footer*/
   height: 100%
 }
@@ -50,6 +50,10 @@ main{
   background-color: #ffffff;
   margin-left: 10%;
   margin-right: 10%;
+}
+.sidebar{
+  grid-area: 'side';
+
 }
 
 /* Header */

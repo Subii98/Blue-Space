@@ -106,7 +106,7 @@ function CreateQuestion(props) {
     const onClickSubmit = async () => {
         if (index == max) {
             console.log("create new question");
-            let res = await FetchApiPost("/api/questions/upsert", {
+            let res = await FetchApiPost("/api/questions/insert", {
                 text: text,
                 option: [optionOne, optionTwo, optionThree, optionFour],
                 answer: answer,
