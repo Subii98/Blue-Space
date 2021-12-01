@@ -142,18 +142,31 @@ platformRouter.get(
   })
 );
 
+// platformRouter.delete(
+//   "/delete/:userId",
+//   expressAsyncHandler(async (req, res) => {
+//     const platform = await Platform.findById(req.params.userId);
+//     if (platform) {
+//       const delPlatform = await Platform.deleteOne(platform);
+//       res.send({ message: "plaform deleted" });
+//     } else {
+//       res.status(404).send({ message: "Platform Not Found" });
+//     }
+//   })
+// );
+
 platformRouter.delete(
-  "/delete/:userId",
-  expressAsyncHandler(async (req, res) => {
-    const platform = await Platform.findById(req.params.userId);
-    if (platform) {
-      const delPlatform = await Platform.deleteOne(platform);
-      res.send({ message: "plaform deleted" });
-    } else {
-      res.status(404).send({ message: "Platform Not Found" });
-    }
-  })
-);
+    "/deletePlatform",
+    expressAsyncHandler(async (req, res) => {
+      const platform = await Platform.find({_id: req.params.platformId});
+      if (platform) {
+        const delPlatform = await Platform.deleteOne(platform);
+        res.send({ message: "plaform deleted" });
+      } else {
+        res.status(404).send({ message: "Platform Not Found" });
+      }
+    })
+  );
 
 platformRouter.post(
     "/edit",
@@ -177,7 +190,7 @@ platformRouter.post(
         // quizId,
         platformId,
       } = req.body;
-      
+
       const bannerPath = req.files[0] ? "/" + req.files[0].path : "";
       const iconPath = req.files[1] ? "/" + req.files[1].path : "";
 
@@ -254,7 +267,7 @@ platformRouter.put(
     const platform = await Platform.findById(req.params.userId);
     if (platform) {
       await Platform.updateOne({ _id: req.params.userId });
-      res.send({ message: "plaform deleted" });
+      res.send({ message: "plaform updated" });
     } else {
       res.status(404).send({ message: "Platform Not Found" });
     }
