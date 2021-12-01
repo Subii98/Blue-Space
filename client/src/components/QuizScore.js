@@ -11,6 +11,9 @@ function QuizScore(props){
     const [expRate] = useState(3)
     const [levelUp, setLevelUp] = useState(false)
     const [expBarAmount, setExpBarAmount] = useState() 
+    const [disableThumbUp, setDisableThumbUp] = useState(false)
+    const [disableThumbDown, setDisableThumbDown] = useState(false)
+
     const history = useHistory();
 
     useEffect(()=> {
@@ -19,7 +22,7 @@ function QuizScore(props){
 
     useEffect (() => {
         editPoints()
-    }, [level, expBarAmount, levelUp])
+    }, [level, expBarAmount, levelUp ,disableThumbDown, disableThumbUp])
 
     function calcLevel(){
         const tmpExp = props.user.exp + (props.count * expRate)
@@ -102,6 +105,16 @@ function QuizScore(props){
         history.push("/platform/" + platformId);
     }
 
+    const onClickDisableThumbUp = () => {
+        setDisableThumbUp(true)
+        setDisableThumbDown(false) 
+    }
+
+    const onClickDisableThumbDown = () => {
+        setDisableThumbUp(false)
+        setDisableThumbDown(true) 
+    }
+
     return(
         <div className="score">
             <div className="scoreHeader">
@@ -152,7 +165,13 @@ function QuizScore(props){
                         </div>
                     </div>
                 </div>
-                <div className="rateQuizText">Rate this quiz!</div>
+                <div className="rateQuizContents">
+                    <div className="rateQuizText">Rate this quiz!</div>
+                    <div className="rateThumbs">
+                        <button disabled={disableThumbUp} onClick={() => onClickDisableThumbUp()}><img src="/images/icon/thumb-up.png" /></button>
+                        <button disabled={disableThumbDown} onClick={() => onClickDisableThumbDown()}><img src="/images/icon/thumb-down.png" /></button>
+                    </div>
+                </div>
             </div>
             
             <button type="button" onClick={onClickClose}>CLOSE</button>

@@ -549,8 +549,31 @@ top: 69rem;
 .rateQuizText{
   color: #929292;
   font-size: 2rem;
-  margin-bottom: 3rem;
 }
+
+.rateQuizContents{
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 3rem;
+
+}
+.rateQuizContents img{
+  object-fit: contain;
+  width: 3rem;
+  margin-right: 2rem;
+}
+
+.rateQuizContents button{
+  border: none;
+}
+
+.rateQuizContents button:disabled{
+  opacity: 30%;
+}
+
 .expAndLevel{
   display: flex;
   flex-direction: column;
