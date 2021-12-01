@@ -27,7 +27,8 @@ function ManageTable(props){
     }, [])
 
     useEffect(() => {
-        setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
+        if (props.user != undefined)
+            setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
     }, [users])
 
     const onClickSortLevel = () => {

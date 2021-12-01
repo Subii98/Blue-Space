@@ -23,7 +23,7 @@ function LeaderboardScreen(){
             .get("/api/v1")
             .then(res => {
                 setLoading(true);
-                setUsers(res.data.sort((b, a) => (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions)))
+                setUsers(res.data.sort((b, a) => a.totalQuestions !== 0 ? (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions) : 0 - (b.correct / b.totalQuestions)))
                 setLoading(false);
                 return;
             })

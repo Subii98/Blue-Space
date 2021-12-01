@@ -800,7 +800,8 @@ th button:disabled{
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
-  border:none
+  border:none;
+  object-fit: contain;
 }
 
 .usernameBadge img{
