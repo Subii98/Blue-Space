@@ -440,7 +440,7 @@ div.flex-container {
   padding: 0;
   margin: 0;
   list-style: none;
-  border: 1px solid silver;
+  
   -ms-box-orient: horizontal;
   display: -webkit-box;
   display: -moz-box;
@@ -448,6 +448,7 @@ div.flex-container {
   display: -moz-flex;
   display: -webkit-flex;
   display: flex;
+  flex-direction: row;
   align-items: center;
 
 }
@@ -461,10 +462,42 @@ div.wrap {
   margin: 10px;
   margin-bottom: 40px;
   width: 345px;
-  
-  
+}
+.categoryItems {
+  display: flex;
+  flex-direction: row;
+}
+.cardContent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
+.categoryIcon{
+  width: 1.8rem;
+  object-fit: contain;
+  margin-right: 1rem;
+}
+
+.categories{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.categories h1{
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+.subCategories h2{
+  font-weight: normal;
+  font-size: 2rem;
+}
+.subCategories {
+  display: flex;
+  flex-direction: column;
+}
 /* add media query for growing and shrinking */
 @media (max-width: 600px) {
   .flex-container {
@@ -560,6 +593,7 @@ th button{
 
 th button:disabled{
   font-weight: bold;
+  background-color: rgb(64, 64, 64, 0.15);
   color: #000000;
 }
 
