@@ -6,8 +6,9 @@ const platformSchema = new mongoose.Schema({
     // name: String,
     title: String,
     description: String,
-    subscriber: [String],
+    subscriber: [String], //number
     icon: String,
+    // banner: String,
     banner: String,
     fontFamily: String,
     titleFontSize: Number,

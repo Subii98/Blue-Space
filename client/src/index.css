@@ -5,6 +5,7 @@ code {
 @import "./css/PlatformScreen.css";
 @import "./css/MyPage.css";
 @import "./css/ProfileSetting.css";
+@import "./css/CreatePlatform.css";
 @font-face {
   font-family: 'oswald-light';
   src: local('oswald-light'), url(./fonts/Oswald-Light.ttf) format('truetype');
@@ -36,7 +37,7 @@ body{
       'header'
       'main'
       'footer';
-  grid-template-columns: 1fr;
+  grid-template-columns:1fr;
   grid-template-rows: 13rem 1fr 5rem; /*header body footer*/
   height: 100%
 }
@@ -50,6 +51,10 @@ main{
   background-color: #ffffff;
   margin-left: 10%;
   margin-right: 10%;
+}
+.sidebar{
+  grid-area: 'side';
+
 }
 
 /* Header */
@@ -215,6 +220,7 @@ img.hamburger{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2%;
 }
 .platformBottom{
   display: flex;
@@ -230,6 +236,7 @@ img.hamburger{
   border-width: 1px;
   background-color: transparent;
   padding: 1px 1.2rem;
+  margin-top: 1%;
 }
 /*Start of Timer Component*/
 .timer{
@@ -434,7 +441,7 @@ div.flex-container {
   padding: 0;
   margin: 0;
   list-style: none;
-  border: 1px solid silver;
+  
   -ms-box-orient: horizontal;
   display: -webkit-box;
   display: -moz-box;
@@ -442,6 +449,7 @@ div.flex-container {
   display: -moz-flex;
   display: -webkit-flex;
   display: flex;
+  flex-direction: row;
   align-items: center;
 
 }
@@ -455,10 +463,42 @@ div.wrap {
   margin: 10px;
   margin-bottom: 40px;
   width: 345px;
-  
-  
+}
+.categoryItems {
+  display: flex;
+  flex-direction: row;
+}
+.cardContent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
+.categoryIcon{
+  width: 1.8rem;
+  object-fit: contain;
+  margin-right: 1rem;
+}
+
+.categories{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.categories h1{
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+.subCategories h2{
+  font-weight: normal;
+  font-size: 2rem;
+}
+.subCategories {
+  display: flex;
+  flex-direction: column;
+}
 /* add media query for growing and shrinking */
 @media (max-width: 600px) {
   .flex-container {
@@ -505,6 +545,88 @@ div.wrap {
   padding-inline-start: 0
 }
 
+
+/*start of ManageTable*/
+.leaderboardTable {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  font-family: 'oswald-light';
+  src: local('oswald-light'), url(./fonts/Oswald-Light.ttf) format('truetype');
+  margin-bottom: 5rem;
+}
+
+td {
+  text-align: center;
+}
+
+
+
+td,
+th{
+  color: #000000;
+  border: 1px solid rgb(190, 190, 190);
+  padding: 0.3rem;
+  font-weight: normal;
+  height: 100%;
+}
+
+thead{
+  background-color: #d2d2d2;
+  
+}
+
+th button{
+  width: 100%;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+}
+
+th button:disabled{
+  font-weight: bold;
+  background-color: rgb(64, 64, 64, 0.15);
+  color: #000000;
+}
+
+.leaderboardTitle{
+  border: none;
+  display: inline-block;
+  font-size: 1.3rem;
+  width: 50%;
+  background-color: rgb(0, 174, 239, 0.15);
+  margin-top: 0.5rem;
+}
+
+.leaderboardBadge{
+  border: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.leaderboardBadge td{
+  border: none;
+  font-size: 2rem;
+}
+
+.leaderboardBadge img{
+  border: none;
+  width: 2.5rem;
+  object-fit: contain;
+}
+
+/*end of ManageTable */
+
 /* start of StoreScreen*/
 .storePage{
   display: flex;
@@ -529,6 +651,7 @@ div.wrap {
 
 .userTitle {
   display: inline-block;
+  border: none;
 }
 
 .userTitle p{
@@ -544,12 +667,13 @@ div.wrap {
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
+  border:none
 }
 
 .usernameBadge img{
   width: 1.5rem;
-  object-fit: cover;
   margin-right: 0.5rem;
+  object-fit: contain;
 }
 
 .storeContent{
@@ -623,3 +747,61 @@ div.wrap {
   background: transparent
 }
 /* end of StoreScreen*/
+
+/*start of LeaderboardScreen*/
+.leaderboard{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.leaderboardHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #d2d2d2;
+}
+
+.leaderboardHeader p{
+  font-size: 1.5rem;
+}
+
+.leaderboardHeader button{
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+}
+
+.leaderboardHeader button:disabled{
+  border: 1px solid #000000;
+  color: #000000;
+}
+.userRank{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid #000000;
+  margin-bottom: 5rem;
+  
+}
+.userProfile {
+  display: flex;
+  flex-direction: column;
+}
+
+.allRanks{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+/*end of LeaderboardScreen*/
+
+/*start of RankAccuracy component*/
+.rankSorted{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000000;
+}
+/*end of RankAccuracy component*/

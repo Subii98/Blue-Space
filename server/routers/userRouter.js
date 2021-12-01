@@ -17,6 +17,11 @@ userRouter.use(cookieParser());
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(clientId);
 
+userRouter.get('/', expressAsyncHandler(async (req, res) => {
+  const users = await User.find({})
+  res.send(users)
+}))
+
 userRouter.post("/auth/google", async (req, res) => {
   console.log("entered auth google");
   const { token } = req.body;
@@ -102,7 +107,7 @@ userRouter.post("/auth/google", async (req, res) => {
         var randomName = "";
         randomName += name.toLowerCase();
         randomName = randomName.replace(/\s+/g, "");
-        randomName += Math.floor(Math.random() * 100 + 1);
+        randomName += Math.floor(Math.random() * 1000 + 1);
         console.log("randomname: ", randomName);
 
         console.log("current user cnt is: ", currentUserCounter);
@@ -116,7 +121,11 @@ userRouter.post("/auth/google", async (req, res) => {
           exp: 0,
           quizPlayed: 0,
           badge: "",
-          title: "",
+          title: "Newbie",
+          correct: 0,
+          totalQuestions: 0,
+          playCount: 0,
+          level: 1
         });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
@@ -293,13 +302,18 @@ userRouter.post(
 userRouter.post(
   "/editPoints",
   expressAsyncHandler(async (req, res) => {
-    const { points, userId } = req.body;
+    const { points, userId, correct, totalQuestions, playCount, exp, level } = req.body;
 
     const editUser = await User.updateOne(
       { _id: userId },
       {
         $set: {
           points: points,
+          correct: correct,
+          totalQuestions: totalQuestions,
+          playCount: playCount,
+          exp: exp,
+          level: level
         },
       }
     );

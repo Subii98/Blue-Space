@@ -34,6 +34,7 @@ app.use("/githubwebhook", (req, res) => {
 
 app.use("/static",express.static(path.join(__dirname, "./client/build/static")));
 app.use("/images", express.static(path.join(__dirname, "./client/build/images")));
+app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
 app.use(express.json({ limit: "50mb" }));
 app.use(
   express.urlencoded({

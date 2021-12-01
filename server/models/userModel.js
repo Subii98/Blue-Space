@@ -33,6 +33,18 @@ const userSchema = new mongoose.Schema({
   },
   title: {
     type: String
+  },
+  correct: {
+    type: Number,
+  },
+  totalQuestions: {
+    type: Number,
+  },
+  playCount: {
+    type: Number
+  },
+  level: {
+    type: Number
   }
 });
 
