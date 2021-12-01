@@ -5,9 +5,9 @@ import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
-import { FetchApiPost } from "../utils/Network";
+import { FetchApiPost, FetchApiPostWithFile } from "../utils/Network";
 import { useHistory } from "react-router-dom";
-
+import { Button } from "@mui/material";
 
 function EditPlatform(props) {
     const history = useHistory();
@@ -26,10 +26,13 @@ function EditPlatform(props) {
     const [description, setDescription] = useState("");
     const [banner, setBanner] = useState("");
     const [bannerURL, setBannerURL] = useState("");
+    const [bannerImageRef, setBannerImageRef] = useState();
 
     const [subscriber, setSubscriber] = useState("");
-    // const [banner, setBanner] = useState("");
-    // const [icon, setIcon] = useState("");
+    const [icon, setIcon] = useState("");
+    const [iconURL, setIconURL] = useState("");
+    const [iconImageRef, setIconImageRef] = useState();
+
     // const [fontFamily, setFontFamily] = useState("");
     // const [titleFontSize, setTitleFontSize] = useState(0);
     // const [descFontSize, setDescFontSize] = useState(0);
@@ -39,16 +42,38 @@ function EditPlatform(props) {
     const [tag3, setTag3] = useState("");
     // const [quizId, setQuizId] = useState("");
 
-    useEffect(()=>{
-        if(platform){
-            setTitle(platform.title)
-            setDescription(platform.description)
-            setFontColor(platform.fontColor)
-            setTag1(platform.tag1)
-            setTag2(platform.tag2)
-            setTag3(platform.tag3)
+    const onClickBanner = () => {
+        if (bannerImageRef) bannerImageRef.click();
+    };
+
+    const onClickIcon = () => {
+        if (iconImageRef) iconImageRef.click();
+    };
+
+    const onChangeBanner = e => {
+        setBannerURL(URL.createObjectURL(e.target.files[0]));
+        setBanner(e.target.files[0]);
+        console.log("???changed")
+        console.log(e.target.files[0])
+        console.log(banner)
+
+    };
+    
+    const onChangeIcon = e => {
+        setIconURL(URL.createObjectURL(e.target.files[0]));
+        setIcon(e.target.files[0]);
+    };
+
+    useEffect(() => {
+        if (platform) {
+            setTitle(platform.title);
+            setDescription(platform.description);
+            setFontColor(platform.fontColor);
+            setTag1(platform.tag1);
+            setTag2(platform.tag2);
+            setTag3(platform.tag3);
         }
-    },[platform]);
+    }, [platform]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -60,13 +85,14 @@ function EditPlatform(props) {
                 console.log(data);
                 setLoading(false);
                 setPlatform(data);
+                
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
             }
         };
         fetchData();
-    }, [ props.match.params.platformId ]);
+    }, [props.match.params.platformId]);
 
     useEffect(() => {
         console.log(store);
@@ -74,9 +100,34 @@ function EditPlatform(props) {
         setUserName(store.username);
     }, [store]);
 
+    // const onClickSubmit = async () => {
+    //     let res = await FetchApiPost("/api/platforms/edit", {
+    //         platformId : platform._id,
+    //         // userId : userId,
+    //         userName: userName,
+    //         // name : name,
+    //         title: title,
+    //         description: description,
+    //         // subscriber : subscriber,
+    //         // icon : icon,
+    //         banner: banner,
+    //         // fontFamily : fontFamily,
+    //         // titleFontSize : titleFontSize,
+    //         // descFontSize : descFontSize,
+    //         fontColor: fontColor,
+    //         tag1: tag1,
+    //         tag2: tag2,
+    //         tag3: tag3,
+    //         // quizId : quizId.split(','),
+    //     });
+    //     // setCreatePlatform(JSON.stringify(res));
+    //     alert("platform edit");
+    //     history.goBack()
+    // };
+
     const onClickSubmit = async () => {
-        let res = await FetchApiPost("/api/platforms/edit", {
-            platformId : platform._id,
+        let res = await FetchApiPostWithFile("/api/platforms/edit", [banner, icon], {
+            platformId: platform._id,
             // userId : userId,
             userName: userName,
             // name : name,
@@ -84,7 +135,6 @@ function EditPlatform(props) {
             description: description,
             // subscriber : subscriber,
             // icon : icon,
-            banner: banner,
             // fontFamily : fontFamily,
             // titleFontSize : titleFontSize,
             // descFontSize : descFontSize,
@@ -96,7 +146,7 @@ function EditPlatform(props) {
         });
         // setCreatePlatform(JSON.stringify(res));
         alert("platform edit");
-        history.goBack()
+        history.goBack();
     };
 
     return (
@@ -104,60 +154,128 @@ function EditPlatform(props) {
             <div>
                 {loading && <LoadingModal />}
                 {error && <MessageModal variant="danger">{error}</MessageModal>}
-                <div className="platform_insert_box">
-                    {/* <div className="platform_insert_box-data">
-                        <span>userId</span>
-                        <input value={userId} onChange={(e)=>setUserId(e.target.value)} />
-                    </div> */}
-                    {/* <div className="platform_insert_box-data">
-                        <span>name</span>
-                        <input value={name} onChange={(e)=>setName(e.target.value)} />
-                    </div> */}
-                    <div className="platform_insert_box-data">
-                        <span>title</span>
-                        <input value={title} onChange={e => setTitle(e.target.value)} />
+                <div className="create-plaform-main">
+                    <div>
+                        {loading && <LoadingModal />}
+                        {error && <MessageModal variant="danger">{error}</MessageModal>}
+                        <div className="tags">
+                            <input
+                                className="tag-input"
+                                value={tag1}
+                                onChange={e => setTag1(e.target.value)}
+                                placeholder="#Tag1"
+                            />
+                            <input
+                                className="tag-input"
+                                value={tag2}
+                                onChange={e => setTag2(e.target.value)}
+                                placeholder="#Tag2"
+                            />
+                            <input
+                                className="tag-input"
+                                value={tag3}
+                                onChange={e => setTag3(e.target.value)}
+                                placeholder="#Tag2"
+                            />
+                        </div>
+                        <div className="postArea">
+                            <div className="cp-banner">
+                                <img
+                                    src={
+                                        platform.banner && platform.banner != ""
+                                            ? platform.banner
+                                            : "./images/sample.jpeg"
+                                    }
+                                    onClick={onClickBanner}
+                                />
+                                <input
+                                    ref={ref => setBannerImageRef(ref)}
+                                    id="file-input"
+                                    type="file"
+                                    onChange={onChangeBanner}
+                                />
+                            </div>
+                            <div className="platformInfoArea">
+                                <div>
+                                    <img src={platform.icon} onClick={onClickIcon} />
+                                    <input
+                                        ref={ref => setIconImageRef(ref)}
+                                        id="file-input"
+                                        type="file"
+                                        onChange={onChangeIcon}
+                                    />
+                                </div>
+                                {/* <img src="/images/noimage.png" alt="platformprofile" align="center" /> */}
+                                <div className="platformInfo">
+                                    <div className="platformTop">
+                                        <input
+                                            value={title}
+                                            onChange={e => setTitle(e.target.value)}
+                                            placeholder="Title"
+                                            style={{ fontSize: "40px", width: "70%" }}
+                                        />
+                                        {/* <span>title font color</span> */}
+                                        <input
+                                            type="color"
+                                            value={fontColor}
+                                            onChange={e => setFontColor(e.target.value)}
+                                        />
+
+                                        <span>{store.username}</span>
+                                    </div>
+                                    <div className="platformBottom">
+                                        {/* <span>{platform.description}</span> */}
+                                        <input
+                                            value={description}
+                                            onChange={e => setDescription(e.target.value)}
+                                            placeholder="description"
+                                            style={{ fontSize: "12px", width: "70%" }}
+                                        />
+                                        <Button
+                                            style={{
+                                                backgroundColor: "#00aeef",
+                                                color: "white",
+                                                float: "right",
+                                            }}
+                                        >
+                                            {"SUBSCRIBE"}
+                                        </Button>
+                                    </div>
+                                    <div className="platformBottom">
+                                        <span></span>
+                                        <button type="button">EDIT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <Button
+                                className="asd"
+                                onClick={onClickSubmit}
+                                style={{
+                                    backgroundColor: "#00aeef",
+                                    color: "white",
+                                    float: "right",
+                                }}
+                            >
+                                {"SAVE"}
+                            </Button>
+                            <Button
+                                onClick={() => history.goBack()}
+                                style={{
+                                    float: "right",
+                                    color: "#00aeef",
+                                    bordercolor: "#00aeef",
+                                    borderradius: "5px",
+                                    borderstyle: "solid",
+                                    borderwidth: "1px",
+                                }}
+                            >
+                                {"CANCEL"}
+                            </Button>
+                        </div>
                     </div>
-                    <div className="platform_insert_box-data">
-                        <span>description</span>
-                        <input value={description} onChange={e => setDescription(e.target.value)} />
-                    </div>
-                    <div className="platform_insert_box-data">
-                        <span>banner</span>
-                        <input
-                            type="file"
-                            name="bannerImage"
-                            onChange={e => setBannerURL(URL.createObjectURL(e.target.files[0]))}
-                        />
-                        <img src={bannerURL} width="10%"></img>
-                    </div>
-                    <div className="platform_insert_box-data">
-                        <span>font color</span>
-                        <input
-                            type="color"
-                            value={fontColor}
-                            onChange={e => setFontColor(e.target.value)}
-                        />
-                    </div>
-                    <div className="platform_insert_box-data">
-                        <span>tag1</span>
-                        <input value={tag1} onChange={e => setTag1(e.target.value)} />
-                    </div>
-                    <div className="platform_insert_box-data">
-                        <span>tag2</span>
-                        <input value={tag2} onChange={e => setTag2(e.target.value)} />
-                    </div>
-                    <div className="platform_insert_box-data">
-                        <span>tag1</span>
-                        <input value={tag3} onChange={e => setTag3(e.target.value)} />
-                    </div>
-                    <button onClick={onClickSubmit}>submit</button>
-                    <button onClick={()=>history.goBack()}>Cancel</button>
-                    {/* <span style={{ border : "1px solid blue"}}>CREATE RESULT :: {createPlatform}</span> */}
                 </div>
-                {/* <div style={{ border : "1px solid red"}}>
-                    <div>PLATFORMS :: {platforms}</div>
-                </div> */}
-                {/* <PlatformListArea /> */}
             </div>
         </div>
     );

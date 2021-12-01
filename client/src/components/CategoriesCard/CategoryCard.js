@@ -15,30 +15,23 @@ function CategoryCard(props) {
             {props.user}
           </Typography>
     */
-   console.log("name: ", props.category.name);
-   console.log("description", props.category.description);
-   console.log('props: ', props)
     return (
-        <div>
-            <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea onClick={()=> {store.setSearch(props.category.search)}}component={Link} to={props.category.route}>
-        <CardMedia
-          component="img"
-          height="140"
-          image={props.category.image}
-          alt="category"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.category.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.category.description}
-          </Typography>     
-        </CardContent>
-      </CardActionArea>
-    </Card>
-        </div>
+      <Card sx={{ maxWidth: 300}}>
+        <CardActionArea onClick={()=> {store.setSearch(props.category.search)}}component={Link} to={props.category.route}>
+          <CardMedia
+            component="img"
+            height="190"
+            image={props.category.image}
+            alt="category"
+          />
+          <CardContent className="cardContent">
+            <img className="categoryIcon" src={props.category.icon} alt="icon"/>
+            <Typography variant="h5" component="div" style={{fontSize: "2rem", fontFamily: "oswald-light"}}>
+              {props.category.name}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
     )
 }
 

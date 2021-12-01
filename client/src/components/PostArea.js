@@ -69,10 +69,12 @@ function PostArea(props) {
     return (
         <div className="postArea">
             <div className="banner">
-                <img src={platform.banner} />
+                <img src={platform.banner && platform.banner != ""
+                                ? platform.banner
+                                : "./images/sample.jpeg"} />
             </div>
             <div className="platformInfoArea">
-                <img src="/images/platformprofile.jpg" alt="platformprofile" />
+                <img src={platform.icon} alt="platformprofile" />
                 <div className="platformInfo">
                     <div className="platformTop">
                         <a href="" Style={"color:" + platform.fontColor}>
