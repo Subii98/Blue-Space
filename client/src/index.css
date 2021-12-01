@@ -219,7 +219,6 @@ img.hamburger{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2%;
 }
 .platformBottom{
   display: flex;
@@ -235,7 +234,6 @@ img.hamburger{
   border-width: 1px;
   background-color: transparent;
   padding: 1px 1.2rem;
-  margin-top: 1%;
 }
 /*Start of Timer Component*/
 .timer{
@@ -555,7 +553,6 @@ div.wrap {
 .usernameBadge img{
   width: 1.5rem;
   margin-right: 0.5rem;
-  object-fit: contain;
 }
 
 .storeContent{
@@ -632,58 +629,28 @@ div.wrap {
 
 /*start of LeaderboardScreen*/
 .leaderboard{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  
 }
-
 .leaderboardHeader{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  background-color: #d2d2d2;
-}
-
-.leaderboardHeader p{
-  font-size: 1.5rem;
-}
-
-.leaderboardHeader button{
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-}
-
-.leaderboardHeader button:disabled{
-  border: 1px solid #000000;
-  color: #000000;
+  justify-content: space-evenly;
 }
 .userRank{
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  align-items: center;
-  border: 1px solid #000000;
-  margin-bottom: 5rem;
-  
+  border: 1px solid #000000
 }
 .userProfile {
   display: flex;
   flex-direction: column;
 }
-
-.allRanks{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
 /*end of LeaderboardScreen*/
 
 /*start of RankAccuracy component*/
-.rankSorted{
+.rankAccuracy{
   display: flex;
   flex-direction: column;
-  border: 1px solid #000000;
 }
 /*end of RankAccuracy component*/
