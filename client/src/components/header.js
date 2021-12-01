@@ -7,8 +7,7 @@ import LogoutComponent from "./Logout";
 
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
-    const [data, setData] = useState();
-    //console.log(GlobalStoreContext);
+    const [data, setData] = useState(store.search);
     let history = useHistory();
     //const loginData = localStorage.getItem('data');
     /*
@@ -21,6 +20,7 @@ function Header(props) {
   
     let userName = "";
     console.log(store)
+    console.log('search value' , store.search);
     if (store.loggedIn){
       userName = store.username;
     }
@@ -30,8 +30,16 @@ function Header(props) {
       event.preventDefault();
       store.setSearch(data);
       console.log("printing search query: ", store.search);
+      /*if (data.length == 0){
+        data = undefined;
+      }*/
+      let queryString = "search=" + data;
       history.push("/search");
+      //history.push(`/search?${queryString}`);
     }
+
+    
+    
 
     return (
       <header>

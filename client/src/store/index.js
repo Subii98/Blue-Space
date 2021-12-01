@@ -58,6 +58,10 @@ export const useGlobalStore = () => {
       }
       case GlobalStoreActionType.SEARCH: {
         return setStore({
+          loggedIn: store.loggedIn,
+          username: store.username,
+          email: store.email,
+          actualName: store.actualName,
           search: payload.search,
         });
       }
