@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
+import ManageTable from './ManageTable';
 
 function RankSort(props){
     const [user] = useState(props.user)
@@ -79,6 +80,7 @@ function RankSort(props){
         setUsers(users.sort((b, a) => a.totalQuestions !== 0 ? (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions) : 0 - (b.correct / b.totalQuestions)))
         setUserRank(users.indexOf(users.find( e => e.username === props.user.username))+ 1)
     }
+    /*
     return(
         <div className="leaderboard">
             <div className="userRank">
@@ -122,6 +124,14 @@ function RankSort(props){
                 </div>)}
             </div>
         </div>
+    )
+    */
+
+    return(
+        <div>
+            {users != undefined ? <ManageTable userRank={userRank} users={users} user={props.user}/> : false}
+        </div>
+        
     )
 
 }

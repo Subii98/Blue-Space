@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import RankSort from "../components/RankSort.js";
+import ManageTable from "../components/ManageTable.js";
 
 function LeaderboardScreen(){
     const [user, setUser] = useState()
+    const [users, setUsers] = useState()
     const [error, setError] = useState()
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let userData = localStorage.getItem("data");
@@ -17,12 +19,26 @@ function LeaderboardScreen(){
                     "No userdata"
                 );
             })
+        axios
+            .get("/api/v1")
+            .then(res => {
+                setLoading(true);
+                setUsers(res.data.sort((b, a) => (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions)))
+                setLoading(false);
+                return;
+            })
+            .catch(error => {
+                setError("Error loading users");
+                setLoading(false);
+                console.log("Error loading users");
+            });
     }, [])
 
     return(
-        <div className="leaderboard">
-            <RankSort user={user}></RankSort>
+        <div>
+            {users != undefined ? <ManageTable user={user} users={users}/> : false}
         </div>
+        
     )
 }
 
