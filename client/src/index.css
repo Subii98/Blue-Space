@@ -5,6 +5,7 @@ code {
 @import "./css/PlatformScreen.css";
 @import "./css/MyPage.css";
 @import "./css/ProfileSetting.css";
+@import "./css/CreatePlatform.css";
 @font-face {
   font-family: 'oswald-light';
   src: local('oswald-light'), url(./fonts/Oswald-Light.ttf) format('truetype');

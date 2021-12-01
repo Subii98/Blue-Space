@@ -9,7 +9,7 @@ const platformSchema = new mongoose.Schema({
     subscriber: [String], //number
     icon: String,
     // banner: String,
-    banner: {data: Buffer, contentType: String},
+    banner: String,
     fontFamily: String,
     titleFontSize: Number,
     descFontSize: Number,

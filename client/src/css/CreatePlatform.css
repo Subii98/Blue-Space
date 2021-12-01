@@ -1,0 +1,15 @@
+.cp-banner {
+    width : 100%;
+    height : 120px;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+.cp-banner > img{
+    width : auto;
+    height : 100%;
+}
+
+.cp-banner > input {
+    display : none;
+}

@@ -87,3 +87,36 @@ export const FetchApiDelete = async (url, params) => {
         alert(error);
     }
 };
+
+export const FetchApiPostWithFile = async (url, files, params) => {
+    try {
+        let formData = new FormData();
+        for(var file of files){
+            formData.append("file", file);
+        }
+        if (params)
+            Object.keys(params).forEach(key => {
+                formData.append(key, params[key]);
+            });
+
+        const response = await axios({
+            method: "POST",
+            url: url,
+            data: formData,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "multipart-form-data",
+            },
+            withCredentials: true,
+        });
+
+        if (response.data.resultCode != 200) {
+            throw response.data.errorMsg;
+        }
+
+        return response.data;
+    } catch (error) {
+        alert(error)
+        return { resultCode: 9999, errorMessage: error };
+    }
+};
