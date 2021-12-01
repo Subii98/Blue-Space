@@ -77,7 +77,7 @@ function CreatePlatform(props) {
             });
     }
     const onClickSubmit = async () => {
-        let res = await FetchApiPostWithFile("/api/platforms/insert", [banner,icon], {
+        let res = await FetchApiPostWithFile("/api/platforms/insert", [banner, icon], {
             userId: user._id,
             // userId : userId,
             userName: userName,
@@ -107,25 +107,45 @@ function CreatePlatform(props) {
     const onChangeIcon = e => {
         setIconURL(URL.createObjectURL(e.target.files[0]));
         setIcon(e.target.files[0]);
-    }
+    };
 
-    const onClickBanner = ()=>{
-        if(bannerImageRef) bannerImageRef.click();
-    }
-    
+    const onClickBanner = () => {
+        if (bannerImageRef) bannerImageRef.click();
+    };
+
     const onClickIcon = () => {
-        if(iconImageRef) iconImageRef.click();
-    }
+        if (iconImageRef) iconImageRef.click();
+    };
 
     return (
         <div className="create-plaform-main">
             <div>
                 {loading && <LoadingModal />}
                 {error && <MessageModal variant="danger">{error}</MessageModal>}
+                <div className="tags">
+                    <input
+                        className="tag-input"
+                        value={tag1}
+                        onChange={e => setTag1(e.target.value)}
+                        placeholder="#Tag1"
+                    />
+                    <input
+                        className="tag-input"
+                        value={tag2}
+                        onChange={e => setTag2(e.target.value)}
+                        placeholder="#Tag2"
+                    />
+                    <input
+                        className="tag-input"
+                        value={tag3}
+                        onChange={e => setTag3(e.target.value)}
+                        placeholder="#Tag2"
+                    />
+                </div>
                 <div className="postArea">
                     <div className="cp-banner">
                         {/* <img src="/images/platformprofile.jpg"  height="10%"/> */}
-                        <img src={bannerURL} onClick={onClickBanner}/>
+                        <img src={bannerURL} onClick={onClickBanner} />
 
                         <input
                             ref={ref => setBannerImageRef(ref)}
@@ -135,17 +155,15 @@ function CreatePlatform(props) {
                         />
                     </div>
                     <div className="platformInfoArea">
-                    <div>
-                        {/* <img src="/images/platformprofile.jpg"  height="10%"/> */}
-                        <img src={iconURL} onClick={onClickIcon}/>
-
-                        <input
-                            ref={ref => setIconImageRef(ref)}
-                            id="file-input"
-                            type="file"
-                            onChange={onChangeIcon}
-                        />
-                    </div>
+                        <div>
+                            <img src={iconURL} onClick={onClickIcon} />
+                            <input
+                                ref={ref => setIconImageRef(ref)}
+                                id="file-input"
+                                type="file"
+                                onChange={onChangeIcon}
+                            />
+                        </div>
                         {/* <img src="/images/noimage.png" alt="platformprofile" align="center" /> */}
                         <div className="platformInfo">
                             <div className="platformTop">
@@ -184,39 +202,10 @@ function CreatePlatform(props) {
                             </div>
                             <div className="platformBottom">
                                 <span></span>
-
                                 <button type="button">EDIT</button>
                             </div>
                         </div>
                     </div>
-                    <div className="platform_insert_box">
-                        <div className="platform_insert_box-data">
-                            <span>title font color</span>
-                            <input
-                                type="color"
-                                value={fontColor}
-                                onChange={e => setFontColor(e.target.value)}
-                            />
-                        </div>
-                        <div className="platform_insert_box-data">
-                            <span>tag1</span>
-                            <input value={tag1} onChange={e => setTag1(e.target.value)} />
-                        </div>
-                        <div className="platform_insert_box-data">
-                            <span>tag2</span>
-                            <input value={tag2} onChange={e => setTag2(e.target.value)} />
-                        </div>
-                        <div className="platform_insert_box-data">
-                            <span>tag1</span>
-                            <input value={tag3} onChange={e => setTag3(e.target.value)} />
-                        </div>
-                        <button onClick={onClickSubmit}>submit</button>
-                        {/* <span style={{ border : "1px solid blue"}}>CREATE RESULT :: {createPlatform}</span> */}
-                    </div>
-                    {/* <div style={{ border : "1px solid red"}}>
-                    <div>PLATFORMS :: {platforms}</div>
-                </div> */}
-                    {/* <PlatformListArea /> */}
                 </div>
                 <div>
                     <Button
@@ -231,6 +220,7 @@ function CreatePlatform(props) {
                         {"SAVE"}
                     </Button>
                     <Button
+                        onClick={() => history.goBack()}
                         style={{
                             float: "right",
                             color: "#00aeef",
@@ -242,7 +232,6 @@ function CreatePlatform(props) {
                     >
                         {"CANCEL"}
                     </Button>
-                    <button onClick={() => history.goBack()}>Cancel</button>
                 </div>
             </div>
         </div>

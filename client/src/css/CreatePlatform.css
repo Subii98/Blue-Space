@@ -4,6 +4,11 @@
     display : flex;
     justify-content: center;
     align-items: center;
+    border-style: solid;
+    border-radius: 5px 5px 0px 0px;
+    border-color: #d2d2d2;
+    border-width: 1px;
+    overflow: hidden;
 }
 .cp-banner > img{
     width : auto;
@@ -13,3 +18,17 @@
 .cp-banner > input {
     display : none;
 }
+
+.tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+.tag-input {
+    text-decoration: none;
+    color: #00aeef;
+    font-size: 1.4rem;
+    margin-left: 0.5rem;
+  }

@@ -156,49 +156,97 @@ platformRouter.delete(
 );
 
 platformRouter.post(
-  "/edit",
-  expressAsyncHandler(async (req, res) => {
-    const {
-      // userId ,
-      // userName,
-      title,
-      description,
-      // subscriber,
-      // icon,
-      banner,
-      // fontFamily,
-      // titleFontSize,
-      // descFontSize,
-      fontColor,
-      tag1,
-      tag2,
-      tag3,
-      // quizId,
-      platformId,
-    } = req.body;
+    "/edit",
+    uploadModule.array("file"),
+    expressAsyncHandler(async (req, res) => {
+      const {
+        // userId ,
+        userName,
+        title,
+        description,
+        // subscriber,
+        // icon,
+        // banner,
+        // fontFamily,
+        // titleFontSize,
+        // descFontSize,
+        fontColor,
+        tag1,
+        tag2,
+        tag3,
+        // quizId,
+        platformId,
+      } = req.body;
+      
+      const bannerPath = req.files[0] ? "/" + req.files[0].path : "";
+      const iconPath = req.files[1] ? "/" + req.files[1].path : "";
 
-    const editPlatform = await Platform.updateOne(
-      { _id: platformId },
-      {
-        $set: {
-          title: title,
-          description: description,
-          // subscriber,
-          // icon,
-          banner: banner,
-          // fontFamily,
-          // titleFontSize,
-          // descFontSize,
-          fontColor: fontColor,
-          tag1: tag1,
-          tag2: tag2,
-          tag3: tag3,
-        },
-      }
-    );
-    res.send(editPlatform);
-  })
-);
+      const editPlatform = await Platform.updateOne(
+        { _id: platformId },
+        {
+          $set: {
+            title: title,
+            description: description,
+            // fontFamily,
+            // titleFontSize,
+            // descFontSize,
+            fontColor: fontColor,
+            tag1: tag1,
+            tag2: tag2,
+            tag3: tag3,
+            icon: iconPath,
+            banner: bannerPath,
+          },
+        }
+      );
+      res.send(editPlatform);
+    })
+  );
+
+// platformRouter.post(
+//   "/edit",
+//   expressAsyncHandler(async (req, res) => {
+//     const {
+//       // userId ,
+//       // userName,
+//       title,
+//       description,
+//       // subscriber,
+//       // icon,
+//       banner,
+//       // fontFamily,
+//       // titleFontSize,
+//       // descFontSize,
+//       fontColor,
+//       tag1,
+//       tag2,
+//       tag3,
+//       // quizId,
+//       platformId,
+//     } = req.body;
+
+//     const editPlatform = await Platform.updateOne(
+//       { _id: platformId },
+//       {
+//         $set: {
+//           title: title,
+//           description: description,
+//           // subscriber,
+//           // icon,
+//           banner: banner,
+//           // fontFamily,
+//           // titleFontSize,
+//           // descFontSize,
+//           fontColor: fontColor,
+//           tag1: tag1,
+//           tag2: tag2,
+//           tag3: tag3,
+//         },
+//       }
+//     );
+//     res.send(editPlatform);
+//   })
+// );
 
 platformRouter.put(
   "/update/:userId",
