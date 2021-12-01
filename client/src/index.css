@@ -138,6 +138,62 @@ img.hamburger{
   margin-left: 3rem;
 }
 
+.profileThumb{
+  border-radius: 50%;
+  object-fit: contain;
+  width: 5rem;
+  border: 1px solid #00aeef;
+}
+
+.miniProfile{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.miniProfile a{
+  text-decoration: none;
+  color: #000000;
+}
+
+.redirectMyPage{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.redirectMyPage img{
+  width: 1.5rem;
+  object-fit: contain;
+  margin-right: 1rem;
+}
+
+.redirectMyPage p{
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.redirectLogout{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.redirectLogout p{
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.redirectLogout img{
+  object-fit: contain;
+  width: 1.5rem;
+  margin-right: 1rem;
+}
+
 .mainButtons{
   display: flex;
   flex-wrap: wrap;
