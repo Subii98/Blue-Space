@@ -66,7 +66,7 @@ function RankLevel(props){
                     <p>{totalQuestions != 0 ? Math.round(( correct / totalQuestions) * 100) : 0}%</p>
                     <p>{playCount}</p>
                 </div>
-                <div className="rankAccuracy">
+                <div className="rankSorted">
                     <div className="leaderboardHeader">
                         <p>Rank</p>
                         <p>Username</p>
