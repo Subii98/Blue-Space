@@ -17,11 +17,13 @@ function ManageTable(props){
     const [disableCnt, setDisableCnt] = useState()
 
     useEffect(()=> {
-        setUsers(props.users)
-        setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
-        setDisableCnt(false)
-        setDisableLv(false)
-        setDisableAcc(true)
+        if (props.user != undefined){
+            setUsers(props.users)
+            setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
+            setDisableCnt(false)
+            setDisableLv(false)
+            setDisableAcc(true)
+        }
     }, [])
 
     useEffect(() => {
