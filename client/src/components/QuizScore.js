@@ -7,8 +7,10 @@ function QuizScore(props){
     const user = props.user
     const [questions, setQuestions] = useState(props.questions)
     const [platformId, setPlatformId] = useState(props.platformId)
-    const [level, setLevel] = useState(10)
+    const [level, setLevel] = useState(props.user.level)
     const [expRate] = useState(3)
+    const [levelUp, setLevelUp] = useState(false)
+    const [expBarAmount, setExpBarAmount] = useState() 
     const history = useHistory();
 
     useEffect(()=> {
@@ -16,34 +18,70 @@ function QuizScore(props){
     }, [])
 
     useEffect (() => {
-        console.log(level)
         editPoints()
-    }, [level])
+    }, [level, expBarAmount, levelUp])
 
     function calcLevel(){
         const tmpExp = props.user.exp + (props.count * expRate)
-        console.log(tmpExp)
+
         if ( 0 <= tmpExp && tmpExp <= 15){
-            console.log("why?")
             setLevel(1)
+            setExpBarAmount( (tmpExp / 15) * 100)
+            if ((tmpExp / 15) * 100 >= 100){
+                setLevel(level + 1)
+                setLevelUp(true)
+                setExpBarAmount(( ((tmpExp / 15) * 100) -100) / 49)
+            }
         }
         else if ( 15 < tmpExp && tmpExp <= 49){
             setLevel(2)
+            setExpBarAmount( (tmpExp / 49) * 100)
+            if ((tmpExp / 49) * 100 >= 100){
+                setLevel(level + 1)
+                setLevelUp(true)
+                setExpBarAmount(( ((tmpExp / 49) * 100) -100) / 106)
+            }
         }
         else if ( 49 < tmpExp && tmpExp <= 106){
             setLevel(3)
+            setExpBarAmount( (tmpExp / 106) * 100)
+            if ((tmpExp / 106) * 100 >= 100){
+                setLevel(level + 1)
+                setLevelUp(true)
+                console.log("3")
+                setExpBarAmount(( ((tmpExp / 106) * 100 )-100) / 198)
+            }
         }
         else if ( 106 < tmpExp && tmpExp <= 198){
             setLevel(4)
+            setExpBarAmount( (tmpExp / 198) * 100)
+            if ((tmpExp / 198) * 100 >= 100){
+                setLevel(level + 1)
+                setLevelUp(true)
+                setExpBarAmount(( ((tmpExp / 198) * 100) -100) / 333)
+            }
         }
         else if ( 198 < tmpExp && tmpExp <= 333){
             setLevel(5)
+            setExpBarAmount( (tmpExp / 333) * 100)
+            if ((tmpExp / 333) * 100 >= 100){
+                setLevel(level + 1)
+                setLevelUp(true)
+                setExpBarAmount(( ((tmpExp / 333) * 100)-100) / 705)
+            }
         }
         else if ( 333 < tmpExp && tmpExp <= 705){
             setLevel(6)
+            setExpBarAmount( (tmpExp / 705) * 100)
+            if ((tmpExp / 705) * 100 >= 100){
+                setLevel(level + 1)
+                setLevelUp(true)
+                setExpBarAmount(99.9)
+            }
         }
         else {
             setLevel(7)
+            setExpBarAmount( 99.9)
         }
     }
 
@@ -66,15 +104,57 @@ function QuizScore(props){
 
     return(
         <div className="score">
-            <p>Score</p>
-            <div className="questionsCorrect">
-                <p>Questions Correct {props.count}/{questions.length}</p>
+            <div className="scoreHeader">
+                <div className="centered">Score</div>
+                <img src="/images/confetti.png" alt="confetti"/>
             </div>
-            <p>Points Earned +{props.count * 10}</p>
-            <p>Points Spent -{props.usedPoints}</p>
-            <p>Exp +{props.count * expRate}</p>
-            <p>Lv.{level}</p>
-            <p>Rate this quiz!</p>
+            <div className="userPreview2">
+                <div className="userTitle2">
+                    <p style={{ textAlign: "center"}}>{user.title}</p>
+                </div>                    
+                <div className="usernameBadge2">
+                    <img src={user.badge}/>
+                    <span>{user.username}</span>
+                </div>
+            </div>
+            <div className="storeContent">
+                <div className="scoreText">
+                    <p>Questions Correct</p>
+                    <div className="correctCount">
+                        <div className="scoreInfoBlue">{props.count}</div>
+                        <div className="scoreInfo">/{questions.length}</div>
+                    </div>
+                    
+                </div>
+                <div className="scoreText">
+                    <p>Points Spent</p>
+                    <div className="scoreInfo">-{props.usedPoints}</div>
+                </div>
+                <div className="scoreText">
+                    <p>Points Earned</p>
+                    <div className="scoreInfoBlue">+{props.count * 10}</div>
+                </div>                
+                <div className="expAndLevel">
+                    <div className="levelUpInfo">
+                        {levelUp ? <div className="expCount" style={{textAlign:'left', opacity: "100%"}}>
+                            <p>Level Up!</p>
+                        </div> : <div className="expCount" style={{textAlign:'left', opacity: "0%"}}>
+                            <p>Level Up!</p>
+                        </div>}
+                        <div className="expCount" style={{textAlign:'right'}}>
+                            <p>+{props.count * expRate}exp</p>
+                        </div>
+                    </div>
+                    <div className="expBarWithLevel">
+                        <p>Lv.{level}</p>
+                        <div className="expBarContainer">
+                            <div className="expBar rate" style={{width: `${expBarAmount}%`}}></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="rateQuizText">Rate this quiz!</div>
+            </div>
+            
             <button type="button" onClick={onClickClose}>CLOSE</button>
         </div>
     )

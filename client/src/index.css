@@ -398,6 +398,8 @@ top: 69rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  
+  overflow: hidden;
 }
 
 .score button{
@@ -409,9 +411,142 @@ top: 69rem;
   border-radius: 5px;
 }
 
-.questionsCorrect {
+.scoreHeader {
+  position: relative;
+  height: auto;
+  overflow: hidden;
+}
+
+.scoreHeader img{
+  object-fit: cover;
+  transform: scale(1.4);
+  width: 100%;
+  position: relative;
+  opacity: 80%;
+  
+}
+
+.centered {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+}
+
+.userPreview2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.userTitle2 {
+  display: inline-block;
+  border: none;
+}
+
+.userTitle2 p{
+  font-size: 2rem;
+  background-color: rgb(0, 174, 239, 0.15);
+}
+
+.usernameBadge2 span{
+  font-size: 2.5rem;
+}
+
+.usernameBadge2{
   display: flex;
   flex-direction: row;
+  margin-bottom: 1rem;
+  border:none
+}
+
+.usernameBadge2 img{
+  width: 2.5rem;
+  margin-right: 0.5rem;
+  object-fit: contain;
+}
+
+.storeContent{
+  display: flex;
+  flex-direction: column;
+}
+
+.scoreText{
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2.5rem;
+  color: #929292;
+}
+
+.scoreInfo {
+  font-size: 4rem;
+}
+
+.scoreInfoBlue{
+  font-size: 4rem;
+  color: #00aeef;
+}
+
+.rateQuizText{
+  color: #929292;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+.expAndLevel{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.expBarWithLevel{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expBarWithLevel p{
+  font-size: 2.5rem;
+  color: #929292;
+}
+
+.correctCount{
+  display: flex;
+  flex-direction: row;
+}
+
+.expCount{
+  width: 50%;
+  height: 1.5rem;
+}
+
+.expCount p{
+  font-size: 1.5rem;
+  color: #00aeef;
+}
+
+.expBarContainer{
+  width: 80%;
+  height: 2rem;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
+}
+
+.expBar{
+  text-align: right;
+  padding-top: 10px; 
+  padding-bottom: 10px;
+  height: auto;
+  background-color: #00aeef;
+}
+
+.levelUpInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 /*end of QuizScore page*/
@@ -671,7 +806,8 @@ th button:disabled{
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
-  border:none
+  border:none;
+  object-fit: contain;
 }
 
 .usernameBadge img{
