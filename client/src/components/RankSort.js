@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
 
-function RankAccuracy(props){
+function RankSort(props){
     const [user] = useState(props.user)
+    const [users, setUsers] = useState([]);
     const [title, setTitle] = useState()
     const [badge, setBadge] = useState()
     const [username, setUsername] = useState()
@@ -12,16 +12,18 @@ function RankAccuracy(props){
     const [playCount, setPlayCount] = useState()
     const [userRank, setUserRank] = useState()
     const [level, setLevel] = useState()
-    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [disableAcc, setDisableAcc] = useState()
+    const [disableLv, setDisableLv] = useState()
+    const [disableCnt, setDisableCnt] = useState()
 
     useEffect(()=> {
         axios
             .get("/api/v1")
             .then(res => {
                 setLoading(true);
-                setUsers(res.data);
+                setUsers(res.data.sort((b, a) => (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions)))
                 setLoading(false);
                 return;
             })
@@ -30,8 +32,10 @@ function RankAccuracy(props){
                 setLoading(false);
                 console.log("Error loading users");
             });
-        users.sort((b, a) => (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions))
         setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
+        setDisableCnt(false)
+        setDisableLv(false)
+        setDisableAcc(true)
     }, [])
 
     useEffect(() => {
@@ -43,13 +47,40 @@ function RankAccuracy(props){
             setTotalQuestions(props.user.totalQuestions)
             setPlayCount(props.user.playCount)
             setLevel(props.user.level)
-            users.sort((b, a) => (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions))
             setUserRank(users.indexOf(users.find( e => e.username == props.user.username))+ 1)
         }
     }, [props.user])
-    
+
+    useEffect(() => {
+
+    }, [users])
+
+    const onClickSortLevel = () => {
+        setDisableAcc(false)
+        setDisableCnt(false)
+        setDisableLv(true)
+        setUsers(users.sort((b, a) => a.level - b.level))
+        setUserRank(users.indexOf(users.find( e => e.username === props.user.username))+ 1)
+    }
+
+    const onClickSortPlayCount = () => {
+        setDisableAcc(false)
+        setDisableLv(false)
+        setDisableCnt(true)
+        setUsers(users.sort((b, a) => a.playCount - b.playCount))
+        setUserRank(users.indexOf(users.find( e => e.username === props.user.username))+ 1)
+
+    }
+
+    const onClickSortAccuracy = () => {
+        setDisableCnt(false)
+        setDisableLv(false)
+        setDisableAcc(true)
+        setUsers(users.sort((b, a) => a.totalQuestions !== 0 ? (a.correct / a.totalQuestions) - (b.correct / b.totalQuestions) : 0 - (b.correct / b.totalQuestions)))
+        setUserRank(users.indexOf(users.find( e => e.username === props.user.username))+ 1)
+    }
     return(
-        <div>
+        <div className="leaderboard">
             <div className="userRank">
                 <p>{userRank}</p>
                 <div className="userProfile">
@@ -62,19 +93,19 @@ function RankAccuracy(props){
                     </div>
                 </div>
                 <p>{level}</p>
-                <p>{Math.round(( correct / totalQuestions) * 100)}%</p>
+                <p>{totalQuestions != 0 ? Math.round(( correct / totalQuestions) * 100) : 0}%</p>
                 <p>{playCount}</p>
             </div>
-            <div className="rankAccuracy">
+            <div className="rankSorted">
                 <div className="leaderboardHeader">
                     <p>Rank</p>
                     <p>Username</p>
-                    <p>Level</p>
-                    <p>Accuracy</p>
-                    <p>Play Count</p>
+                    <button disabled={disableLv} onClick={() => onClickSortLevel()}>Level</button>
+                    <button disabled={disableAcc} onClick={() => onClickSortAccuracy()}>Accuracy</button>
+                    <button disabled={disableCnt} onClick={()=> onClickSortPlayCount()}>Play Count</button>
                 </div>
                 {users.map((user, index) => 
-                    <div className="userRank">
+                    <div className="allRanks" key={index+1}>
                         <p>{index+1}</p>
                         <div className="userProfile">
                             <div className="userTitle">
@@ -86,7 +117,7 @@ function RankAccuracy(props){
                             </div>
                         </div>
                     <p>{user.level}</p>
-                    <p>{Math.round(( user.correct / user.totalQuestions) * 100)}%</p>
+                    <p>{user.totalQuestions != 0 ? Math.round(( user.correct / user.totalQuestions) * 100) : 0}%</p>
                     <p>{user.playCount}</p>
                 </div>)}
             </div>
@@ -95,4 +126,4 @@ function RankAccuracy(props){
 
 }
 
-export default RankAccuracy
+export default RankSort

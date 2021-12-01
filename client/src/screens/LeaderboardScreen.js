@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import RankAccuracy from "../components/RankAccuracy.js";
+import RankSort from "../components/RankSort.js";
 
 function LeaderboardScreen(){
     const [user, setUser] = useState()
@@ -21,7 +21,7 @@ function LeaderboardScreen(){
 
     return(
         <div className="leaderboard">
-            <RankAccuracy user={user}></RankAccuracy>
+            <RankSort user={user}></RankSort>
         </div>
     )
 }

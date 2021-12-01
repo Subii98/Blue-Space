@@ -121,7 +121,7 @@ userRouter.post("/auth/google", async (req, res) => {
           exp: 0,
           quizPlayed: 0,
           badge: "",
-          title: "",
+          title: "Newbie",
           correct: 0,
           totalQuestions: 0,
           playCount: 0,
