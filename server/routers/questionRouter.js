@@ -119,6 +119,10 @@ questionRouter.post(
         question.text = text;
         question.option = option;
         question.answer = answer;
+        question.first = 0;
+        question.second = 0;
+        question.third = 0;
+        question.fourth = 0;
       }
       // Save the document
       question

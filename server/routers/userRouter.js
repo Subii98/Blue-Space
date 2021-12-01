@@ -107,7 +107,7 @@ userRouter.post("/auth/google", async (req, res) => {
         var randomName = "";
         randomName += name.toLowerCase();
         randomName = randomName.replace(/\s+/g, "");
-        randomName += Math.floor(Math.random() * 100 + 1);
+        randomName += Math.floor(Math.random() * 1000 + 1);
         console.log("randomname: ", randomName);
 
         console.log("current user cnt is: ", currentUserCounter);
