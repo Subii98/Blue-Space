@@ -31,7 +31,7 @@ function ProfileSetting(props) {
     }, [userData]);
 
     const onClickUpdate = async () => {
-        const res = await FetchApiPost("/api/v1/set_username", {
+        const res = await FetchApiPost("/api/v1/set_user", {
             newName: name,
             userId: userData._id,
         });

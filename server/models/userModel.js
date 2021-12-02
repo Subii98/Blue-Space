@@ -45,6 +45,9 @@ const userSchema = new mongoose.Schema({
   },
   level: {
     type: Number
+  },
+  userImage: {
+    type: String
   }
 });
 

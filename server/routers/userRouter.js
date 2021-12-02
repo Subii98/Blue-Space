@@ -125,7 +125,8 @@ userRouter.post("/auth/google", async (req, res) => {
           correct: 0,
           totalQuestions: 0,
           playCount: 0,
-          level: 1
+          level: 1,
+          userImage: "/images/blank-profile.png"
         });
         console.log("saved user: ", user);
         console.log("username: ", user.username);
@@ -292,7 +293,7 @@ userRouter.get(
 );
 
 userRouter.post(
-  "/set_username",
+  "/set_user",
   expressAsyncHandler(async (req, res) => {
     const { newName, userId } = req.body;
     const existUser = await User.findOne({ username : newName });
