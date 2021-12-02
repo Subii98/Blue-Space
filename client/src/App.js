@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./components/header.js";
+import NavBar from "./components/Navigation/NavBar.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import QuizScreen from "./screens/QuizScreen.js";
 import PlatformScreen from "./screens/PlatformScreen.js";
@@ -16,12 +17,15 @@ import ProfileSetting from "./screens/ProfileSetting.js";
 import StoreScreen from "./screens/StoreScreen.js"
 import LeaderboardScreen from "./screens/LeaderboardScreen.js";
 
+
 function App() {
   return (
     <BrowserRouter>
       <div className="grid-container">
-        <Header />
-        <main>
+        <NavBar></NavBar>
+        
+          <Header />
+          <main>
           <Route path="/quiz/:quizId" component={QuizScreen}></Route>
           <Route path="/platform/:id" component={PlatformScreen}></Route>
           <Route path="/CreatePlatform" component={CreatePlatform}></Route>
@@ -36,7 +40,8 @@ function App() {
           <Route path="/ProfileSetting/:userId" component={ProfileSetting}></Route>
           <Route path="/store" component={StoreScreen}></Route>
           <Route path="/leaderboard" component={LeaderboardScreen}></Route>
-        </main>
+          </main>
+        
       </div>
     </BrowserRouter>
   );

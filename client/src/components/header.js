@@ -44,12 +44,6 @@ function Header(props) {
     return (
       <header>
         <div className="all">
-          <img
-            src="/images/hamburger.png"
-            className="hamburger"
-            alt="hamburger"
-            width="25"
-          />
           <a href="/">
             <img
               src="/images/logo11.png"
