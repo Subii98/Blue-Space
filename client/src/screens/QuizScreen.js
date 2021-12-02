@@ -5,14 +5,19 @@ import PostArea from "../components/PostArea.js";
 import Question from "../components/Question.js";
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
+import Quiz from "../components/Quiz.js";
 
 function QuizScreen(props) {
     const [quiz, setQuiz] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [platformId ,setPlatformId] = useState()
+    const [platform, setPlatform] = useState()
 
     useEffect(() => {
-        if (props.match.params.quizId) fetchQuiz();
+        if (props.match.params.quizId){
+            fetchQuiz();
+        }
     }, []);
 
     function fetchQuiz() {
@@ -20,9 +25,7 @@ function QuizScreen(props) {
             .get("/api/questions/get_question/" + props.match.params.quizId)
             .then(res => {
                 setLoading(true);
-                const data = res.data;
-                console.log(data)
-                setQuiz(data);
+                setQuiz(res.data);
                 setLoading(false);
                 return;
             })
@@ -32,6 +35,7 @@ function QuizScreen(props) {
                 console.log("Error loading quiz");
             });
     }
+
     return (
         <div>
             {loading ? (
@@ -39,6 +43,7 @@ function QuizScreen(props) {
             ) : error ? (
                 <MessageModal variant="danger">{error}</MessageModal>
             ) : (
+                
                 <div className="platformQuiz">
                     {quiz && quiz.length > 0 ? <Question question={quiz}></Question> : <></>}
                 </div>

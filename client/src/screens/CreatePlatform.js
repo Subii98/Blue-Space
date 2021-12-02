@@ -164,7 +164,6 @@ function CreatePlatform(props) {
                                 onChange={onChangeIcon}
                             />
                         </div>
-                        {/* <img src="/images/noimage.png" alt="platformprofile" align="center" /> */}
                         <div className="platformInfo">
                             <div className="platformTop">
                                 <input

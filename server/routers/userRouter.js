@@ -120,7 +120,7 @@ userRouter.post("/auth/google", async (req, res) => {
           subscribedPlatforms: [],
           exp: 0,
           quizPlayed: 0,
-          badge: "",
+          badge: "/images/badges/user.png",
           title: "Newbie",
           correct: 0,
           totalQuestions: 0,
@@ -276,6 +276,18 @@ userRouter.get(
     const { user_id } = req.query;
     const user = await User.findOne({ _id: user_id });
     res.send(user);
+  })
+);
+
+userRouter.get(
+  "/get_user/:username",
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findOne({ username: req.params.username });
+    if (user){
+      res.send(user)
+    }else{
+      res.status(404).send({message: 'User Not Found'})
+    }
   })
 );
 

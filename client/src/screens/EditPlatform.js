@@ -5,9 +5,10 @@ import Tags from "../components/Tags.js";
 import PostArea from "../components/PostArea.js";
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
-import { FetchApiPost, FetchApiPostWithFile } from "../utils/Network";
+import { FetchApiDelete, FetchApiPost, FetchApiPostWithFile } from "../utils/Network";
 import { useHistory } from "react-router-dom";
 import { Button } from "@mui/material";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 function EditPlatform(props) {
     const history = useHistory();
@@ -53,9 +54,6 @@ function EditPlatform(props) {
     const onChangeBanner = e => {
         setBannerURL(URL.createObjectURL(e.target.files[0]));
         setBanner(e.target.files[0]);
-        console.log("???changed")
-        console.log(e.target.files[0])
-        console.log(banner)
 
     };
     
@@ -149,6 +147,15 @@ function EditPlatform(props) {
         history.goBack();
     };
 
+    const onClickDelete = async (e) =>{
+        let res = await FetchApiDelete("/api/platforms/deletePlatform", {
+            platformId: platform._id
+        });
+        console.log(res);
+        // alert("platform delete");
+        // history.goBack();
+    };
+
     return (
         <div>
             <div>
@@ -205,7 +212,6 @@ function EditPlatform(props) {
                                         onChange={onChangeIcon}
                                     />
                                 </div>
-                                {/* <img src="/images/noimage.png" alt="platformprofile" align="center" /> */}
                                 <div className="platformInfo">
                                     <div className="platformTop">
                                         <input
@@ -272,6 +278,19 @@ function EditPlatform(props) {
                                 }}
                             >
                                 {"CANCEL"}
+                            </Button>
+                            <Button
+                                onClick={onClickDelete}
+                                style={{
+                                    float: "right",
+                                    color: "#00aeef",
+                                    bordercolor: "#00aeef",
+                                    borderradius: "5px",
+                                    borderstyle: "solid",
+                                    borderwidth: "1px",
+                                }}
+                            >
+                                {"DELETE"}
                             </Button>
                         </div>
                     </div>
