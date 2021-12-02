@@ -191,7 +191,7 @@ function EditPlatform(props) {
                                     src={
                                         platform.banner && platform.banner != ""
                                             ? platform.banner
-                                            : "./images/sample.jpeg"
+                                            : "/images/sample.jpeg"
                                     }
                                     onClick={onClickBanner}
                                 />

@@ -24,7 +24,10 @@ function CreatePlatform(props) {
     const [totalQuestions, setTotalQuestions] = useState("");
     const [correct, setCorrect] = useState("");
     const [badge, setBadge] = useState("");
+    const [level, setLevel] = useState()
+    const [expBarAmount, setExpBarAmount] = useState()
     const [subscribingPlatforms, setSubscribingPlatforms] = useState([]);
+    const expRange = [15, 49, 106, 198, 333, 705, 9999]
     const history = useHistory();
 
     useEffect(() => {
@@ -65,6 +68,8 @@ function CreatePlatform(props) {
             setTotalQuestions(user.totalQuestions);
             setCorrect(user.correct);
             setBadge(user.badge)
+            setLevel(user.level)            
+            setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
         }
     });
 
@@ -87,18 +92,28 @@ function CreatePlatform(props) {
                 {error && <MessageModal variant="danger">{error}</MessageModal>}
                 <div className="side">
                     <div className="profile">
+                        <div className="settingsGear">
+                            <img src="/images/icon/gear.png" style={{opacity: "0%"}}/>
+                            <button onClick={() => history.push(`/ProfileSetting/${user._id}`)}><img src="/images/icon/gear.png"/></button>
+                        </div>
                         <div className="profile-image">
                             <img src={"./images/sample.jpeg"} />
                         </div>
-                        <div className="user-info">
-                            <div className="badge-image"><img src={badge} />{title}</div>
-                            <div >
-                                {name}
-                                <button onClick={() => history.push(`/ProfileSetting/${user._id}`)}>
-                                    edit
-                                </button>
+                        <div className="userPreview">
+                            <div className="userTitle">
+                                <p style={{ textAlign: "center"}}>{title}</p>
+                            </div>
+                            <div className="usernameBadge">
+                                <img src={badge}/>
+                                <span>{name}</span>
                             </div>
                         </div>
+                        <div className="expBarWithLevel2">
+                            <p>Lv.{level}</p>
+                            <div className="expBarContainer2">
+                            <div className="expBar2 rate" style={{width: `${expBarAmount}%`}}></div>
+                        </div>
+                    </div>
                     </div>
                     <div className="platforms-list">
                         <div className="stat">STATS</div>
