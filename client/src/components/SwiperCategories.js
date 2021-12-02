@@ -13,7 +13,7 @@ import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.min.css'
 import 'swiper/components/pagination/pagination.min.css'
 
-import CategoryCard from './CategoriesCard/CategoryCard.js'
+import HomePageCategoryCard from './HomePageCategoryCard.js'
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -30,17 +30,34 @@ function SwiperCategories() {
     for (let i = 0; i < 6; i +=1){
         slides.push(
             <SwiperSlide key={`slide-${i}`}>
-                <CategoryCard category={catinfo[i]}></CategoryCard>
+                <HomePageCategoryCard category={catinfo[i]}></HomePageCategoryCard>
             </SwiperSlide>
         );
     }
     return (
         <div>
-            <Swiper id="main" tag='section' wrapperTag="ul" navigation pagination>
+            {/* <Swiper
+                id="main"
+                tag="section"
+                wrapperTag="ul"
+                navigation
+                pagination={{ clickable: true }}
+                spaceBetween={0}
+                slidesPerView={1}
+                centeredSlides="true"
+            > */}
+            <Swiper
+                grabCursor="true"
+                centeredSlides="true"
+                spaceBetween={0}
+                slidesPerView={1}
+                loop="true"
+                pagination={{ clickable: true, dynamicBullets: true }}
+            >
                 {slides}
             </Swiper>
         </div>
-    )
+    );
 }
 
 export default SwiperCategories
