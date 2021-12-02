@@ -96,7 +96,7 @@ function Header(props) {
           <div className="headerItems">
             <div className="topLine">
               <div className="searchBar">
-                <form onSubmit={handleSubmit}>
+                <form className="searchForm" onSubmit={handleSubmit}>
                   <input
                     type="text"
                     name="search"

@@ -156,23 +156,32 @@ img.hamburger{
   flex-direction: row;
   justify-content: flex-start;
   min-width: 1fr;
+  height: auto;
 }
 
 .searchInput{
-  border-style: solid;
-  border-width: 1px;
-  border-color: #D2D2D2;
+  border-style: none;
+  border-left: 1px solid #d2d2d2;
+  border-top: 1px solid #d2d2d2;
+  border-bottom: 1px solid #d2d2d2;
   border-radius: 5px 0px 0px 5px;
-  min-width: 50rem
+  min-width: 55rem;
+  height: 2.2rem
 }
 
 .searchInput::placeholder{
   padding: 5px;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 .searchInput:focus{
   outline-color: #00aeef;
 }
+
+.searchForm{
+  display: flex;
+  flex-direction: row;
+}
+
 /*searchbar magnifying glass button*/
 .all button{
   border-style: 1px solid;
@@ -186,6 +195,8 @@ img.hamburger{
   border-color: #00aeef;
   background-color: #00aeef;
   border-radius: 0px 5px 5px 0px;
+  width: 3.5rem;
+  display: block;
 }
 
 .headerItems{
@@ -922,6 +933,18 @@ th button:disabled{
   padding: 1rem 5rem 1rem 5rem;
 }
 
+.storePoints{
+  color: #00aeef;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.storePoints p{
+  color: #000000;
+  margin-left: 1rem;
+
+}
 .userPreview {
   display: flex;
   flex-direction: column;
@@ -938,7 +961,7 @@ th button:disabled{
 }
 
 .usernameBadge span{
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .usernameBadge{
@@ -946,12 +969,12 @@ th button:disabled{
   flex-direction: row;
   margin-bottom: 1rem;
   border:none;
-  object-fit: contain;
 }
 
 .usernameBadge img{
-  width: 1.5rem;
+  width: 1.7rem;
   margin-right: 0.5rem;
+  object-fit: contain;
 }
 
 .storeContent{
