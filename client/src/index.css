@@ -97,7 +97,6 @@ img.hamburger{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  min-height: 4rem;
   min-width: 1fr;
 }
 
@@ -163,7 +162,7 @@ img.hamburger{
 .redirectMyPage{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: auto;
 }
 
 .redirectMyPage img{
@@ -180,7 +179,7 @@ img.hamburger{
 .redirectLogout{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: auto;
 }
 
 .redirectLogout p{
@@ -792,7 +791,7 @@ td {
 td,
 th{
   color: #000000;
-  border: 1px solid rgb(190, 190, 190);
+  border: 1px solid #d2d2d2;
   padding: 0.3rem;
   font-weight: normal;
   height: 100%;
@@ -849,6 +848,8 @@ th button:disabled{
 .storePage{
   display: flex;
   flex-direction: column;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
 }
 
 .storeHeader {
@@ -856,10 +857,8 @@ th button:disabled{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #929292;
-  border-radius: 5px;
-  border: none;
-  padding: 1rem
+  border-bottom: 1px solid #d2d2d2;
+  padding: 1rem 5rem 1rem 5rem;
 }
 
 .userPreview {
@@ -899,8 +898,9 @@ th button:disabled{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
   height: auto;
+  padding: 1rem 5rem 1rem 5rem;
+  
 }
 .badges {
   display: flex;
@@ -908,6 +908,8 @@ th button:disabled{
   justify-content: space-between;
   width: 100%;
   margin-bottom: 2rem;
+  padding: 0rem 5rem 5rem 5rem;
+  border-bottom: 1px solid #d2d2d2;
 }
 
 .storeBadges{
