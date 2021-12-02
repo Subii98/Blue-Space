@@ -134,7 +134,7 @@ function Header(props) {
           </div>
           <div className="loginButtons">
             {!store.loggedIn ? <LoginComponent />
-              : store.loggedIn && !openMiniProfile ? <img className="profileThumb" src={user && user.badge} alt="badge" onClick={() => onClickMiniProfile()}/>
+              : store.loggedIn && !openMiniProfile ? <img className="profileThumb" src={user && user.badge} onClick={() => onClickMiniProfile()}/>
               : store.loggedIn && openMiniProfile ?
                 <div className="miniProfile">
                   <div className="userPreview">
@@ -149,10 +149,10 @@ function Header(props) {
                     <img src="/images/icon/smile.png" alt="smile"/>
                     <p>My Page</p>
                   </Link>
-                  <Link className="redirectLogout" onClick={() => onClickCloseMiniProfile()}>
+                  <div className="redirectLogout">
                     <img src="/images/icon/logout.png" alt="logout"/>
-                    <LogoutComponent />
-                  </Link>
+                    <LogoutComponent onClick={() => onClickCloseMiniProfile()}/>
+                  </div>
                 </div>
               : false}
           </div>
