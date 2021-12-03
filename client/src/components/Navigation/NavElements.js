@@ -27,8 +27,21 @@ function NavElements() {
                 setError("No userdata");
             });
     }
+    function getQuizzes() {
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/quizzes")
+            .then(res => setQuizzes(res.data))
+            .catch(error => {
+                setError("No quizdata");
+            });
+    }
+
+
     useEffect(()=> {
         fetchUser();
+        getQuizzes();
     }, []);
 
     useEffect(()=> {
@@ -102,24 +115,37 @@ function NavElements() {
             <div className="navHeaders navElement">
                 <HistoryIcon sx={{ fontSize: 26 }}></HistoryIcon>
                 Recent Quizzes
+                <div className="linksContainer">
+                    {quizzes
+                        ? quizzes.map((quiz, index) => {
+                              /* console.log("entered loop: ", sub, index); */
+                              const quizName = quiz.title;
+                              const quizIds = quiz._id;
+                              return (
+                                  <ui className="navLinks">
+                                      <Link to={`/quiz/${quizIds}`}>{quizName}</Link>
+                                  </ui>
+                              );
+                          })
+                        : null}
+                </div>
             </div>
             <div className="navHeaders navElement">
                 <FolderSharedOutlinedIcon sx={{ fontSize: 28 }}> </FolderSharedOutlinedIcon>
                 Subscribed Platforms
                 <div className="linksContainer">
-                    {subscribedID? (
-                        subscribedID.map((sub, index) => {
-                        /* console.log("entered loop: ", sub, index); */
-                        const subName = subscribedNames[index];
-                        return (
-                            <ui className="navLinks">
-                                    <Link to={`/platform/${sub}`}>{subName}</Link>
-                            </ui>
-                        );
-                    })
-                    ) : null}
+                    {subscribedID
+                        ? subscribedID.map((sub, index) => {
+                              /* console.log("entered loop: ", sub, index); */
+                              const subName = subscribedNames[index];
+                              return (
+                                  <ui className="navLinks">
+                                      <Link to={`/platform/${sub}`}>{subName}</Link>
+                                  </ui>
+                              );
+                          })
+                        : null}
                 </div>
-
             </div>
             <div className="navHeaders navElement">
                 <FolderSharedOutlinedIcon sx={{ fontSize: 28 }}> </FolderSharedOutlinedIcon>
@@ -127,10 +153,12 @@ function NavElements() {
             </div>
             <div className="navHeaders navElement">
                 <AnnouncementOutlinedIcon sx={{ fontSize: 28 }}> </AnnouncementOutlinedIcon>
-                <a className='popup' href="twitter.com">Announcements on Twitter</a>
+                <a className="popup" href="twitter.com">
+                    Announcements on Twitter
+                </a>
             </div>
             <div className="navHeaders navElement">
-                <a className='popup' href="javascript:;" onClick={e => modalOpen(e)}>
+                <a className="popup" href="javascript:;" onClick={e => modalOpen(e)}>
                     <TextsmsOutlinedIcon sx={{ fontSize: 28 }}> </TextsmsOutlinedIcon>
                     Send Us Feedback
                 </a>
@@ -152,7 +180,7 @@ function NavElements() {
                                     name="email"
                                     placeholder="Email-Address"
                                     value={email}
-                                    onChange={e=> handleEmailChange(e)}
+                                    onChange={e => handleEmailChange(e)}
                                 />
 
                                 <label>Send us Feedback</label>
