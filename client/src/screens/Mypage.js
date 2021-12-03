@@ -71,7 +71,7 @@ function CreatePlatform(props) {
             setLevel(user.level)            
             setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
         }
-    },[]);
+    });
 
     function subscribe(id) {
         axios
