@@ -9,13 +9,12 @@
     border-color: #d2d2d2;
     border-width: 1px;
     overflow: hidden;
-}
-.cp-banner > img{
-    width : auto;
-    height : 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.cp-banner > input {
+.cp-banner-input {
     display : none;
 }
 

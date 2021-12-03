@@ -149,6 +149,7 @@ img.hamburger{
 
 .loginButton{
   cursor:pointer;
+  color: #00aeef;
 }
 
 .logoutButton{
@@ -166,25 +167,33 @@ img.hamburger{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  min-height: 4rem;
   min-width: 1fr;
+  height: auto;
 }
 
 .searchInput{
-  border-style: solid;
-  border-width: 1px;
-  border-color: #D2D2D2;
+  border-style: none;
+  border-left: 1px solid #d2d2d2;
+  border-top: 1px solid #d2d2d2;
+  border-bottom: 1px solid #d2d2d2;
   border-radius: 5px 0px 0px 5px;
-  min-width: 50rem
+  min-width: 55rem;
+  height: 2.2rem
 }
 
 .searchInput::placeholder{
   padding: 5px;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 .searchInput:focus{
   outline-color: #00aeef;
 }
+
+.searchForm{
+  display: flex;
+  flex-direction: row;
+}
+
 /*searchbar magnifying glass button*/
 .all button{
   border-style: 1px solid;
@@ -198,6 +207,8 @@ img.hamburger{
   border-color: #00aeef;
   background-color: #00aeef;
   border-radius: 0px 5px 5px 0px;
+  width: 3.5rem;
+  display: block;
 }
 
 .headerItems{
@@ -232,7 +243,7 @@ img.hamburger{
 .redirectMyPage{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: auto;
 }
 
 .redirectMyPage img{
@@ -249,7 +260,7 @@ img.hamburger{
 .redirectLogout{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: auto;
 }
 
 .redirectLogout p{
@@ -367,6 +378,7 @@ img.hamburger{
   background-color: transparent;
   padding: 1px 1.2rem;
 }
+
 /*Start of Timer Component*/
 .timer{
   display: flex;
@@ -523,7 +535,7 @@ top: 69rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   overflow: hidden;
 }
 
@@ -613,6 +625,13 @@ top: 69rem;
 .scoreInfoBlue{
   font-size: 4rem;
   color: #00aeef;
+}
+
+.scoreContent{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .rateQuizText{
@@ -870,7 +889,7 @@ td {
 td,
 th{
   color: #000000;
-  border: 1px solid rgb(190, 190, 190);
+  border: 1px solid #d2d2d2;
   padding: 0.3rem;
   font-weight: normal;
   height: 100%;
@@ -927,6 +946,8 @@ th button:disabled{
 .storePage{
   display: flex;
   flex-direction: column;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
 }
 
 .storeHeader {
@@ -934,12 +955,22 @@ th button:disabled{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #929292;
-  border-radius: 5px;
-  border: none;
-  padding: 1rem
+  border-bottom: 1px solid #d2d2d2;
+  padding: 1rem 5rem 1rem 5rem;
 }
 
+.storePoints{
+  color: #00aeef;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.storePoints p{
+  color: #000000;
+  margin-left: 1rem;
+
+}
 .userPreview {
   display: flex;
   flex-direction: column;
@@ -956,7 +987,7 @@ th button:disabled{
 }
 
 .usernameBadge span{
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .usernameBadge{
@@ -964,12 +995,12 @@ th button:disabled{
   flex-direction: row;
   margin-bottom: 1rem;
   border:none;
-  object-fit: contain;
 }
 
 .usernameBadge img{
-  width: 1.5rem;
+  width: 1.7rem;
   margin-right: 0.5rem;
+  object-fit: contain;
 }
 
 .storeContent{
@@ -977,8 +1008,9 @@ th button:disabled{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
   height: auto;
+  padding: 1rem 5rem 1rem 5rem;
+  
 }
 .badges {
   display: flex;
@@ -986,6 +1018,8 @@ th button:disabled{
   justify-content: space-between;
   width: 100%;
   margin-bottom: 2rem;
+  padding: 0rem 5rem 5rem 5rem;
+  border-bottom: 1px solid #d2d2d2;
 }
 
 .storeBadges{
@@ -1071,3 +1105,159 @@ th button:disabled{
   flex-direction: column;
 }
 /*end of RankAccuracy component*/
+
+/*start of myPage*/
+.myPage{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #d2d2d2
+}
+
+.profileImage{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileImage img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #00aeef;
+}
+
+.usernameBadgeMyPage{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+  border:none;
+  justify-content: center;
+}
+
+.usernameBadgeMyPage span{
+  font-size: 1.5rem;
+}
+
+
+.usernameBadgeMyPage img{
+  width: 1.7rem;
+  margin-right: 0.5rem;
+  object-fit: contain;
+}
+
+.sideArea{
+  border-right: 1px solid #d2d2d2;
+}
+.settingsGear{
+  display: block;
+}
+.settingsGear img{
+  width: 1.7rem;
+  opacity: 80%;
+}
+.settingsGear button{
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  float: right;
+}
+
+.settingsGear button:hover{
+  cursor: pointer;
+}
+
+.sideAreaInfo{
+  padding: 3rem;
+}
+
+.expBarWithLevel2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.expBarContainer2{
+  width: 70%;
+  border: 1px solid #d2d2d2;
+  border-radius: 3rem;
+  height: 0.5rem;
+}
+
+.expBar2{
+  text-align: right;
+  height: 0.5rem;
+  background-color: #00aeef;
+  border-radius: 3rem;
+}
+
+.myPageDetails{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.myPageDetails p{
+  color: #929292;
+  text-align: center;
+}
+
+.myPageStats{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.myPageStats p{
+  color: #929292;
+}
+
+.myPageDetailsListTitle{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lineStats{
+  width: 8rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 3rem;
+
+}
+
+.myPageStatsInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.myPageStatsInfo h1{
+  font-weight: normal;
+  font-size: 2.8rem;
+}
+
+.myPageDetailsList{
+  padding: 2rem;
+}
+
+.myPageDetailsList2{
+  padding: 2rem;
+  border-top: 1px solid #d2d2d2;
+}
+
+.myPagePlatformsHeader{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.linePlatforms{
+  width: 18rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 4rem;
+}

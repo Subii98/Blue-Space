@@ -160,49 +160,48 @@ function QuizScore(props){
                     <span>{user.username}</span>
                 </div>
             </div>
-            <div className="storeContent">
-                <div className="scoreText">
-                    <p>Questions Correct</p>
-                    <div className="correctCount">
-                        <div className="scoreInfoBlue">{props.count}</div>
-                        <div className="scoreInfo">/{questions.length}</div>
-                    </div>
-                    
+            <div className="scoreText">
+                <p>Questions Correct</p>
+                <div className="correctCount">
+                    <div className="scoreInfoBlue">{props.count}</div>
+                    <div className="scoreInfo">/{questions.length}</div>
                 </div>
-                <div className="scoreText">
-                    <p>Points Spent</p>
-                    <div className="scoreInfo">-{props.usedPoints}</div>
-                </div>
-                <div className="scoreText">
-                    <p>Points Earned</p>
-                    <div className="scoreInfoBlue">+{props.count * 10}</div>
-                </div>                
-                <div className="expAndLevel">
-                    <div className="levelUpInfo">
-                        {levelUp ? <div className="expCount" style={{textAlign:'left', opacity: "100%"}}>
-                            <p>Level Up!</p>
-                        </div> : <div className="expCount" style={{textAlign:'left', opacity: "0%"}}>
-                            <p>Level Up!</p>
-                        </div>}
-                        <div className="expCount" style={{textAlign:'right'}}>
-                            <p>+{props.count * expRate}exp</p>
-                        </div>
-                    </div>
-                    <div className="expBarWithLevel">
-                        <p>Lv.{level}</p>
-                        <div className="expBarContainer">
-                            <div className="expBar rate" style={{width: `${expBarAmount}%`}}></div>
-                        </div>
+                
+            </div>
+            <div className="scoreText">
+                <p>Points Spent</p>
+                <div className="scoreInfo">-{props.usedPoints}</div>
+            </div>
+            <div className="scoreText">
+                <p>Points Earned</p>
+                <div className="scoreInfoBlue">+{props.count * 10}</div>
+            </div>                
+            <div className="expAndLevel">
+                <div className="levelUpInfo">
+                    {levelUp ? <div className="expCount" style={{textAlign:'left', opacity: "100%"}}>
+                        <p>Level Up!</p>
+                    </div> : <div className="expCount" style={{textAlign:'left', opacity: "0%"}}>
+                        <p>Level Up!</p>
+                    </div>}
+                    <div className="expCount" style={{textAlign:'right'}}>
+                        <p>+{props.count * expRate}exp</p>
                     </div>
                 </div>
-                <div className="rateQuizContents">
-                    <div className="rateQuizText">Rate this quiz!</div>
-                    <div className="rateThumbs">
-                        <button disabled={disableThumbUp} onClick={() => onClickDisableThumbUp()}><img src="/images/icon/thumb-up.png" /></button>
-                        <button disabled={disableThumbDown} onClick={() => onClickDisableThumbDown()}><img src="/images/icon/thumb-down.png" /></button>
+                <div className="expBarWithLevel">
+                    <p>Lv.{level}</p>
+                    <div className="expBarContainer">
+                        <div className="expBar rate" style={{width: `${expBarAmount}%`}}></div>
                     </div>
                 </div>
             </div>
+            <div className="rateQuizContents">
+                <div className="rateQuizText">Rate this quiz!</div>
+                <div className="rateThumbs">
+                    <button disabled={disableThumbUp} onClick={() => onClickDisableThumbUp()}><img src="/images/icon/thumb-up.png" /></button>
+                    <button disabled={disableThumbDown} onClick={() => onClickDisableThumbDown()}><img src="/images/icon/thumb-down.png" /></button>
+                </div>
+            </div>
+        
             
             <button type="button" onClick={onClickClose}>CLOSE</button>
         </div>

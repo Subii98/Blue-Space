@@ -85,7 +85,7 @@ function StoreScreen(){
     return(
         <div className="storePage">
             <div className="storeHeader">
-                <p>{userPoints} points</p>
+                <div className="storePoints">{userPoints}<p> Points</p></div>
                 <div className="userPreview">
                     <div className="userTitle">
                         <p style={{ textAlign: "center"}}>{currentTitle}</p>
