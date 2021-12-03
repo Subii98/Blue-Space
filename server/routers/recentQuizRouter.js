@@ -12,6 +12,33 @@ recentQuizRouter.get(
   })
 );
 
+recentQuizRouter.get(
+    "/:userid",
+    expressAsyncHandler(async (req, res) => {
+        var id = req.params.userid;
+        console.log("hello im in recent quiz router id", id);
+        
+        const recent = await RecentQuiz.aggregate([
+            {
+                $match: {
+                    userID: "61a7b8710de47947bd0d983c",
+                }
+            },
+            {$group: {
+                    _id: "$quizID",
+                    quizName: { $first: "$quizName" },
+                    count: {
+                        $sum: 1,
+                    },
+                }
+              }
+        ]);
+      console.log("recent object", recent);
+        res.send(recent);
+    })
+);
+
+
 recentQuizRouter.post(
   "/record",
   expressAsyncHandler(async (req, res) => {
