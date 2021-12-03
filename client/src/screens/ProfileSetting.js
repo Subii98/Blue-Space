@@ -107,6 +107,7 @@ function ProfileSetting(props) {
         const res = await FetchApiPostWithFile("/api/v1/set_user", [userImage],{
             newName: name,
             userId: userData._id,
+            userImage: userImage
         });
 
         if (res.err) {
