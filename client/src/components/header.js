@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { GlobalStoreContext } from "../store";
@@ -8,6 +9,9 @@ import LogoutComponent from "./Logout";
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
     const [data, setData] = useState(store.search);
+    const [openMiniProfile, setOpenMiniProfile] = useState(false)
+    const [user, setUser] = useState()
+    const [error, setError] = useState()
     let history = useHistory();
     //const loginData = localStorage.getItem('data');
     /*
@@ -19,12 +23,41 @@ function Header(props) {
     } */
   
     let userName = "";
-    console.log(store)
-    console.log('search value' , store.search);
     if (store.loggedIn){
       userName = store.username;
     }
     //console.log('username for header: ', userName);
+
+    useEffect(() => {
+      if (store.loggedIn){
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/v1/get_user/" + userName)
+            .then((res) =>  setUser(res.data))
+            .catch((error) => {
+                setError(
+                    "No userdata"
+                );
+            })
+      }
+    }, [])
+
+    useEffect(() => {
+      if (store.loggedIn){
+        let userData = localStorage.getItem("data");
+        userData = JSON.parse(userData);
+        axios
+            .get("/api/v1/get_user/" + userName)
+            .then((res) =>  setUser(res.data))
+            .catch((error) => {
+                setError(
+                    "No userdata"
+                );
+            })
+      }
+
+    }, [openMiniProfile, store.loggedIn])
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -38,18 +71,20 @@ function Header(props) {
       //history.push(`/search?${queryString}`);
     }
 
-    
-    
+    const onClickMiniProfile = () => {
+      if (openMiniProfile)
+        setOpenMiniProfile(false)
+      else
+        setOpenMiniProfile(true)
+    }
+
+    const onClickCloseMiniProfile = () => {
+      setOpenMiniProfile(false)
+    }
 
     return (
       <header>
         <div className="all">
-          <img
-            src="/images/hamburger.png"
-            className="hamburger"
-            alt="hamburger"
-            width="25"
-          />
           <a href="/">
             <img
               src="/images/logo11.png"
@@ -61,7 +96,7 @@ function Header(props) {
           <div className="headerItems">
             <div className="topLine">
               <div className="searchBar">
-                <form onSubmit={handleSubmit}>
+                <form className="searchForm" onSubmit={handleSubmit}>
                   <input
                     type="text"
                     name="search"
@@ -76,13 +111,7 @@ function Header(props) {
                 </form>
               </div>
               <div className="login">
-                {store.loggedIn ? (
-                  <a href="/MyPage">{userName} </a>
-                ) : (
-                  <LoginComponent />
-                )}
-
-                <LogoutComponent />
+                
               </div>
             </div>
             <div className="mainButtons">
@@ -102,6 +131,30 @@ function Header(props) {
                 <button type="button">HELP</button>
               </Link>
             </div>
+          </div>
+          <div className="loginButtons">
+            {!store.loggedIn ? <LoginComponent />
+              : store.loggedIn && !openMiniProfile ? <img className="profileThumb" src={user && user.badge} onClick={() => onClickMiniProfile()}/>
+              : store.loggedIn && openMiniProfile ?
+                <div className="miniProfile">
+                  <div className="userPreview">
+                    <div className="userImage">
+                    </div>                    
+                    <div className="usernameBadge">
+                      <img src={user && user.badge}/>
+                      <span onClick={() => onClickMiniProfile()}>{userName}</span>
+                    </div>
+                  </div>
+                  <Link className="redirectMyPage" to="/MyPage" onClick={() => onClickCloseMiniProfile()}>
+                    <img src="/images/icon/smile.png" alt="smile"/>
+                    <p>My Page</p>
+                  </Link>
+                  <div className="redirectLogout">
+                    <img src="/images/icon/logout.png" alt="logout"/>
+                    <LogoutComponent onClick={() => onClickCloseMiniProfile()}/>
+                  </div>
+                </div>
+              : false}
           </div>
         </div>
       </header>

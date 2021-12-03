@@ -8,6 +8,8 @@ import MessageModal from "../components/MessageModal.js";
 import { FetchApiPost, FetchApiPostWithFile } from "../utils/Network";
 import { Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
 
 function CreatePlatform(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -79,23 +81,14 @@ function CreatePlatform(props) {
     const onClickSubmit = async () => {
         let res = await FetchApiPostWithFile("/api/platforms/insert", [banner, icon], {
             userId: user._id,
-            // userId : userId,
             userName: userName,
-            // name : name,
             title: title,
             description: description,
-            // subscriber : subscriber,
-            // icon : icon,
-            // fontFamily : fontFamily,
-            // titleFontSize : titleFontSize,
-            // descFontSize : descFontSize,
             fontColor: fontColor,
             tag1: tag1,
             tag2: tag2,
             tag3: tag3,
-            // quizId : quizId.split(','),
         });
-        // setCreatePlatform(JSON.stringify(res));
         alert("platform created!");
     };
 
@@ -143,17 +136,14 @@ function CreatePlatform(props) {
                     />
                 </div>
                 <div className="postArea">
-                    <div className="cp-banner">
-                        {/* <img src="/images/platformprofile.jpg"  height="10%"/> */}
-                        <img src={bannerURL} onClick={onClickBanner} />
-
-                        <input
-                            ref={ref => setBannerImageRef(ref)}
-                            id="file-input"
-                            type="file"
-                            onChange={onChangeBanner}
-                        />
-                    </div>
+                    <input
+                        ref={ref => setBannerImageRef(ref)}
+                        id="file-input"
+                        className="cp-banner-input"
+                        type="file"
+                        onChange={onChangeBanner}
+                    />
+                    <div className="cp-banner" style={{ backgroundImage : `url(${bannerURL})` }} onClick={onClickBanner} />
                     <div className="platformInfoArea">
                         <div>
                             <img src={iconURL} onClick={onClickIcon} />
@@ -164,7 +154,6 @@ function CreatePlatform(props) {
                                 onChange={onChangeIcon}
                             />
                         </div>
-                        {/* <img src="/images/noimage.png" alt="platformprofile" align="center" /> */}
                         <div className="platformInfo">
                             <div className="platformTop">
                                 <input
@@ -173,17 +162,14 @@ function CreatePlatform(props) {
                                     placeholder="Title"
                                     style={{ fontSize: "40px", width: "70%" }}
                                 />
-                                {/* <span>title font color</span> */}
                                 <input
                                     type="color"
                                     value={fontColor}
                                     onChange={e => setFontColor(e.target.value)}
                                 />
-
                                 <span>{store.username}</span>
                             </div>
                             <div className="platformBottom">
-                                {/* <span>{platform.description}</span> */}
                                 <input
                                     value={description}
                                     onChange={e => setDescription(e.target.value)}
@@ -209,6 +195,7 @@ function CreatePlatform(props) {
                 </div>
                 <div>
                     <Button
+                    component={Link} to="/"
                         className="asd"
                         onClick={onClickSubmit}
                         style={{

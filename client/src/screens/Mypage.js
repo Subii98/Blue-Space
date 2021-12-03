@@ -18,24 +18,20 @@ function CreatePlatform(props) {
     const [name, setName] = useState("");
     const [platforms, setPlatforms] = useState([]);
     const [user, setUser] = useState();
+    const [title, settitle] = useState("");
+    const [exp, setExp] = useState();
+    const [points, setPoints] = useState();
+    const [totalQuestions, setTotalQuestions] = useState("");
+    const [correct, setCorrect] = useState("");
+    const [badge, setBadge] = useState("");
+    const [level, setLevel] = useState()
+    const [expBarAmount, setExpBarAmount] = useState()
     const [subscribingPlatforms, setSubscribingPlatforms] = useState([]);
+    const expRange = [15, 49, 106, 198, 333, 705, 9999]
+    const [userImage, setUserImage] = useState("");
     const history = useHistory();
 
     useEffect(() => {
-        // const fetchData = async () => {
-        //     try {
-        //         setLoading(true);
-        //         const { data } = await axios.get("/api/platforms/name/"+name);
-        //         console.log("name " ,name)
-        //         console.log("store", store)
-        //         setLoading(false);
-        //         setPlatforms(data);
-        //         console.log("data", data)
-        //     } catch (err) {
-        //         setError(err.message);
-        //         setLoading(false);
-        //     }
-        // };
         let userData = localStorage.getItem("data");
         userData = JSON.parse(userData);
         axios
@@ -59,15 +55,34 @@ function CreatePlatform(props) {
                     subscribe(raw);
                 });
                 console.log(subscribingPlatforms);
+                console.log("platforms", platforms);
             };
             fetchData();
         }
     }, [user]);
 
+    useEffect(() => {
+        if (user) {
+            settitle(user.title);
+            setExp(user.exp);
+            setPoints(user.points);
+            setTotalQuestions(user.totalQuestions);
+            setCorrect(user.correct);
+            setBadge(user.badge)
+            setLevel(user.level)            
+            setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
+            setUserImage(user.userImage)
+        }
+    });
+
     function subscribe(id) {
         axios
             .get("/api/platforms/by_id/" + id)
-            .then(res => subscribingPlatforms.push(res.data))
+            .then(res =>{ 
+                subscribingPlatforms.push(res.data);
+                console.log("!!",subscribingPlatforms);
+                setSubscribingPlatforms([...subscribingPlatforms]);
+            })
             .catch(error => {
                 setError("No userdata");
             });
@@ -78,47 +93,58 @@ function CreatePlatform(props) {
     }, [store]);
     return (
         <div>
-            {/* <Tags />
-            <PostArea /> */}
             <div>
                 {loading && <LoadingModal />}
                 {error && <MessageModal variant="danger">{error}</MessageModal>}
-
-                {/* {platforms && platforms.map((raw,idx)=>{ */}
-                {/* return (
-                        // <div key={"Platform" + idx}>
-                        //     <CardContent>
-                        //         <Typography >
-                        //             {idx+1}
-                        //         </Typography>
-                        //         <Typography gutterBottom variant="h5" component="div">
-                        //             {raw.title}
-                        //         </Typography>     
-                        //     </CardContent>
-                            
-                        // </div>
-                        <div className>
-                            <p style={{textAlign: "center", color: "#929292"}}>Owned Platforms</p>
-                            <Platform platforms = {platforms}></Platform>
-                            {/* <PlatformCard platform={platforms}></PlatformCard>) */}
-                {/* </div>  */}
-                {/* ); */}
-                {/* })} */}
-
-                <div className="my-page-container">
-                    <div className="name-box">
-                        {name}
-                        <button onClick={()=>history.push(`/ProfileSetting/${user._id}`)}>edit</button>
+                <div className="side">
+                    <div className="profile">
+                        <div className="settingsGear">
+                            <img src="/images/icon/gear.png" style={{opacity: "0%"}}/>
+                            <button onClick={() => history.push(`/ProfileSetting/${user._id}`)}><img src="/images/icon/gear.png"/></button>
+                        </div>
+                        <div className="profile-image">
+                            <img src={userImage} />
+                        </div>
+                        <div className="userPreview">
+                            <div className="userTitle">
+                                <p style={{ textAlign: "center"}}>{title}</p>
+                            </div>
+                            <div className="usernameBadge">
+                                <img src={badge}/>
+                                <span>{name}</span>
+                            </div>
+                        </div>
+                        <div className="expBarWithLevel2">
+                            <p>Lv.{level}</p>
+                            <div className="expBarContainer2">
+                            <div className="expBar2 rate" style={{width: `${expBarAmount}%`}}></div>
+                        </div>
                     </div>
+                    </div>
+                    <div className="platforms-list">
+                        <div className="stat">STATS</div>
+                        <div className="stat-value">
+                            <div className="child">ACCURACY</div>
+                            <div className="child">TITLE</div>
+                            <div className="child">RANK</div>
+                            <div className="child">POINTS</div>
+                        </div>
+                        <div className="stat-value">
+                            <div className="child">
+                                {totalQuestions != 0 ? (correct / totalQuestions) * 100 : 0}%
+                            </div>
+                            <div className="child">{title}</div>
+                            <div className="child">{exp}</div>
+                            <div className="child">{points}</div>
+                        </div>
 
-                    <div className="platform-container">
                         <div className="platform-box">
                             <p>Owned Platforms</p>
-                            <Platform platforms={platforms}></Platform>
+                            <Platform platforms={platforms} row={true}></Platform>
                         </div>
                         <div className="platform-box">
-                            <p>Subscribing Platforms</p>
-                            <Platform platforms={subscribingPlatforms}></Platform>
+                            <p>Subscribed Platforms</p>
+                            <Platform platforms={subscribingPlatforms} row={true}></Platform>
                         </div>
                     </div>
                 </div>

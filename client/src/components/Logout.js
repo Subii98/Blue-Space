@@ -33,7 +33,7 @@ function Logout() {
         onLogoutSuccess={onSuccess}
         render={(renderProps)=>{
           return (
-            <a className="logoutButton" onClick={renderProps.onClick}>LOGOUT</a>
+            <a className="logoutButton" onClick={renderProps.onClick} style={{fontSize: "1.5rem"}}>Log Out</a>
           )
         }}
       />

@@ -6,12 +6,12 @@ function Platform(props){
 
     useEffect(() => {
         setPlatforms(props.platforms)
-    }, [props.platforms]);
+    }, [props.platforms, props.row]);
     
     return(
-        <div className="platformCard">
+        <div className="platformCard" style={props.row && {display:"flex", flexDirection: "row", alignItems:"flex-start", justifyContent:"space-evenly", width: "100%"}}>
         {props.platforms.map((platform)=> (
-            <PlatformCard platform={platform}></PlatformCard>)
+            <PlatformCard platform={platform} row={props.row}></PlatformCard>)
         )}
         </div>
     )

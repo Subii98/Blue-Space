@@ -19,6 +19,9 @@ html{
   box-sizing: border-box; /*easiler to manage box and add padding / margin*/
   display: flex;
   justify-content: center;
+  --color-primary-rgb: 255, 99, 88;
+  --color-secondary: #D2D2D2;
+  --color-secondary-rgb: 210,210,210; 
   
 }
 body{
@@ -33,11 +36,12 @@ body{
 /* layouts */
 .grid-container{
   display: grid;
+  /* grid-template: [row-1-start] min-content [row-1-end row-2-start] 1fr [row-end] / min-content 1fr; */
   grid-template-areas: 
-      'header'
-      'main'
-      'footer';
-  grid-template-columns:1fr;
+      'nav header'
+      'nav main'
+      'nav footer';
+  grid-template-columns:min-content 1fr;
   grid-template-rows: 13rem 1fr 5rem; /*header body footer*/
   height: 100%
 }
@@ -52,10 +56,64 @@ main{
   margin-left: 10%;
   margin-right: 10%;
 }
-.sidebar{
-  grid-area: 'side';
+.navigation{
+  grid-area: nav;
+}
+nav {
+  /* background-color : white; */
+  height: 100%;
+  position:relative;
+  /*width:20vh;*/
+}
+.navContainer {
+  color: black;
+  min-height: 4.8rem;
+  display:flex;
+  align-items: center;
+  padding: 0 2rem 0 2.5rem; 
+  border-bottom:rgb(0, 174, 239, 0.05), 1px solid;
+  flex-wrap: wrap;
+}
+.navElement {
+  color: black;
+  min-height: 4.8rem;
+  align-items: center;
+  margin-left: 1rem;
+  margin-bottom:3rem;
+  /* padding: 0 2rem 0 2.5rem;  */
+  border-bottom:rgb(0, 174, 239, 0.05), 1px solid;
+} 
+.navElement:hover {
+  text-decoration: none;
+}
+.expanded {
+  background-color:#F5F5F5;
+  width:26rem;
+}
+.navHeaders {
+  font-size: 2.2rem;
+  display: relative;
+  width:100%;
 
 }
+.copyright {
+  bottom:0px;
+}
+.menuIcon {
+  margin-right: 1rem;
+  margin-bottom: 3rem;
+  
+}
+/* nav::before {
+  content: "";
+  background-color: rgba(var(--color-secondary-rgb), 1);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+} */
+
+
 
 /* Header */
 .all{
@@ -80,6 +138,7 @@ img.hamburger{
 
 .loginButton{
   cursor:pointer;
+  color: #00aeef;
 }
 
 .logoutButton{
@@ -97,25 +156,33 @@ img.hamburger{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  min-height: 4rem;
   min-width: 1fr;
+  height: auto;
 }
 
 .searchInput{
-  border-style: solid;
-  border-width: 1px;
-  border-color: #D2D2D2;
+  border-style: none;
+  border-left: 1px solid #d2d2d2;
+  border-top: 1px solid #d2d2d2;
+  border-bottom: 1px solid #d2d2d2;
   border-radius: 5px 0px 0px 5px;
-  min-width: 50rem
+  min-width: 55rem;
+  height: 2.2rem
 }
 
 .searchInput::placeholder{
   padding: 5px;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 .searchInput:focus{
   outline-color: #00aeef;
 }
+
+.searchForm{
+  display: flex;
+  flex-direction: row;
+}
+
 /*searchbar magnifying glass button*/
 .all button{
   border-style: 1px solid;
@@ -129,6 +196,8 @@ img.hamburger{
   border-color: #00aeef;
   background-color: #00aeef;
   border-radius: 0px 5px 5px 0px;
+  width: 3.5rem;
+  display: block;
 }
 
 .headerItems{
@@ -136,6 +205,62 @@ img.hamburger{
   flex-direction: column;
   justify-content: flex-start;
   margin-left: 3rem;
+}
+
+.profileThumb{
+  border-radius: 50%;
+  object-fit: contain;
+  width: 5rem;
+  border: 1px solid #00aeef;
+}
+
+.miniProfile{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.miniProfile a{
+  text-decoration: none;
+  color: #000000;
+}
+
+.redirectMyPage{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+}
+
+.redirectMyPage img{
+  width: 1.5rem;
+  object-fit: contain;
+  margin-right: 1rem;
+}
+
+.redirectMyPage p{
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.redirectLogout{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+}
+
+.redirectLogout p{
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.redirectLogout img{
+  object-fit: contain;
+  width: 1.5rem;
+  margin-right: 1rem;
 }
 
 .mainButtons{
@@ -176,10 +301,16 @@ img.hamburger{
   border-color: #d2d2d2;
   border-width: 1px;
   overflow: hidden;
+  width : 100%;
+  height : 200px;
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  
 }
 .banner img{
   max-width: 100%;
-  height: 25%;
+  /* height: 100%; */
   margin: 0px;
   margin: -70px 0px -70px 0px;
 }
@@ -220,7 +351,6 @@ img.hamburger{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2%;
 }
 .platformBottom{
   display: flex;
@@ -236,8 +366,8 @@ img.hamburger{
   border-width: 1px;
   background-color: transparent;
   padding: 1px 1.2rem;
-  margin-top: 1%;
 }
+
 /*Start of Timer Component*/
 .timer{
   display: flex;
@@ -394,6 +524,8 @@ top: 69rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  overflow: hidden;
 }
 
 .score button{
@@ -405,9 +537,172 @@ top: 69rem;
   border-radius: 5px;
 }
 
-.questionsCorrect {
+.scoreHeader {
+  position: relative;
+  height: auto;
+  overflow: hidden;
+}
+
+.scoreHeader img{
+  object-fit: cover;
+  transform: scale(1.4);
+  width: 100%;
+  position: relative;
+  opacity: 80%;
+  
+}
+
+.centered {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+}
+
+.userPreview2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.userTitle2 {
+  display: inline-block;
+  border: none;
+}
+
+.userTitle2 p{
+  font-size: 2rem;
+  background-color: rgb(0, 174, 239, 0.15);
+}
+
+.usernameBadge2 span{
+  font-size: 2.5rem;
+}
+
+.usernameBadge2{
   display: flex;
   flex-direction: row;
+  margin-bottom: 1rem;
+  border:none
+}
+
+.usernameBadge2 img{
+  width: 2.5rem;
+  margin-right: 0.5rem;
+  object-fit: contain;
+}
+
+.storeContent{
+  display: flex;
+  flex-direction: column;
+}
+
+.scoreText{
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2.5rem;
+  color: #929292;
+}
+
+.scoreInfo {
+  font-size: 4rem;
+}
+
+.scoreInfoBlue{
+  font-size: 4rem;
+  color: #00aeef;
+}
+
+.scoreContent{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.rateQuizText{
+  color: #929292;
+  font-size: 2rem;
+}
+
+.rateQuizContents{
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 3rem;
+
+}
+.rateQuizContents img{
+  object-fit: contain;
+  width: 3rem;
+  margin-right: 2rem;
+}
+
+.rateQuizContents button{
+  border: none;
+}
+
+.rateQuizContents button:disabled{
+  opacity: 30%;
+}
+
+.expAndLevel{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.expBarWithLevel{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expBarWithLevel p{
+  font-size: 2.5rem;
+  color: #929292;
+}
+
+.correctCount{
+  display: flex;
+  flex-direction: row;
+}
+
+.expCount{
+  width: 50%;
+  height: 1.5rem;
+}
+
+.expCount p{
+  font-size: 1.5rem;
+  color: #00aeef;
+}
+
+.expBarContainer{
+  width: 80%;
+  height: 2rem;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
+}
+
+.expBar{
+  text-align: right;
+  padding-top: 10px; 
+  padding-bottom: 10px;
+  height: auto;
+  background-color: #00aeef;
+}
+
+.levelUpInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 /*end of QuizScore page*/
@@ -538,12 +833,15 @@ div.wrap {
 
 
 .swiper-container {
-  width: 400px;
+  width: 100vh;
 }
+/* .swiper-slide {
 
-.swiper-wrapper {
-  padding-inline-start: 0
-}
+} */
+
+/* .swiper-wrapper {
+  padding-inline-start: 0;
+} */
 
 
 /*start of ManageTable*/
@@ -574,7 +872,7 @@ td {
 td,
 th{
   color: #000000;
-  border: 1px solid rgb(190, 190, 190);
+  border: 1px solid #d2d2d2;
   padding: 0.3rem;
   font-weight: normal;
   height: 100%;
@@ -631,6 +929,8 @@ th button:disabled{
 .storePage{
   display: flex;
   flex-direction: column;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
 }
 
 .storeHeader {
@@ -638,12 +938,22 @@ th button:disabled{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #929292;
-  border-radius: 5px;
-  border: none;
-  padding: 1rem
+  border-bottom: 1px solid #d2d2d2;
+  padding: 1rem 5rem 1rem 5rem;
 }
 
+.storePoints{
+  color: #00aeef;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.storePoints p{
+  color: #000000;
+  margin-left: 1rem;
+
+}
 .userPreview {
   display: flex;
   flex-direction: column;
@@ -660,18 +970,18 @@ th button:disabled{
 }
 
 .usernameBadge span{
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .usernameBadge{
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
-  border:none
+  border:none;
 }
 
 .usernameBadge img{
-  width: 1.5rem;
+  width: 1.7rem;
   margin-right: 0.5rem;
   object-fit: contain;
 }
@@ -681,8 +991,9 @@ th button:disabled{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
   height: auto;
+  padding: 1rem 5rem 1rem 5rem;
+  
 }
 .badges {
   display: flex;
@@ -690,6 +1001,8 @@ th button:disabled{
   justify-content: space-between;
   width: 100%;
   margin-bottom: 2rem;
+  padding: 0rem 5rem 5rem 5rem;
+  border-bottom: 1px solid #d2d2d2;
 }
 
 .storeBadges{
@@ -750,58 +1063,28 @@ th button:disabled{
 
 /*start of LeaderboardScreen*/
 .leaderboard{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  
 }
-
 .leaderboardHeader{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  background-color: #d2d2d2;
-}
-
-.leaderboardHeader p{
-  font-size: 1.5rem;
-}
-
-.leaderboardHeader button{
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-}
-
-.leaderboardHeader button:disabled{
-  border: 1px solid #000000;
-  color: #000000;
+  justify-content: space-evenly;
 }
 .userRank{
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  align-items: center;
-  border: 1px solid #000000;
-  margin-bottom: 5rem;
-  
+  border: 1px solid #000000
 }
 .userProfile {
   display: flex;
   flex-direction: column;
 }
-
-.allRanks{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
 /*end of LeaderboardScreen*/
 
 /*start of RankAccuracy component*/
-.rankSorted{
+.rankAccuracy{
   display: flex;
   flex-direction: column;
-  border: 1px solid #000000;
 }
 /*end of RankAccuracy component*/

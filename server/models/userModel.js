@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     //unique: true,
   },
-
   expire: {
     type: Date,
   },
@@ -45,6 +44,9 @@ const userSchema = new mongoose.Schema({
   },
   level: {
     type: Number
+  },
+  userImage: {
+    type: String
   }
 });
 
