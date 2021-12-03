@@ -174,7 +174,7 @@ function CreatePlatform(props) {
                             <div className="userTitle">
                                 <p style={{ textAlign: "center"}}>{title}</p>
                             </div>
-                            <div className="usernameBadge">
+                            <div className="usernameBadgeMyPage">
                                 <img src={badge}/>
                                 <span>{name}</span>
                             </div>
