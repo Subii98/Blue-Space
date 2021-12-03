@@ -315,21 +315,24 @@ userRouter.post(
     "/set_user",
     uploadModule.array("file"),
     expressAsyncHandler(async (req, res) => {
-        const { newName, userId, userImage } = req.body;
-        const existUser = await User.findOne({ username: newName });
+        console.log(req.files)
+        const { newName, userId } = req.body;
+        const existUser = await User.findById(userId);
+        console.log("-----------------", existUser);
         if (existUser) {
             if (existUser._id != userId) return res.send({ err: "exist user" });
         }
-        const userImagePath = req.files[0] ? "/" + req.files[0].path : userImage;
-        console.log("????", newName);
-        console.log("!!!", userImagePath);
+        let update_obj = { username : newName };
+        if(req.files[0]){
+            Object.assign(update_obj, { userImage : "/" + req.files[0].path});
+        }
+        // const userImagePath = req.files[0] ? req.files[0].path : null;
+        // console.log("-----------------", newName);
+        // console.log("!!!", userImagePath);
         const modifyUser = await User.updateOne(
             { _id: userId },
             {
-                $set: {
-                    username: newName,
-                    userImage: userImagePath,
-                },
+                $set: update_obj
             }
         );
         res.send({ modifyUser });

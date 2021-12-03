@@ -42,10 +42,23 @@ function MyPage(props) {
             .catch(error => {
                 setError("No userdata");
             });
-    }, []);
+    }, [history.location.pathname]);
 
     useEffect(() => {
         if (user) {
+            if (user) {
+                setName(user.username)
+                settitle(user.title);
+                setExp(user.exp);
+                setPoints(user.points);
+                setTotalQuestions(user.totalQuestions);
+                setCorrect(user.correct);
+                setBadge(user.badge)
+                setLevel(user.level)            
+                setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
+                setUserImage(user.userImage)
+                setUserPlayCount(user.playCount)
+            }
             const fetchData = async () => {
                 setLoading(true);
                 const { data } = await axios.get("/api/platforms/" + user._id);
@@ -62,21 +75,6 @@ function MyPage(props) {
         }
     }, [user]);
 
-    useEffect(() => {
-        if (user) {
-            settitle(user.title);
-            setExp(user.exp);
-            setPoints(user.points);
-            setTotalQuestions(user.totalQuestions);
-            setCorrect(user.correct);
-            setBadge(user.badge)
-            setLevel(user.level)            
-            setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
-            setUserImage(user.userImage)
-            setUserPlayCount(user.playCount)
-        }
-    });
-
     function subscribe(id) {
         axios
             .get("/api/platforms/by_id/" + id)
@@ -90,9 +88,9 @@ function MyPage(props) {
             });
     }
 
-    useEffect(() => {
-        if (store && store.username) setName(store.username);
-    }, [store]);
+    // useEffect(() => {
+    //     if (store && store.username) setName(store.username);
+    // }, [store]);
 
     useEffect(() => {
         
