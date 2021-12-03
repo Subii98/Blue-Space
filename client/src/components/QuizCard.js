@@ -19,9 +19,15 @@ function QuizCard(props) {
                         alt="quizPreview"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {props.quiz.title}
-                        </Typography>
+                        <div className="cardContentHeader">                        
+                            <Typography gutterBottom variant="h5" component="div">
+                                {props.quiz.title}
+                            </Typography>
+                            <Typography className="quizHeart" variant="subtitle1" color="text.secondary">
+                                <img src="/images/icon/like2.png" style={{width: "1rem"}}/>
+                                {props.quiz.likes}
+                            </Typography>
+                        </div>
                         <Typography variant="body2" color="text.secondary">
                             {props.quiz.description}
                         </Typography>

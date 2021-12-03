@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Platform from './Platform.js';
 
-function PlatformItems({ currentItems }) {
-  useEffect(()=>{
-
-  }, [currentItems])
-  console.log("currentitems", currentItems)
+function PlatformItems(props) {
   return (
     <>
-      <Platform platforms={currentItems} row={true}/>
+      <Platform platforms={props.currentItems} row={props.row}/>
     </>
   );
 }

@@ -15,7 +15,7 @@ function QuizScore(props){
     const [disableThumbUp, setDisableThumbUp] = useState(false)
     const [disableThumbDown, setDisableThumbDown] = useState(false)
     const [quizDetails, setQuizDetails] = useState(); //used for creation of recent quiz
-
+    const [likes, setLikes] = useState(props.likes)
 
     console.log("quiz ID for quizscore is ", props.quizID);
     const history = useHistory();
@@ -26,7 +26,7 @@ function QuizScore(props){
 
     useEffect (() => {
         editPoints()
-    }, [level, expBarAmount, levelUp ,disableThumbDown, disableThumbUp])
+    }, [level, expBarAmount, levelUp ,disableThumbDown, disableThumbUp, likes])
 
     function calcLevel(){
         const tmpExp = props.user.exp + (props.count * expRate)
@@ -114,6 +114,13 @@ function QuizScore(props){
             });
         
     }
+
+    const editLikes = async () => {
+        let res = await FetchApiPost("/api/quizzes/editLikes", {
+            quizId: props.quizID,
+            likes: likes
+        })
+    }
     //saves a record in recent quizzes
     const record = async () => {
         console.log("quizdetails info" , quizDetails);
@@ -135,17 +142,20 @@ function QuizScore(props){
 
     const onClickClose = () => {
         console.log("back to platform page")
+        editLikes()
         history.push("/platform/" + platformId);
     }
 
     const onClickDisableThumbUp = () => {
         setDisableThumbUp(true)
-        setDisableThumbDown(false) 
+        setDisableThumbDown(false)
+        setLikes(likes+1)
     }
 
     const onClickDisableThumbDown = () => {
         setDisableThumbUp(false)
-        setDisableThumbDown(true) 
+        setDisableThumbDown(true)
+        setLikes(likes-1)
     }
 
     return(

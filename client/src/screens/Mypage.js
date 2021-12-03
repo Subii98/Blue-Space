@@ -11,7 +11,7 @@ import PlatformCard from "../components/PlatformCard.js";
 import { Link, useHistory } from "react-router-dom";
 import PaginatedItems from "../components/PaginatedItems";
 
-function CreatePlatform(props) {
+function MyPage(props) {
     const { store } = useContext(GlobalStoreContext);
     //use react hooks to set data (empty array by default)
     const [loading, setLoading] = useState(false);
@@ -33,12 +33,6 @@ function CreatePlatform(props) {
     const [playCount, setUserPlayCount] = useState()
     const history = useHistory();
 
-    const [items, setItems] = useState(platforms)
-    const [itemsPerPage, setItemsPerPage] =useState(4)
-    const [currentItems, setCurrentItems] = useState(null);
-    const [pageCount, setPageCount] = useState(0);
-    const [itemOffset, setItemOffset] = useState(0);
-
     useEffect(() => {
         let userData = localStorage.getItem("data");
         userData = JSON.parse(userData);
@@ -51,7 +45,6 @@ function CreatePlatform(props) {
     }, []);
 
     useEffect(() => {
-        console.log("userDataaaa", user);
         if (user) {
             const fetchData = async () => {
                 setLoading(true);
@@ -101,14 +94,10 @@ function CreatePlatform(props) {
         if (store && store.username) setName(store.username);
     }, [store]);
 
+    useEffect(() => {
+        
+    }, [platforms, subscribingPlatforms]);
 
-    const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % items.length;
-        console.log(
-          `User requested page number ${event.selected}, which is offset ${newOffset}`
-        );
-        setItemOffset(newOffset);
-      };
     /*
     return (
         <div>
@@ -171,7 +160,7 @@ function CreatePlatform(props) {
         </div>
     );
     */
-
+   if (subscribingPlatforms)
     return(
         <div>
             {loading && <LoadingModal />}
@@ -214,7 +203,7 @@ function CreatePlatform(props) {
                                 <h1>{Math.round(totalQuestions != 0 ? (correct / totalQuestions) * 100 : 0)}%</h1>
                             </div>
                             <div className="myPageStatsInfo">
-                                <p>Play Count</p>
+                                <p>PLAY COUNT</p>
                                 <h1>{playCount}</h1>
                             </div>
                             <div className="myPageStatsInfo">
@@ -232,14 +221,14 @@ function CreatePlatform(props) {
                             <p>OWNED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>                        
-                        <PaginatedItems itemsPerPage={4} items={platforms}/>
+                        <PaginatedItems itemsPerPage={4} items={platforms} row={true}/>
                     </div>
                     <div className="myPageDetailsList2">
                         <div className="myPagePlatformsHeader">
                             <p>SUBSCRIBED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>
-                        <PaginatedItems itemsPerPage={4} items={subscribingPlatforms}/>
+                        <PaginatedItems itemsPerPage={4} items={subscribingPlatforms} row={true}/>
                     </div>
                 </div>
             </div>
@@ -248,4 +237,4 @@ function CreatePlatform(props) {
     )
 }
 
-export default CreatePlatform;
+export default MyPage;

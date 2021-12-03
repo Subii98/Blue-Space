@@ -12,12 +12,14 @@ function CreateQuiz(props) {
     //use react hooks to set data (empty array by default)
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [likes, setLikes] = useState(0)
     console.log(props.match.params);
     const onClickSubmit = async () => {
         let res = await FetchApiPost("/api/quizzes/insert", {
             title,
             description,
             platformId: props.match.params.platformId,
+            likes
         });
         alert("quiz added");
     };
