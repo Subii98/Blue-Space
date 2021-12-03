@@ -9,12 +9,12 @@ import { Link } from "react-router-dom";
 function PlatformCard(props) {
     console.log(props.platform);
     return (
-        <div>
-            <Card sx={{ maxWidth: 345 }}>
+        <div className="platformCards">
+            <Card sx={props.row ? { width: 100} : {width: 250}}>
                 <CardActionArea component={Link} to={`/platform/${props.platform._id}`}>
                     <CardMedia
                         component="img"
-                        height="140"
+                        height="100"
                         image={
                             props.platform.banner && props.platform.banner != ""
                                 ? props.platform.banner
@@ -22,14 +22,14 @@ function PlatformCard(props) {
                         }
                         alt="category"
                     />
-                    <CardContent>
+                    {!props.row && <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {props.platform.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.platform.description}
                         </Typography>
-                    </CardContent>
+                    </CardContent>}
                 </CardActionArea>
             </Card>
             <br />

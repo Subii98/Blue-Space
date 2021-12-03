@@ -52,6 +52,11 @@
     flex-direction: column;
     flex-wrap: wrap;
 }
+
+.ownedPlatforms{
+    display: flex;
+    flex-direction: row;
+}
 .name-box {
     width: 100%;
     text-align: left;
@@ -74,7 +79,7 @@
 .platform-box {
     display: flex;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     height: auto;
 }
 .platform-box > p {

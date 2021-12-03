@@ -71,7 +71,7 @@ function CreatePlatform(props) {
             setLevel(user.level)            
             setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
         }
-    });
+    },[]);
 
     function subscribe(id) {
         axios
@@ -134,11 +134,11 @@ function CreatePlatform(props) {
 
                         <div className="platform-box">
                             <p>Owned Platforms</p>
-                            <Platform platforms={platforms}></Platform>
+                            <Platform platforms={platforms} row={true}></Platform>
                         </div>
                         <div className="platform-box">
-                            <p>Subscribing Platforms</p>
-                            <Platform platforms={subscribingPlatforms}></Platform>
+                            <p>Subscribed Platforms</p>
+                            <Platform platforms={subscribingPlatforms} row={true}></Platform>
                         </div>
                     </div>
                 </div>
