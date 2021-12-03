@@ -9,6 +9,7 @@ import { FetchApiGet } from "../utils/Network";
 import Platform from "../components/Platform.js";
 import PlatformCard from "../components/PlatformCard.js";
 import { Link, useHistory } from "react-router-dom";
+import PaginatedItems from "../components/PaginatedItems";
 
 function CreatePlatform(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -31,6 +32,12 @@ function CreatePlatform(props) {
     const [userImage, setUserImage] = useState("");
     const [playCount, setUserPlayCount] = useState()
     const history = useHistory();
+
+    const [items, setItems] = useState(platforms)
+    const [itemsPerPage, setItemsPerPage] =useState(4)
+    const [currentItems, setCurrentItems] = useState(null);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
 
     useEffect(() => {
         let userData = localStorage.getItem("data");
@@ -94,6 +101,14 @@ function CreatePlatform(props) {
         if (store && store.username) setName(store.username);
     }, [store]);
 
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % items.length;
+        console.log(
+          `User requested page number ${event.selected}, which is offset ${newOffset}`
+        );
+        setItemOffset(newOffset);
+      };
     /*
     return (
         <div>
@@ -217,14 +232,14 @@ function CreatePlatform(props) {
                             <p>OWNED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>                        
-                        <Platform platforms={platforms} row={true}></Platform>
+                        <PaginatedItems itemsPerPage={4} items={platforms}/>
                     </div>
                     <div className="myPageDetailsList2">
                         <div className="myPagePlatformsHeader">
                             <p>SUBSCRIBED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>
-                        <Platform platforms={subscribingPlatforms} row={true}></Platform>
+                        <PaginatedItems itemsPerPage={4} items={subscribingPlatforms}/>
                     </div>
                 </div>
             </div>
