@@ -153,7 +153,7 @@ function NavElements() {
             </div>
             <div className="navHeaders navElement">
                 <AnnouncementOutlinedIcon sx={{ fontSize: 28 }}> </AnnouncementOutlinedIcon>
-                <a className="popup" href="twitter.com">
+                <a className="popup" href="https://twitter.com" target="_blank">
                     Announcements on Twitter
                 </a>
             </div>
