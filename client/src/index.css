@@ -1088,3 +1088,133 @@ th button:disabled{
   flex-direction: column;
 }
 /*end of RankAccuracy component*/
+
+/*start of myPage*/
+.myPage{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #d2d2d2
+}
+
+.profileImage img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #00aeef;
+}
+.sideArea{
+  border-right: 1px solid #d2d2d2;
+}
+.settingsGear{
+  display: block;
+}
+.settingsGear img{
+  width: 1.7rem;
+  opacity: 80%;
+}
+.settingsGear button{
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  float: right;
+}
+
+.settingsGear button:hover{
+  cursor: pointer;
+}
+
+.sideAreaInfo{
+  padding: 3rem;
+}
+
+.expBarWithLevel2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.expBarContainer2{
+  width: 70%;
+  border: 1px solid #d2d2d2;
+  border-radius: 3rem;
+  height: 0.5rem;
+}
+
+.expBar2{
+  text-align: right;
+  height: 0.5rem;
+  background-color: #00aeef;
+  border-radius: 3rem;
+}
+
+.myPageDetails{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.myPageDetails p{
+  color: #929292;
+  text-align: center;
+}
+
+.myPageStats{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.myPageStats p{
+  color: #929292;
+}
+
+.myPageDetailsListTitle{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lineStats{
+  width: 8rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 3rem;
+
+}
+
+.myPageStatsInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.myPageStatsInfo h1{
+  font-weight: normal;
+  font-size: 2.8rem;
+}
+
+.myPageDetailsList{
+  padding: 2rem;
+}
+
+.myPageDetailsList2{
+  padding: 2rem;
+  border-top: 1px solid #d2d2d2;
+}
+
+.myPagePlatformsHeader{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.linePlatforms{
+  width: 18rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 4rem;
+}

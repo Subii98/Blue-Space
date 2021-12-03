@@ -29,6 +29,7 @@ function CreatePlatform(props) {
     const [subscribingPlatforms, setSubscribingPlatforms] = useState([]);
     const expRange = [15, 49, 106, 198, 333, 705, 9999]
     const [userImage, setUserImage] = useState("");
+    const [playCount, setUserPlayCount] = useState()
     const history = useHistory();
 
     useEffect(() => {
@@ -72,6 +73,7 @@ function CreatePlatform(props) {
             setLevel(user.level)            
             setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
             setUserImage(user.userImage)
+            setUserPlayCount(user.playCount)
         }
     });
 
@@ -91,11 +93,13 @@ function CreatePlatform(props) {
     useEffect(() => {
         if (store && store.username) setName(store.username);
     }, [store]);
+
+    /*
     return (
         <div>
             <div>
                 {loading && <LoadingModal />}
-                {error && <MessageModal variant="danger">{error}</MessageModal>}
+                {error && <MessageModal variant="danger">{error}</MessageModal>}                
                 <div className="side">
                     <div className="profile">
                         <div className="settingsGear">
@@ -151,6 +155,82 @@ function CreatePlatform(props) {
             </div>
         </div>
     );
+    */
+
+    return(
+        <div>
+            {loading && <LoadingModal />}
+            {error && <MessageModal variant="danger">{error}</MessageModal>}
+            <div className="myPage">
+                <div className="sideArea">
+                    <div className="settingsGear">
+                        <button onClick={() => history.push(`/ProfileSetting/${user._id}`)}><img src="/images/icon/gear.png"/></button>
+                    </div>
+                    <div className="sideAreaInfo">
+                        <div className="profileImage">
+                            <img src={userImage} alt="profile"/>
+                        </div>
+                        <div className="userPreview">
+                            <div className="userTitle">
+                                <p style={{ textAlign: "center"}}>{title}</p>
+                            </div>
+                            <div className="usernameBadge">
+                                <img src={badge}/>
+                                <span>{name}</span>
+                            </div>
+                        </div>
+                        <div className="expBarWithLevel2">
+                            <p>Lv.{level}</p>
+                            <div className="expBarContainer2">
+                                <div className="expBar2" style={{width: `${expBarAmount}%`}}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="myPageDetails">
+                    <div className="myPageDetailsList">
+                        <div className="myPageDetailsListTitle">
+                            <p>STATS</p>
+                            <div className="lineStats"/>
+                        </div>
+                        <div className="myPageStats">
+                            <div className="myPageStatsInfo">
+                                <p>ACCURACY</p>
+                                <h1>{Math.round(totalQuestions != 0 ? (correct / totalQuestions) * 100 : 0)}%</h1>
+                            </div>
+                            <div className="myPageStatsInfo">
+                                <p>Play Count</p>
+                                <h1>{playCount}</h1>
+                            </div>
+                            <div className="myPageStatsInfo">
+                                <p>TITLE</p>
+                                <h1>{title}</h1>
+                            </div>
+                            <div className="myPageStatsInfo">
+                                <p>POINTS</p>
+                                <h1>{points}p</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="myPageDetailsList2">
+                        <div className="myPagePlatformsHeader">
+                            <p>OWNED PLATFORMS</p>
+                            <div className="linePlatforms"/>
+                        </div>                        
+                        <Platform platforms={platforms} row={true}></Platform>
+                    </div>
+                    <div className="myPageDetailsList2">
+                        <div className="myPagePlatformsHeader">
+                            <p>SUBSCRIBED PLATFORMS</p>
+                            <div className="linePlatforms"/>
+                        </div>
+                        <Platform platforms={subscribingPlatforms} row={true}></Platform>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+    )
 }
 
 export default CreatePlatform;
