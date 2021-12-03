@@ -31,7 +31,7 @@ function NavElements() {
         let userData = localStorage.getItem("data");
         userData = JSON.parse(userData);
         axios
-            .get("/api/quizzes")
+            .get("/api/recentquiz/"+userData.id)
             .then(res => setQuizzes(res.data))
             .catch(error => {
                 setError("No quizdata");
@@ -119,7 +119,7 @@ function NavElements() {
                     {quizzes
                         ? quizzes.map((quiz, index) => {
                               /* console.log("entered loop: ", sub, index); */
-                              const quizName = quiz.title;
+                              const quizName = quiz.quizName;
                               const quizIds = quiz._id;
                               return (
                                   <ui className="navLinks">
