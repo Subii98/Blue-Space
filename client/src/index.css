@@ -1229,6 +1229,9 @@ th button:disabled{
 .myPageDetailsList2{
   padding: 2rem;
   border-top: 1px solid #d2d2d2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .myPagePlatformsHeader{
@@ -1244,3 +1247,40 @@ th button:disabled{
   border-top: 2px solid #929292;
   margin-bottom: 4rem;
 }
+
+/*start of PaginatedItems*/
+.pagination{
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-around;
+  margin-left: 0;
+  padding: 0;
+  width: 30%;
+}
+
+.pagination ul{
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+.pagination li{
+  list-style: none;
+  margin-left: 0;
+  padding: 0
+}
+
+.page-item{
+  cursor: pointer;
+  color: #d2d2d2;
+  font-size: 1.3rem;
+}
+
+.break-label{
+  color: #d2d2d2
+}
+.active{
+  color: #00aeef;
+}
+/*end of PaginatedItems*/
