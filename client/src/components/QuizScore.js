@@ -2,6 +2,7 @@ import { CallReceivedOutlined } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from "react-router-dom";
 import { FetchApiPost } from '../utils/Network';
+import axios from "axios";
 
 function QuizScore(props){
     const user = props.user
@@ -13,7 +14,10 @@ function QuizScore(props){
     const [expBarAmount, setExpBarAmount] = useState() 
     const [disableThumbUp, setDisableThumbUp] = useState(false)
     const [disableThumbDown, setDisableThumbDown] = useState(false)
+    const [quizDetails, setQuizDetails] = useState(); //used for creation of recent quiz
 
+
+    console.log("quiz ID for quizscore is ", props.quizID);
     const history = useHistory();
 
     useEffect(()=> {
@@ -98,7 +102,33 @@ function QuizScore(props){
             exp: user.exp + (props.count * expRate),
             level: level
         });
+        axios
+            .get("/api/quizzes/get_quiz/" + props.quizID)
+            .then(res => {
+                setQuizDetails(res);
+                console.log("entered quiz details");
+                return;
+            })
+            .catch(error => {
+                console.log("Error loading quiz");
+            });
+        
     }
+    //saves a record in recent quizzes
+    const record = async () => {
+        console.log("quizdetails info" , quizDetails);
+        let res = await FetchApiPost("/api/recentquiz/record", {
+            userID: user._id,
+            quizID: props.quizID,
+            name: quizDetails.title,
+            correct: props.count,
+            total: questions.length,
+        });
+    }
+    useEffect(() => {
+        record();
+    }, [quizDetails]);
+
 
     const onClickClose = () => {
         console.log("back to platform page")

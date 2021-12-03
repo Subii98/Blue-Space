@@ -297,7 +297,7 @@ function Question(props) {
             </div>
         );
     } else {
-        return <QuizScore questions={questions} count={count} platformId={platformId} user={user} usedPoints={usedPoints}/>;
+        return <QuizScore quizID={props.quizID} questions={questions} count={count} platformId={platformId} user={user} usedPoints={usedPoints}/>;
     }
 }
 

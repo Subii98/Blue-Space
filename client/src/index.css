@@ -6,6 +6,7 @@ code {
 @import "./css/MyPage.css";
 @import "./css/ProfileSetting.css";
 @import "./css/CreatePlatform.css";
+@import "./css/PopupModal.css";
 @font-face {
   font-family: 'oswald-light';
   src: local('oswald-light'), url(./fonts/Oswald-Light.ttf) format('truetype');
@@ -32,11 +33,10 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* grid-template: [row-1-start] min-content [row-1-end row-2-start] 1fr [row-end] / min-content 1fr; */
 /* layouts */
 .grid-container{
   display: grid;
-  /* grid-template: [row-1-start] min-content [row-1-end row-2-start] 1fr [row-end] / min-content 1fr; */
   grid-template-areas: 
       'nav header'
       'nav main'
@@ -103,6 +103,17 @@ nav {
   margin-right: 1rem;
   margin-bottom: 3rem;
   
+}
+a.popup {
+   color: inherit;  
+}
+
+.navLinks{
+  width:100%;
+}
+.linksContainer{
+  display: flex;
+  flex-wrap: wrap;
 }
 /* nav::before {
   content: "";
@@ -823,7 +834,13 @@ div.wrap {
 /* .swiper-wrapper {
   padding-inline-start: 0;
 } */
-
+.swiper-wrapper{
+-webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    }
 
 /*start of ManageTable*/
 .leaderboardTable {
