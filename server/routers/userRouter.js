@@ -2,10 +2,12 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import User from "../models/userModel.js";
+import Platform from "../models/platformModel.js"
 import Counter from "../models/counterModel.js";
 import cookieParser from "cookie-parser";
 import { createRequire } from "module";
 import { uploadModule } from "../utils.js";
+
 
 const require = createRequire(import.meta.url);
 
@@ -159,7 +161,8 @@ userRouter.post("/auth/google", async (req, res) => {
 
             console.log("saving username: ", user.username);
             console.log("what user", user);
-            user.save()
+            user
+              .save()
                 .then(() => {
                     return res.status(200).json({
                         success: true,
@@ -389,6 +392,42 @@ userRouter.post(
         );
         res.send(editUserTitle);
     })
+);
+
+userRouter.get(
+  "/get_subscribers/:id",
+  expressAsyncHandler(async (req, res) => {
+    console.log("Entered get subscribers with id" , req.params.id);
+    const user = await User.findOne({ _id: req.params.id });
+    if (user) {
+      var subscriberarray = user.subscribedPlatforms;
+      if (!subscriberarray.length){
+        return res.status(201).json({
+          success: true,
+          ids: [],
+          names: [],
+          message: "No platforms",
+        });
+      }
+      const platforms = await Platform.find({_id: {$in: subscriberarray}}).sort({title: 1});
+      if (platforms){
+        var ids = platforms.map(function(platform) {return platform._id});
+        var names = platforms.map(function(platform) {return platform.title});
+        return res.status(200).json({
+          success: true,
+          ids: ids,
+          names: names,
+          message: "Sucessful with platforms",
+        });
+      } 
+      else {
+        res.status(404).send({ message: "Platforms Not Found" });
+      }
+      
+    } else {
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
 );
 
 export default userRouter;
