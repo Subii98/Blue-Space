@@ -10,10 +10,6 @@ function PaginatedItems(props) {
     const [items, setItems] = useState(props.items)
     const [itemOffset, setItemOffset] = useState(0);
 
-    useEffect(()=>{
-      setItemsPerPage(props.itemsPerPage)
-    }, [props.itemsPerPage])
-
     useEffect(() => {
       // Fetch items from another resources.
       const endOffset = itemOffset + itemsPerPage;
