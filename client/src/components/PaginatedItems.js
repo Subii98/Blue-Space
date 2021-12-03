@@ -8,16 +8,11 @@ function PaginatedItems(props) {
     const [pageCount, setPageCount] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(props.itemsPerPage)
     const [items, setItems] = useState(props.items)
-    console.log(props.items)
-    // Here we use item offsets; we could also use page offsets
-    // following the API or data you're working with.
     const [itemOffset, setItemOffset] = useState(0);
 
-    useEffect(() => {
-    }, [])
-
-    useEffect(() => {
-    }, [props.items])
+    useEffect(()=>{
+      setItemsPerPage(props.itemsPerPage)
+    }, [props.itemsPerPage])
 
     useEffect(() => {
       // Fetch items from another resources.
@@ -38,7 +33,7 @@ function PaginatedItems(props) {
   
     return (
       <>
-        {currentItems && <PlatformItems currentItems={currentItems} />}
+        {currentItems && <PlatformItems currentItems={currentItems} row={props.row}/>}
         <ReactPaginate
           nextLabel=">"
           onPageChange={handlePageClick}

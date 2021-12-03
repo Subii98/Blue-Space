@@ -11,6 +11,7 @@ import { FetchApiGet } from "../utils/Network";
 import Platform from "../components/Platform.js";
 import PlatformCard from "../components/PlatformCard.js";
 import { Link, useHistory } from "react-router-dom";
+import PaginatedItems from "../components/PaginatedItems";
 
 function ProfileSetting(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -294,14 +295,14 @@ function ProfileSetting(props) {
                             <p>OWNED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>                        
-                        <Platform platforms={platforms} row={true}></Platform>
+                        <PaginatedItems itemsPerPage={4} items={platforms} row={true}/>
                     </div>
                     <div className="myPageDetailsList2">
                         <div className="myPagePlatformsHeader">
                             <p>SUBSCRIBED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>
-                        <Platform platforms={subscribingPlatforms} row={true}></Platform>
+                        <PaginatedItems itemsPerPage={4} items={subscribingPlatforms} row={true}/>
                     </div>
                 </div>
             </div>

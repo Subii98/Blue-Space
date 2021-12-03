@@ -14,6 +14,9 @@ const quizSchema = new mongoose.Schema({
     platformId:{
         //platform id contains this quiz
         type: String
+    },
+    likes: {
+        type: Number
     }
 });
 

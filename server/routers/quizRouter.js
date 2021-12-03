@@ -53,13 +53,14 @@ quizRouter.post(
     "/insert",
     expressAsyncHandler(async (req, res) => {
         try{
-            const { title, description, platformId } = req.body;
+            const { title, description, platformId, likes } = req.body;
             const createdQuiz = await Quiz.insertMany([
                 {
                     platformId,
                     // quizId: ,
                     title,
-                    description
+                    description,
+                    likes
                 },
             ]);
             res.send(createdQuiz);
@@ -70,6 +71,22 @@ quizRouter.post(
     })
 );
 
+quizRouter.post(
+    "/editLikes",
+    expressAsyncHandler(async (req, res) => {
+        const { quizId, likes } = req.body;
+
+        const editLikes = await Quiz.updateOne(
+            { _id: quizId },
+            {
+                $set: {
+                    likes: likes
+                },
+            }
+        );
+        res.send(editLikes);
+    })
+);
 //quizRouter.put('/quiz/:id', QuizCtrl.updateQuiz)
 //quizRouter.get('/quiz/:nid', QuizCtrl.getQuizById)
 //quizRouter.get('/quizzes', QuizCtrl.getQuizzes)

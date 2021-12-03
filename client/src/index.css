@@ -780,6 +780,22 @@ div.wrap {
   align-items: center;
 }
 
+.cardContentHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.quizHeart{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.quizHeart img{
+  margin-right: 5px;
+}
+
 .categoryIcon{
   width: 1.8rem;
   object-fit: contain;
