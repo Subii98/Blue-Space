@@ -1170,7 +1170,6 @@ th button:disabled{
 }
 .settingsGear img{
   width: 1.7rem;
-  opacity: 80%;
 }
 .settingsGear button{
   margin-top: 1rem;
@@ -1315,5 +1314,6 @@ th button:disabled{
 }
 .active{
   color: #00aeef;
+  font-weight: bold;
 }
 /*end of PaginatedItems*/
