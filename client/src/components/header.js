@@ -57,7 +57,7 @@ function Header(props) {
             })
       }
 
-    }, [openMiniProfile, user, store.loggedIn])
+    }, [openMiniProfile, store.loggedIn])
 
     const handleSubmit = (event) => {
       event.preventDefault();

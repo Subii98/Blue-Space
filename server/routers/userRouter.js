@@ -5,6 +5,7 @@ import User from "../models/userModel.js";
 import Counter from "../models/counterModel.js";
 import cookieParser from "cookie-parser";
 import { createRequire } from "module";
+import { uploadModule } from "../utils.js";
 
 const require = createRequire(import.meta.url);
 
@@ -292,19 +293,42 @@ userRouter.get(
   })
 );
 
+// userRouter.post(
+//   "/set_user",
+//   expressAsyncHandler(async (req, res) => {
+//     const { newName, userId } = req.body;
+//     const existUser = await User.findOne({ username : newName });
+//     if(existUser){
+//       return res.send({err : "exist user"});
+//     }
+//     const modifyUser = await User.updateOne(
+//       { _id: userId },
+//       {
+//         $set: {
+//           username: newName,
+//         },
+//       }
+//     );
+//     res.send({ modifyUser });
+//   })
+// );
+
 userRouter.post(
   "/set_user",
+  uploadModule.array("file"),
   expressAsyncHandler(async (req, res) => {
     const { newName, userId } = req.body;
     const existUser = await User.findOne({ username : newName });
     if(existUser){
       return res.send({err : "exist user"});
     }
+    const userImagePath = req.files[0] ? "/" + req.files[0].path : existUser.userImage;
     const modifyUser = await User.updateOne(
       { _id: userId },
       {
         $set: {
           username: newName,
+          userImage: userImagePath
         },
       }
     );

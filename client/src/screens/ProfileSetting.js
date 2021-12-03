@@ -12,6 +12,9 @@ function ProfileSetting(props) {
     const [error, setError] = useState(false);
     const [name, setName] = useState("");
     const [userData, setUserData] = useState();
+    const [userImage, setUserImage] = useState("");
+    const [userImageURL, setUserImageURL] = useState("")
+    const [userImageRef, setImageRef] = useState()
 
     useEffect(() => {
         let _userData = localStorage.getItem("data");
@@ -30,25 +33,29 @@ function ProfileSetting(props) {
         }
     }, [userData]);
 
-    const onClickUpdate = async () => {
-        const res = await FetchApiPost("/api/v1/set_user", {
-            newName: name,
-            userId: userData._id,
-        });
+    // const onClickUpdate = async () => {
+    //     const res = await FetchApiPostWithFile("/api/v1/set_user", []{
+    //         newName: name,
+    //         userId: userData._id,
+    //     });
 
-        if (res.err) {
-            alert(`${name} is exist username!!`);
-        } else {
-            alert("Updated");
-        }
-    };
+    //     if (res.err) {
+    //         alert(`${name} is exist username!!`);
+    //     } else {
+    //         alert("Updated");
+    //     }
+    // };
+    // console.log("!@#!@#!@#$!@",userData)
 
     return (
         <div className="profile-setting-main-container">
-            <Button onClick={onClickUpdate}>UPDATE</Button>
+            {/* <Button onClick={onClickUpdate}>UPDATE</Button> */}
             <div className="profile-setting-box">
                 username
                 <TextField value={name} onChange={e => setName(e.target.value)} />
+            </div>
+            <div>
+            <img src={userData.userImage}  />
             </div>
         </div>
     );

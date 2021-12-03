@@ -14,7 +14,7 @@ function EditPlatform(props) {
     const history = useHistory();
     const { store } = useContext(GlobalStoreContext);
     //use react hooks to set data (empty array by default)
-    const [platform, setPlatform] = useState([]);
+    const [platform, setPlatform] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [createPlatform, setCreatePlatform] = useState(null);
@@ -54,9 +54,8 @@ function EditPlatform(props) {
     const onChangeBanner = e => {
         setBannerURL(URL.createObjectURL(e.target.files[0]));
         setBanner(e.target.files[0]);
-
     };
-    
+
     const onChangeIcon = e => {
         setIconURL(URL.createObjectURL(e.target.files[0]));
         setIcon(e.target.files[0]);
@@ -70,6 +69,8 @@ function EditPlatform(props) {
             setTag1(platform.tag1);
             setTag2(platform.tag2);
             setTag3(platform.tag3);
+            setBannerURL(platform.banner);
+            setIconURL(platform.icon);
         }
     }, [platform]);
 
@@ -83,7 +84,6 @@ function EditPlatform(props) {
                 console.log(data);
                 setLoading(false);
                 setPlatform(data);
-                
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
@@ -93,63 +93,31 @@ function EditPlatform(props) {
     }, [props.match.params.platformId]);
 
     useEffect(() => {
-        console.log(store);
-        // setName(store.username)
         setUserName(store.username);
     }, [store]);
-
-    // const onClickSubmit = async () => {
-    //     let res = await FetchApiPost("/api/platforms/edit", {
-    //         platformId : platform._id,
-    //         // userId : userId,
-    //         userName: userName,
-    //         // name : name,
-    //         title: title,
-    //         description: description,
-    //         // subscriber : subscriber,
-    //         // icon : icon,
-    //         banner: banner,
-    //         // fontFamily : fontFamily,
-    //         // titleFontSize : titleFontSize,
-    //         // descFontSize : descFontSize,
-    //         fontColor: fontColor,
-    //         tag1: tag1,
-    //         tag2: tag2,
-    //         tag3: tag3,
-    //         // quizId : quizId.split(','),
-    //     });
-    //     // setCreatePlatform(JSON.stringify(res));
-    //     alert("platform edit");
-    //     history.goBack()
-    // };
 
     const onClickSubmit = async () => {
         let res = await FetchApiPostWithFile("/api/platforms/edit", [banner, icon], {
             platformId: platform._id,
-            // userId : userId,
             userName: userName,
-            // name : name,
             title: title,
             description: description,
-            // subscriber : subscriber,
-            // icon : icon,
-            // fontFamily : fontFamily,
-            // titleFontSize : titleFontSize,
-            // descFontSize : descFontSize,
             fontColor: fontColor,
             tag1: tag1,
             tag2: tag2,
             tag3: tag3,
-            // quizId : quizId.split(','),
+            banner: platform.banner ,
+            banner_changed : banner != "" ? 1 : 0,
+            icon: platform.icon ,
+            icon_changed : icon != "" ? 1 : 0
         });
-        // setCreatePlatform(JSON.stringify(res));
         alert("platform edit");
         history.goBack();
     };
 
-    const onClickDelete = async (e) =>{
-        let res = await FetchApiDelete("/api/platforms/deletePlatform", {
-            platformId: platform._id
+    const onClickDelete = async e => {
+        let res = await FetchApiDelete("/api/platforms/platformDelete", {
+            platformId: platform._id,
         });
         console.log(res);
         // alert("platform delete");
@@ -186,28 +154,31 @@ function EditPlatform(props) {
                             />
                         </div>
                         <div className="postArea">
-                            <div className="cp-banner">
-                                <img
-                                    src={
-                                        platform.banner && platform.banner != ""
-                                            ? platform.banner
-                                            : "/images/sample.jpeg"
-                                    }
-                                    onClick={onClickBanner}
-                                />
-                                <input
-                                    ref={ref => setBannerImageRef(ref)}
-                                    id="file-input"
-                                    type="file"
-                                    onChange={onChangeBanner}
-                                />
-                            </div>
+                            <input
+                                ref={ref => setBannerImageRef(ref)}
+                                id="file-input"
+                                className="cp-banner-input"
+                                type="file"
+                                onChange={onChangeBanner}
+                            />
+                            <div
+                                className="cp-banner"
+                                style={{
+                                    backgroundImage: `url(${
+                                        bannerURL && bannerURL != ""
+                                            ? bannerURL
+                                            : "./images/sample.jpeg"
+                                    })`,
+                                }}
+                                onClick={onClickBanner}
+                            />
                             <div className="platformInfoArea">
                                 <div>
-                                    <img src={platform.icon} onClick={onClickIcon} />
+                                    <img src={iconURL} onClick={onClickIcon} />
                                     <input
                                         ref={ref => setIconImageRef(ref)}
                                         id="file-input"
+                                        className="cp-banner-input"
                                         type="file"
                                         onChange={onChangeIcon}
                                     />

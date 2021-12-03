@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     //unique: true,
   },
-
   expire: {
     type: Date,
   },

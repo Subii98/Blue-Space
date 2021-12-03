@@ -28,6 +28,7 @@ function CreatePlatform(props) {
     const [expBarAmount, setExpBarAmount] = useState()
     const [subscribingPlatforms, setSubscribingPlatforms] = useState([]);
     const expRange = [15, 49, 106, 198, 333, 705, 9999]
+    const [userImage, setUserImage] = useState("");
     const history = useHistory();
 
     useEffect(() => {
@@ -70,13 +71,18 @@ function CreatePlatform(props) {
             setBadge(user.badge)
             setLevel(user.level)            
             setExpBarAmount( user.exp / expRange[user.level - 1] * 100)
+            setUserImage(user.userImage)
         }
     });
 
     function subscribe(id) {
         axios
             .get("/api/platforms/by_id/" + id)
-            .then(res => subscribingPlatforms.push(res.data))
+            .then(res =>{ 
+                subscribingPlatforms.push(res.data);
+                console.log("!!",subscribingPlatforms);
+                setSubscribingPlatforms([...subscribingPlatforms]);
+            })
             .catch(error => {
                 setError("No userdata");
             });
@@ -97,7 +103,7 @@ function CreatePlatform(props) {
                             <button onClick={() => history.push(`/ProfileSetting/${user._id}`)}><img src="/images/icon/gear.png"/></button>
                         </div>
                         <div className="profile-image">
-                            <img src={"./images/sample.jpeg"} />
+                            <img src={userImage} />
                         </div>
                         <div className="userPreview">
                             <div className="userTitle">
