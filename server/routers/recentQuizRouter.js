@@ -31,24 +31,26 @@ recentQuizRouter.post(
         });
       }
 
-      const recentQuizElem = new RecentQuizModel({
+      const recentQuizElem = new RecentQuiz({
         userID: userID,
         quizID: quizID,
-        name: name,
+        quizName: name,
         correct, correct,
         total, total,
       });
 
-      if (!RecentQuizElem) {
+      console.log(recentQuizElem);
+
+      if (!recentQuizElem) {
         return res.status(400).json({ success: false, error: err });
       }
 
-      RecentQuizElem
+      recentQuizElem
         .save()
         .then(() => {
           return res.status(200).json({
             success: true,
-            id: RecentQuizElem._id,
+            id: recentQuizElem._id,
             message: "Feedback created!",
           });
         })

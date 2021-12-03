@@ -2,9 +2,9 @@ import mongoose from 'mongoose'
 
 const quizSchema = new mongoose.Schema({
     //Automatically produced by mongodb
-    _id: {
+    /* _id: {
         type: String
-    },
+    }, */
     title: {
         type: String
     },

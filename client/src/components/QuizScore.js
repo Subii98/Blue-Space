@@ -117,16 +117,19 @@ function QuizScore(props){
     //saves a record in recent quizzes
     const record = async () => {
         console.log("quizdetails info" , quizDetails);
+        console.log("quiz id is " , props.quizID);
         let res = await FetchApiPost("/api/recentquiz/record", {
             userID: user._id,
             quizID: props.quizID,
-            name: quizDetails.title,
+            name: quizDetails.data.title,
             correct: props.count,
             total: questions.length,
         });
     }
     useEffect(() => {
-        record();
+       if (quizDetails){
+            record();
+       }
     }, [quizDetails]);
 
 

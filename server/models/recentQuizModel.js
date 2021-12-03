@@ -5,7 +5,7 @@ const recentQuizModelSchema = new mongoose.Schema({
     type: String,
     //unique: true,
   },
-  quizId: {
+  quizID: {
     type: String,
   },
   quizName: {
