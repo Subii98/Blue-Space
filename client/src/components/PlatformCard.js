@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState} from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,18 +7,18 @@ import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function PlatformCard(props) {
-    console.log(props.platform);
+    
     return (
         <div className="platformCards">
             <Card sx={props.row ? { width: 100} : {width: 250}}>
                 <CardActionArea component={Link} to={`/platform/${props.platform._id}`}>
                     <CardMedia
                         component="img"
-                        height="100"
+                        height={"100"}
                         image={
                             props.platform.banner && props.platform.banner != ""
                                 ? props.platform.banner
-                                : "./images/sample.jpeg"
+                                : "/images/sample.jpeg"
                         }
                         alt="category"
                     />

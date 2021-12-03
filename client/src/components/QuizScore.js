@@ -2,6 +2,7 @@ import { CallReceivedOutlined } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from "react-router-dom";
 import { FetchApiPost } from '../utils/Network';
+import axios from "axios";
 
 function QuizScore(props){
     const user = props.user
@@ -13,7 +14,10 @@ function QuizScore(props){
     const [expBarAmount, setExpBarAmount] = useState() 
     const [disableThumbUp, setDisableThumbUp] = useState(false)
     const [disableThumbDown, setDisableThumbDown] = useState(false)
+    const [quizDetails, setQuizDetails] = useState(); //used for creation of recent quiz
+    const [likes, setLikes] = useState(props.likes)
 
+    console.log("quiz ID for quizscore is ", props.quizID);
     const history = useHistory();
 
     useEffect(()=> {
@@ -22,7 +26,7 @@ function QuizScore(props){
 
     useEffect (() => {
         editPoints()
-    }, [level, expBarAmount, levelUp ,disableThumbDown, disableThumbUp])
+    }, [level, expBarAmount, levelUp ,disableThumbDown, disableThumbUp, likes])
 
     function calcLevel(){
         const tmpExp = props.user.exp + (props.count * expRate)
@@ -98,21 +102,60 @@ function QuizScore(props){
             exp: user.exp + (props.count * expRate),
             level: level
         });
+        axios
+            .get("/api/quizzes/get_quiz/" + props.quizID)
+            .then(res => {
+                setQuizDetails(res);
+                console.log("entered quiz details");
+                return;
+            })
+            .catch(error => {
+                console.log("Error loading quiz");
+            });
+        
     }
+
+    const editLikes = async () => {
+        let res = await FetchApiPost("/api/quizzes/editLikes", {
+            quizId: props.quizID,
+            likes: likes
+        })
+    }
+    //saves a record in recent quizzes
+    const record = async () => {
+        console.log("quizdetails info" , quizDetails);
+        console.log("quiz id is " , props.quizID);
+        let res = await FetchApiPost("/api/recentquiz/record", {
+            userID: user._id,
+            quizID: props.quizID,
+            name: quizDetails.data.title,
+            correct: props.count,
+            total: questions.length,
+        });
+    }
+    useEffect(() => {
+       if (quizDetails){
+            record();
+       }
+    }, [quizDetails]);
+
 
     const onClickClose = () => {
         console.log("back to platform page")
+        editLikes()
         history.push("/platform/" + platformId);
     }
 
     const onClickDisableThumbUp = () => {
         setDisableThumbUp(true)
-        setDisableThumbDown(false) 
+        setDisableThumbDown(false)
+        setLikes(likes+1)
     }
 
     const onClickDisableThumbDown = () => {
         setDisableThumbUp(false)
-        setDisableThumbDown(true) 
+        setDisableThumbDown(true)
+        setLikes(likes-1)
     }
 
     return(

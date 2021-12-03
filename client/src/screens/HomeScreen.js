@@ -11,6 +11,7 @@ import Platform from '../components/Platform.js';
 import QuizCard from '../components/QuizCard.js';
 import { textAlign } from '@mui/system';
 import SwiperCategories from "../components/SwiperCategories.js";
+import PaginatedItems from '../components/PaginatedItems.js';
 
 function HomeScreen(props) {   
   //to check quiz _id matches _id of the url /quiz/_id  
@@ -82,7 +83,7 @@ function HomeScreen(props) {
                               Trending Platforms
                           </p>
                           <div className="line" />
-                          <Platform platforms={platforms}></Platform>
+                          <PaginatedItems itemsPerPage={3} items={platforms} row={false}/>
                       </div>
                   </div>
               </div>

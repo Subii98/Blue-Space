@@ -10,6 +10,8 @@ import { exec } from "child_process";
 import questionRouter from "./routers/questionRouter.js";
 import platformRouter from "./routers/platformRouter.js";
 import searchRouter from "./routers/searchRouter.js";
+import recentQuizRouter from "./routers/recentQuizRouter.js";
+import feedbackRouter from "./routers/feedbackRouter.js";
 
 env(); // set enviornment variables
 const app = express();
@@ -71,6 +73,8 @@ app.use("/api/questions", questionRouter);
 app.use("/api/platforms", platformRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/search", searchRouter);
+app.use("/api/feedback", feedbackRouter);
+app.use("/api/recentquiz", recentQuizRouter);
 app.get("/", (req, res) => {
   res.send("Server is Ready");
 });

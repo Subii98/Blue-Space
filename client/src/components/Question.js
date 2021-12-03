@@ -29,6 +29,7 @@ function Question(props) {
     const [defaultTime, setDefaultTime] = useState(10)
     const [hintCount, setHintCount] = useState(0)
     const [usedPoints, setUsedPoints] = useState(0)
+    const [likes, setLikes] = useState(0)
     
 
     //const question = questions[index]
@@ -39,6 +40,7 @@ function Question(props) {
             .then(res => {
                 const data = res?.data;
                 setPlatformId((data.find( x => x._id === props.question[0].quizId).platformId))
+                setLikes((data.find( x => x._id === props.question[0].quizId).likes))
                 return;
             })
             .catch(error => {
@@ -297,7 +299,7 @@ function Question(props) {
             </div>
         );
     } else {
-        return <QuizScore questions={questions} count={count} platformId={platformId} user={user} usedPoints={usedPoints}/>;
+        return <QuizScore quizID={props.quizID} questions={questions} count={count} platformId={platformId} user={user} usedPoints={usedPoints} likes={likes}/>;
     }
 }
 

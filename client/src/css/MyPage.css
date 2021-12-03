@@ -25,20 +25,9 @@
     display: flex;
     height: 100%;
 }
-.settingsGear{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-}
-.settingsGear img{
-    width: 1.7rem;
-    opacity: 80%;
-}
-.settingsGear button{
-    margin-top: 1rem;
-    background: none;
-    border: none;
+
+.settingsGear button:hover{
+    cursor: pointer;
 }
 
 .platforms-list {
@@ -122,25 +111,3 @@
     width: 10px;
 }
 
-.expBarWithLevel2{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-}
-
-.expBarContainer2{
-  width: 70%;
-  border: 1px solid #d2d2d2;
-  border-radius: 3rem;
-}
-
-.expBar2{
-  text-align: right;
-  padding-top: 10px; 
-  padding-bottom: 10px;
-  height: auto;
-  background-color: #00aeef;
-  border-radius: 3rem;
-}

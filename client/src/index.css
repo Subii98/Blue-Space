@@ -6,6 +6,7 @@ code {
 @import "./css/MyPage.css";
 @import "./css/ProfileSetting.css";
 @import "./css/CreatePlatform.css";
+@import "./css/PopupModal.css";
 @font-face {
   font-family: 'oswald-light';
   src: local('oswald-light'), url(./fonts/Oswald-Light.ttf) format('truetype');
@@ -32,11 +33,10 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* grid-template: [row-1-start] min-content [row-1-end row-2-start] 1fr [row-end] / min-content 1fr; */
 /* layouts */
 .grid-container{
   display: grid;
-  /* grid-template: [row-1-start] min-content [row-1-end row-2-start] 1fr [row-end] / min-content 1fr; */
   grid-template-areas: 
       'nav header'
       'nav main'
@@ -103,6 +103,17 @@ nav {
   margin-right: 1rem;
   margin-bottom: 3rem;
   
+}
+a.popup {
+   color: inherit;  
+}
+
+.navLinks{
+  width:100%;
+}
+.linksContainer{
+  display: flex;
+  flex-wrap: wrap;
 }
 /* nav::before {
   content: "";
@@ -769,6 +780,22 @@ div.wrap {
   align-items: center;
 }
 
+.cardContentHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.quizHeart{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.quizHeart img{
+  margin-right: 5px;
+}
+
 .categoryIcon{
   width: 1.8rem;
   object-fit: contain;
@@ -842,7 +869,13 @@ div.wrap {
 /* .swiper-wrapper {
   padding-inline-start: 0;
 } */
-
+.swiper-wrapper{
+-webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    }
 
 /*start of ManageTable*/
 .leaderboardTable {
@@ -1088,3 +1121,199 @@ th button:disabled{
   flex-direction: column;
 }
 /*end of RankAccuracy component*/
+
+/*start of myPage*/
+.myPage{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #d2d2d2
+}
+
+.profileImage{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileImage img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #00aeef;
+}
+
+.usernameBadgeMyPage{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+  border:none;
+  justify-content: center;
+}
+
+.usernameBadgeMyPage span{
+  font-size: 1.5rem;
+}
+
+
+.usernameBadgeMyPage img{
+  width: 1.7rem;
+  margin-right: 0.5rem;
+  object-fit: contain;
+}
+
+.sideArea{
+  border-right: 1px solid #d2d2d2;
+}
+.settingsGear{
+  display: block;
+}
+.settingsGear img{
+  width: 1.7rem;
+  opacity: 80%;
+}
+.settingsGear button{
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  float: right;
+}
+
+.settingsGear button:hover{
+  cursor: pointer;
+}
+
+.sideAreaInfo{
+  padding: 3rem;
+}
+
+.expBarWithLevel2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.expBarContainer2{
+  width: 70%;
+  border: 1px solid #d2d2d2;
+  border-radius: 3rem;
+  height: 0.5rem;
+}
+
+.expBar2{
+  text-align: right;
+  height: 0.5rem;
+  background-color: #00aeef;
+  border-radius: 3rem;
+}
+
+.myPageDetails{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.myPageDetails p{
+  color: #929292;
+  text-align: center;
+}
+
+.myPageStats{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.myPageStats p{
+  color: #929292;
+}
+
+.myPageDetailsListTitle{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lineStats{
+  width: 8rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 3rem;
+
+}
+
+.myPageStatsInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.myPageStatsInfo h1{
+  font-weight: normal;
+  font-size: 2.8rem;
+}
+
+.myPageDetailsList{
+  padding: 2rem;
+}
+
+.myPageDetailsList2{
+  padding: 2rem;
+  border-top: 1px solid #d2d2d2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.myPagePlatformsHeader{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.linePlatforms{
+  width: 18rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 4rem;
+}
+
+/*start of PaginatedItems*/
+.pagination{
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-around;
+  margin-left: 0;
+  padding: 0;
+  width: 30%;
+}
+
+.pagination ul{
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+.pagination li{
+  list-style: none;
+  margin-left: 0;
+  padding: 0
+}
+
+.page-item{
+  cursor: pointer;
+  color: #d2d2d2;
+  font-size: 1.3rem;
+}
+
+.break-label{
+  color: #d2d2d2
+}
+.active{
+  color: #00aeef;
+}
+/*end of PaginatedItems*/

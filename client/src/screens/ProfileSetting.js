@@ -11,6 +11,7 @@ import { FetchApiGet } from "../utils/Network";
 import Platform from "../components/Platform.js";
 import PlatformCard from "../components/PlatformCard.js";
 import { Link, useHistory } from "react-router-dom";
+import PaginatedItems from "../components/PaginatedItems";
 
 function ProfileSetting(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -32,6 +33,7 @@ function ProfileSetting(props) {
     const [level, setLevel] = useState()
     const [expBarAmount, setExpBarAmount] = useState()
     const [subscribingPlatforms, setSubscribingPlatforms] = useState([]);
+    const [playCount, setPlayCount] = useState()
     const expRange = [15, 49, 106, 198, 333, 705, 9999];
     const history = useHistory();
 
@@ -91,6 +93,7 @@ function ProfileSetting(props) {
             setExpBarAmount(userData.exp/expRange[userData.level -1] * 100);
             setUserImage(userData.userImage);
             setUserImageURL(userData.userImage);
+            setPlayCount(userData.playCount)
         }
     }, [userData]);
 
@@ -107,7 +110,6 @@ function ProfileSetting(props) {
         const res = await FetchApiPostWithFile("/api/v1/set_user", [userImage],{
             newName: name,
             userId: userData._id,
-            userImage: userImage
         });
 
         if (res.err) {
@@ -132,6 +134,7 @@ function ProfileSetting(props) {
     //     }
     // };
 
+    /*
     return (
         <div>
             <div>
@@ -158,7 +161,7 @@ function ProfileSetting(props) {
                             </div>
                             <div className="usernameBadge">
                                 <img src={badge}/>
-                                {/* <span>{name}</span> */}
+                                {// <span>{name}</span> }
                                 <TextField value={name} onChange={e => setName(e.target.value)} />
                             </div>
                         </div>
@@ -224,6 +227,112 @@ function ProfileSetting(props) {
             </div>
         </div>
     );
+    */
+   return(
+       <div>
+            {loading && <LoadingModal />}
+            {error && <MessageModal variant="danger">{error}</MessageModal>}
+            <div className="myPage">
+                <div className="sideArea">
+                    <div className="settingsGear">
+                        <button><img src="/images/icon/gear.png"/></button>
+                    </div>
+                    <div className="sideAreaInfo">
+                        <div className="profileImage">
+                            <img src={userImageURL} onClick={onClickUserImage}/>
+                            <input
+                                ref={ref => setUserImageRef(ref)}
+                                id="file-input"
+                                type="file"
+                                onChange={onChangeUserImage}
+                            />
+                        </div>
+                        <div className="userPreview">
+                            <div className="userTitle">
+                                <p style={{ textAlign: "center"}}>{title}</p>
+                            </div>
+                            <div className="usernameBadgeMyPage">
+                                <img src={badge}/>
+                                <TextField value={name} onChange={e => setName(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="expBarWithLevel2">
+                            <p>Lv.{level}</p>
+                            <div className="expBarContainer2">
+                                <div className="expBar2" style={{width: `${expBarAmount}%`}}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="myPageDetails">
+                    <div className="myPageDetailsList">
+                        <div className="myPageDetailsListTitle">
+                            <p>STATS</p>
+                            <div className="lineStats"/>
+                        </div>
+                        <div className="myPageStats">
+                            <div className="myPageStatsInfo">
+                                <p>ACCURACY</p>
+                                <h1>{Math.round(totalQuestions != 0 ? (correct / totalQuestions) * 100 : 0)}%</h1>
+                            </div>
+                            <div className="myPageStatsInfo">
+                                <p>Play Count</p>
+                                <h1>{playCount}</h1>
+                            </div>
+                            <div className="myPageStatsInfo">
+                                <p>TITLE</p>
+                                <h1>{title}</h1>
+                            </div>
+                            <div className="myPageStatsInfo">
+                                <p>POINTS</p>
+                                <h1>{points}p</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="myPageDetailsList2">
+                        <div className="myPagePlatformsHeader">
+                            <p>OWNED PLATFORMS</p>
+                            <div className="linePlatforms"/>
+                        </div>                        
+                        <PaginatedItems itemsPerPage={4} items={platforms} row={true}/>
+                    </div>
+                    <div className="myPageDetailsList2">
+                        <div className="myPagePlatformsHeader">
+                            <p>SUBSCRIBED PLATFORMS</p>
+                            <div className="linePlatforms"/>
+                        </div>
+                        <PaginatedItems itemsPerPage={4} items={subscribingPlatforms} row={true}/>
+                    </div>
+                </div>
+            </div>
+            <Button
+                    // component={Link} to="/"
+                        className="asd"
+                        onClick={onClickUpdate}
+                        style={{
+                            backgroundColor: "#00aeef",
+                            color: "white",
+                            float: "right",
+                        }}
+                    >
+                        {"SAVE"}
+                    </Button>
+                    <Button
+                        onClick={() => history.goBack()}
+                        style={{
+                            float: "right",
+                            color: "#00aeef",
+                            bordercolor: "#00aeef",
+                            borderradius: "5px",
+                            borderstyle: "solid",
+                            borderwidth: "1px",
+                        }}
+                    >
+                        {"CANCEL"}
+                    </Button>
+        </div>
+          
+    )
 }
 
 export default ProfileSetting;

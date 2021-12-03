@@ -2,9 +2,9 @@ import mongoose from 'mongoose'
 
 const quizSchema = new mongoose.Schema({
     //Automatically produced by mongodb
-    _id: {
+    /* _id: {
         type: String
-    },
+    }, */
     title: {
         type: String
     },
@@ -14,6 +14,9 @@ const quizSchema = new mongoose.Schema({
     platformId:{
         //platform id contains this quiz
         type: String
+    },
+    likes: {
+        type: Number
     }
 });
 
