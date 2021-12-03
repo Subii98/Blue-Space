@@ -27,12 +27,13 @@ recentQuizRouter.get(
             {$group: {
                     _id: "$quizID",
                     quizName: { $first: "$quizName" },
+                    recordID : { $last: '$_id'},
                     count: {
                         $sum: 1,
                     },
                 }
               }
-        ]);
+        ]).sort({recordID: -1});
       console.log("recent object", recent);
         res.send(recent);
     })
