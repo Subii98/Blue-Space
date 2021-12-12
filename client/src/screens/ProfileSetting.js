@@ -120,19 +120,7 @@ function ProfileSetting(props) {
         // alert("user Updated");
         history.goBack();
     };
-    // console.log("!@#!@#!@#$!@",userData)
-    // const onClickUpdate = async () => {
-    //     const res = await FetchApiPost("/api/v1/set_username", {
-    //         newName: name,
-    //         userId: userData._id,
-    //     });
-    //     if (res.err) {
-    //         alert(`${name} is exist username!!`);
-    //         // alert("exist user")
-    //     } else {
-    //         alert("Updated");
-    //     }
-    // };
+    
 
     /*
     return (

@@ -331,18 +331,6 @@ userRouter.post(
         console.log("!!!plat", platform);
         
         if (platform) {
-            // platform.map(data =>{
-            //     const modify = Platform.update(
-            //         {userId : userId},
-            //         {
-            //             $set: {
-            //                 username : newName
-            //             }
-            //         }
-            //     )
-            // })
-            // console.log("???",modify)
-
             const modifyplatform = await Platform.updateMany(
                 { userId: userId },
                 { $set: { userName: newName }}

@@ -68,7 +68,8 @@ function MyPage(props) {
                 user.subscribedPlatforms.map((raw, idx) => {
                     subscribe(raw);
                 });
-                console.log(subscribingPlatforms);
+                
+                console.log("?",subscribingPlatforms);
                 console.log("platforms", platforms);
             };
             fetchData();
@@ -92,9 +93,9 @@ function MyPage(props) {
     //     if (store && store.username) setName(store.username);
     // }, [store]);
 
-    useEffect(() => {
+    // useEffect(() => {
         
-    }, [platforms, subscribingPlatforms]);
+    // }, [platforms, subscribingPlatforms]);
 
     /*
     return (
@@ -158,7 +159,7 @@ function MyPage(props) {
         </div>
     );
     */
-   if (subscribingPlatforms)
+//    if (subscribingPlatforms)
     return(
         <div>
             {loading && <LoadingModal />}

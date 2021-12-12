@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import "../index.css";
 import { FetchApiPost } from "../utils/Network";
 import axios from "axios";
-import { Button } from "@mui/material";
+import { Button, Hidden } from "@mui/material";
 
 function PostArea(props) {
     const history = useHistory();
@@ -11,6 +11,7 @@ function PostArea(props) {
     const [user, setUser] = useState();
     const [error, setError] = useState(false);
     const [isSubscribed, setIsSubscribed] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
 
     const subscribe = async () => {
         let res = await FetchApiPost("/api/v1/subscribe", {
@@ -56,6 +57,9 @@ function PostArea(props) {
             console.log("!!!!", platform._id);
             let _isSubscribed = user.subscribedPlatforms.indexOf(platform._id) != -1;
             setIsSubscribed(_isSubscribed);
+            if (user._id == platform.userId) {
+                setIsOwner(true);
+            }
         }
     }, [user]);
 
@@ -66,12 +70,29 @@ function PostArea(props) {
     if (platform == undefined) return <div>LOADING..</div>;
     console.log(platform);
     console.log(user);
+
+    let subscribeButton;
+    if (!isOwner) {
+        subscribeButton = (
+            <Button
+                style={isSubscribed ? { backgroundColor: "#00aeef", color: "white" } : {}}
+                onClick={isSubscribed ? unsubscribe : subscribe}
+            >
+                {isSubscribed ? "UNSUBSCRIBE" : "SUBSCRIBE"}
+            </Button>
+        );
+    }
+
     return (
         <div className="postArea">
             <div className="banner">
-                <img src={platform.banner && platform.banner != ""
-                                ? platform.banner
-                                : "./images/sample.jpeg"} />
+                <img
+                    src={
+                        platform.banner && platform.banner != ""
+                            ? platform.banner
+                            : "./images/sample.jpeg"
+                    }
+                />
             </div>
             <div className="platformInfoArea">
                 <img src={platform.icon} alt="platformprofile" />
@@ -84,19 +105,24 @@ function PostArea(props) {
                     </div>
                     <div className="platformBottom">
                         <span>{platform.description}</span>
-                        <Button
+                        {subscribeButton}
+                        {/* <Button
                             style={
                                 isSubscribed ? { backgroundColor: "#00aeef", color: "white" } : {}
                             }
                             onClick={isSubscribed ? unsubscribe : subscribe}
                         >
                             {isSubscribed ? "UNSUBSCRIBE" : "SUBSCRIBE"}
-                        </Button>
+                        </Button> */}
                     </div>
                     <div className="platformBottom">
                         <span></span>
 
-                        <button type="button" onClick={onClickEdit}>
+                        <button
+                            style={isOwner ? {} : { display: "none" }}
+                            type="button"
+                            onClick={onClickEdit}
+                        >
                             EDIT
                         </button>
                     </div>
