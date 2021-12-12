@@ -115,10 +115,10 @@ function ProfileSetting(props) {
         if (res.err) {
             alert(`${name} is exist username!!`);
         } else {
-            alert("Updated");
+            // alert("Updated");
         }
-        alert("user Updated");
-        // history.goBack();
+        // alert("user Updated");
+        history.goBack();
     };
     // console.log("!@#!@#!@#$!@",userData)
     // const onClickUpdate = async () => {
