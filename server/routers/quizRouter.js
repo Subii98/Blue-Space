@@ -3,6 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js'
 import Quiz from '../models/quizModel.js'
 import { createRequire } from "module";
+import { uploadModule } from '../utils.js';
 const require = createRequire(import.meta.url);
 var mongoose = require("mongoose");
 
@@ -51,16 +52,18 @@ quizRouter.get(
 
 quizRouter.post(
     "/insert",
+    uploadModule.array("file"),
     expressAsyncHandler(async (req, res) => {
         try{
             const { title, description, platformId, likes } = req.body;
+            const imagePath = req.files[0] ? "/" + req.files[0].path : "/images/sample.jpeg";
             const createdQuiz = await Quiz.insertMany([
                 {
-                    platformId,
-                    // quizId: ,
-                    title,
-                    description,
-                    likes
+                    platformId: platformId,
+                    title : title,
+                    description : description,
+                    likes:0,
+                    quizImage: imagePath
                 },
             ]);
             res.send(createdQuiz);

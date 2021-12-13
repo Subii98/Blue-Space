@@ -1329,3 +1329,19 @@ th button:disabled{
   font-weight: bold;
 }
 /*end of PaginatedItems*/
+
+.createquiz-image-block {
+  width : 50%;
+  height : 120px;
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+  border-radius: 5px 5px 0px 0px;
+  border-color: #d2d2d2;
+  border-width: 1px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

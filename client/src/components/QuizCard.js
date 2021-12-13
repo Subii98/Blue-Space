@@ -11,7 +11,6 @@ function QuizCard(props) {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        console.log("Quiz user ::::::", user);
         if (user && platform) {
             if (user._id == platform.userId) {
                 setIsOwner(true);
@@ -57,7 +56,8 @@ function QuizCard(props) {
                     <CardMedia
                         component="img"
                         height="140"
-                        image={"/images/sample.jpeg"}
+                        // image={"/images/sample.jpeg"}
+                        image = {props.quiz.quizImage}
                         alt="quizPreview"
                     />
                     <CardContent>
@@ -83,7 +83,7 @@ function QuizCard(props) {
                     style={isOwner ? {} : { display: "none" }}
                     onClick={() => history.push("/CreateQuestion/" + props.quiz._id)}
                 >
-                    Create Question
+                    Create/Edit Question
                 </Button>
             </Card>
             <br />
