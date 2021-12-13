@@ -55,7 +55,7 @@ function CreateQuiz(props) {
                                 type="file"
                                 onChange={onChangeImage}
                             />
-
+ 
                 </div>
                 <div className="createquiz-content-block">
                     <div className="createquiz-content-block-label">TITLE :</div>

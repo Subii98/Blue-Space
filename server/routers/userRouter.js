@@ -240,6 +240,10 @@ userRouter.post(
             { _id: userId },
             { $addToSet: { subscribedPlatforms: platformId } }
         );
+        const updatePlatform = await Platform.updateOne(
+            { _id: platformId},
+            { $addToSet: {subscriber : userId}}
+        )
         res.send(updateuser);
     })
 );
@@ -252,6 +256,10 @@ userRouter.post(
             { _id: userId },
             { $pull: { subscribedPlatforms: platformId } }
         );
+        const updatePlatform = await Platform.updateOne(
+            { _id: platformId},
+            { $pull: {subscriber : userId}}
+        )
         res.send(updateuser);
     })
 );
