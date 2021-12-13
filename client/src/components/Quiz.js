@@ -20,14 +20,13 @@ function Quiz(props) {
     const isMounted = useIsMounted();
     const history = useHistory();
 
-    useEffect(()=> {
-        if(user&&platform){
+    useEffect(() => {
+        if (user && platform) {
             if (user._id == platform.userId) {
                 setIsOwner(true);
             }
         }
-        console.log("is owner?", isOwner)
-    })
+    });
 
     function fetchUser() {
         let userData = localStorage.getItem("data");
@@ -56,16 +55,15 @@ function Quiz(props) {
     }, [props.platformId]);
 
     function fetchPlatform() {
-        
         axios
-        .get('/api/platforms/by_id/' + props.platformId)
-        .then(res =>{
-            setPlatform(res.data);
-            return;
-        })
-        .catch(error =>{
-            console.log(error)
-        })
+            .get("/api/platforms/by_id/" + props.platformId)
+            .then(res => {
+                setPlatform(res.data);
+                return;
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
     function fetchQuiz() {
         axios
@@ -96,9 +94,10 @@ function Quiz(props) {
                 <div className="platformQuiz">
                     <div className="quizHeader">
                         <p>Quiz</p>
-                        <Button 
-                        style={isOwner ? {}:{display:"none"}}
-                        onClick={() => history.push("/CreateQuiz/" + props.platformId)}>
+                        <Button
+                            style={isOwner ? {} : { display: "none" }}
+                            onClick={() => history.push("/CreateQuiz/" + props.platformId)}
+                        >
                             Create
                         </Button>
                     </div>
