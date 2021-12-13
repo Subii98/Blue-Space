@@ -740,7 +740,7 @@ top: 69rem;
 
 .latestQuiz ul{
   position: absolute;
-  bottom: 0
+  bottom: -2.5rem;
 }
 
 .trendingPlatform {
@@ -752,7 +752,8 @@ top: 69rem;
 
 .trendingPlatform ul{
   position: absolute;
-  bottom: 0
+  bottom: 0;
+  bottom: -2.5rem;
 }
 
 div.flex-container {

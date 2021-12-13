@@ -38,7 +38,7 @@ function HomeScreen(props) {
 
   const [currentItems2, setCurrentItems2] = useState(null);
   const [pageCount2, setPageCount2] = useState(0);
-  const [itemsPerPage2, setItemsPerPage2] = useState(3)
+  const [itemsPerPage2, setItemsPerPage2] = useState(4)
   const [itemOffset2, setItemOffset2] = useState(0);
 
   useEffect(() => {
