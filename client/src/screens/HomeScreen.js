@@ -36,6 +36,11 @@ function HomeScreen(props) {
   const [itemsPerPage, setItemsPerPage] = useState(4)
   const [itemOffset, setItemOffset] = useState(0);
 
+  const [currentItems2, setCurrentItems2] = useState(null);
+  const [pageCount2, setPageCount2] = useState(0);
+  const [itemsPerPage2, setItemsPerPage2] = useState(2)
+  const [itemOffset2, setItemOffset2] = useState(0);
+
   useEffect(() => {
     axios
          .get('/api/platforms')
@@ -56,7 +61,7 @@ function HomeScreen(props) {
          .get('/api/quizzes')
          .then((res) => {
            setLoading(true)
-           setQuizzes(res?.data)
+           setQuizzes(res?.data.sort((b, a) => a.likes - b.likes))
            setLoading(false)
            return res?.data
          })
@@ -78,7 +83,7 @@ function HomeScreen(props) {
 
   useEffect(() => {
 
-  }, [currentItems])
+  }, [currentItems, currentItems2])
 
   useEffect(() => {
     // Fetch items from another resources.
@@ -97,10 +102,43 @@ function HomeScreen(props) {
     setItemOffset(newOffset);
   };
 
+  useEffect(() => {
+    // Fetch items from another resources.
+    const endOffset = itemOffset2 + itemsPerPage2;
+    console.log(`Loading items from ${itemOffset2} to ${endOffset}`);
+    setCurrentItems2(quizzes.slice(itemOffset2, endOffset));
+    setPageCount2(Math.ceil(quizzes.length / itemsPerPage2));
+  }, [quizzes]);
+
+  useEffect(() => {
+      // Fetch items from another resources.
+      const endOffset = itemOffset2 + itemsPerPage2;
+      console.log(`Loading items from ${itemOffset2} to ${endOffset}`);
+      setCurrentItems2(quizzes.slice(itemOffset2, endOffset));
+      setPageCount2(Math.ceil(quizzes.length / itemsPerPage2));
+  }, [itemOffset2, itemsPerPage2]);
+
+    // Invoke when user click to request another page.
+  const handlePageClick2 = (event) => {
+      const newOffset = (event.selected * itemsPerPage2) % quizzes.length;
+      console.log(
+        `User requested page number ${event.selected}, which is offset ${newOffset}`
+      );
+      setItemOffset2(newOffset);
+  };
+
   function PlatformItems(props) {
     return (
       <>
         {props.currentItems && <Platform platforms={props.currentItems} row={props.row}/>}
+      </>
+    );
+  }
+
+  function QuizItems(props) {
+    return (
+      <>
+      {props.currentItems && props.currentItems.map(quiz => (<QuizCard quiz={quiz} />))}
       </>
     );
   }
@@ -116,15 +154,34 @@ function HomeScreen(props) {
                   <SwiperCategories></SwiperCategories>
                   <div className="homeItems">
                       <div className="latestQuiz">
-                          <p style={{ textAlign: "center", color: "#929292" }}>Latest Quizzes</p>
+                          <p style={{ textAlign: "center", color: "#929292" }}>Popular Quizzes</p>
                           <div className="line" />
-                          {quizzes.map(quiz => (
-                              <QuizCard quiz={quiz} />
-                          ))}
+                            <QuizItems currentItems={currentItems2}></QuizItems>
+                            <ReactPaginate
+                              nextLabel=">"
+                              onPageChange={handlePageClick2}
+                              pageRangeDisplayed={3}
+                              marginPagesDisplayed={2}
+                              pageCount={pageCount}
+                              previousLabel="<"
+                              pageClassName="page-item"
+                              pageLinkClassName="page-link"
+                              previousClassName="page-item"
+                              previousLinkClassName="page-link"
+                              nextClassName="page-item"
+                              nextLinkClassName="page-link"
+                              breakLabel="..."
+                              breakClassName="page-item"
+                              breakLinkClassName="page-link"
+                              containerClassName="pagination"
+                              activeClassName="active"
+                              renderOnZeroPageCount={null}
+                            />
+                          
                       </div>
                       <div className="trendingPlatform">
                           <p style={{ textAlign: "center", color: "#929292" }}>
-                              Trending Platforms
+                              Latest Platforms
                           </p>
                           <div className="line" />
                             <PlatformItems currentItems={currentItems} row={false}/>
