@@ -26,7 +26,6 @@ function Quiz(props) {
                 setIsOwner(true);
             }
         }
-        // console.log("is owner?", isOwner);
     });
 
     function fetchUser() {
