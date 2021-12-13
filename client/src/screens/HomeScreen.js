@@ -12,6 +12,7 @@ import QuizCard from '../components/QuizCard.js';
 import { textAlign } from '@mui/system';
 import SwiperCategories from "../components/SwiperCategories.js";
 import PaginatedItems from '../components/PaginatedItems.js';
+import ReactPaginate from "react-paginate";
 
 function HomeScreen(props) {   
   //to check quiz _id matches _id of the url /quiz/_id  
@@ -29,11 +30,18 @@ function HomeScreen(props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  //pagination stuff
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(4)
+  const [itemOffset, setItemOffset] = useState(0);
+
   useEffect(() => {
     axios
          .get('/api/platforms')
          .then((res) => {
              setPlatforms(res?.data)
+             setCurrentItems(res?.data)
              setLoading(false)
            return res.data;
          })
@@ -59,7 +67,43 @@ function HomeScreen(props) {
           setLoading(false)
   console.log("Error loading home page");
         });
-}, []);
+  }, []);
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(platforms.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(platforms.length / itemsPerPage));
+  }, [platforms])
+
+  useEffect(() => {
+
+  }, [currentItems])
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    const endOffset = itemOffset + itemsPerPage;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(platforms.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(platforms.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage]);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % platforms.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
+  function PlatformItems(props) {
+    return (
+      <>
+        {props.currentItems && <Platform platforms={props.currentItems} row={props.row}/>}
+      </>
+    );
+  }
 
   return (
       <div>
@@ -83,7 +127,27 @@ function HomeScreen(props) {
                               Trending Platforms
                           </p>
                           <div className="line" />
-                          <PaginatedItems itemsPerPage={3} items={platforms} row={false}/>
+                            <PlatformItems currentItems={currentItems} row={false}/>
+                            <ReactPaginate
+                              nextLabel=">"
+                              onPageChange={handlePageClick}
+                              pageRangeDisplayed={3}
+                              marginPagesDisplayed={2}
+                              pageCount={pageCount}
+                              previousLabel="<"
+                              pageClassName="page-item"
+                              pageLinkClassName="page-link"
+                              previousClassName="page-item"
+                              previousLinkClassName="page-link"
+                              nextClassName="page-item"
+                              nextLinkClassName="page-link"
+                              breakLabel="..."
+                              breakClassName="page-item"
+                              breakLinkClassName="page-link"
+                              containerClassName="pagination"
+                              activeClassName="active"
+                              renderOnZeroPageCount={null}
+                            />
                       </div>
                   </div>
               </div>
