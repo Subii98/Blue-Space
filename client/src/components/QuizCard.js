@@ -25,9 +25,10 @@ function QuizCard(props) {
             fetchPlatform();
         }
         if(localStorage.getItem("data")){
-            fetchUser();
+            fetchUser()
         }
     }, [props.quiz]);
+
 
     function fetchUser() {
         let userData = localStorage.getItem("data");
