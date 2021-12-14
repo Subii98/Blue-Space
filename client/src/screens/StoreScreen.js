@@ -174,7 +174,7 @@ function StoreScreen(){
             </div>
             <div className="storeContent">
                 <p style={{ textAlign: "center"}}>BADGE</p>
-                <div className="line" />
+                <div className="lineBadge" />
                 <div className="badges">
                     <BadgeItems currentItems={currentItems} itemOffset={itemOffset}></BadgeItems>
                     <div className="badgePagination">
@@ -202,7 +202,7 @@ function StoreScreen(){
                 </div>
                 <div className="titles">
                     <p style={{ textAlign: "center"}}>TITLE</p>
-                    <div className="line" />
+                    <div className="lineTitle" />
                     <TitleItems currentItems={currentItems2}></TitleItems>
                     <div className="badgePagination">
                         <ReactPaginate

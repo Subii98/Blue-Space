@@ -138,7 +138,7 @@ function HomeScreen(props) {
   function QuizItems(props) {
     return (
       <>
-      {props.currentItems && props.currentItems.map(quiz => (<QuizCard quiz={quiz} />))}
+      {props.currentItems && props.currentItems.map(quiz => (<QuizCard quiz={quiz}/>))}
       </>
     );
   }
