@@ -79,7 +79,6 @@ function CreatePlatform(props) {
             });
     }
     const onClickSubmit = async () => {
-        alert(icon)
         let res = await FetchApiPostWithFile("/api/platforms/insert", [banner, icon], {
             userId: user._id,
             userName: userName,

@@ -876,16 +876,35 @@ div.wrap {
 }
 
 .helpTitle {
-  border-bottom: 1px solid  #e4e8eb;
+  border-bottom: 1px solid  #929292;
   font-family: Oswald;
   font-weight: 300;
-
+  font-size: 2.4rem;
+  text-align: center;
+  margin: 1rem 1rem 1rem 1rem;
 }
 .selected {
   border-bottom: 1px solid #00AEEF;
   color: #00AEEF;
   font-family: Oswald;
   font-weight: 300;
+}
+.panel-heading {
+  font-size: 1.6rem;
+  font-weight: 300;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.panel {
+  border: 1px solid;
+  border-color: #D2D2D2;  
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+.arrow {
+  margin-left: auto;
+  vertical-align:middle;
 }
 
 .panel .panel-collapse {
@@ -1174,9 +1193,6 @@ th button:disabled{
 /* end of StoreScreen*/
 
 /*start of LeaderboardScreen*/
-.leaderboard{
-  
-}
 .leaderboardHeader{
   display: flex;
   flex-direction: row;
@@ -1419,6 +1435,10 @@ th button:disabled{
   flex-direction: column;
 }
 
+.contactText {
+  font-size: 2.2rem;
+  font-weight: 300;
+}
 /*start of platformscreen*/
 .platformContentArea{
   display: flex;
