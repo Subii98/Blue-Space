@@ -28,7 +28,7 @@ export const FetchApiPost = async (url, params) => {
 
         return response.data;
     } catch (error) {
-        alert(error)
+        // alert(error)
     }
 };
 export const FetchApiGet = async (url, params) => {
@@ -60,7 +60,7 @@ export const FetchApiGet = async (url, params) => {
 
         return response.data;
     } catch (error) {
-        alert(error)
+        // alert(error)
     }
 };
 
@@ -84,7 +84,7 @@ export const FetchApiDelete = async (url, params) => {
 
         return response.data;
     } catch (error) {
-        alert(error);
+        // alert(error);
     }
 };
 
@@ -116,7 +116,7 @@ export const FetchApiPostWithFile = async (url, files, params) => {
 
         return response.data;
     } catch (error) {
-        alert(error)
+        // alert(error)
         return { resultCode: 9999, errorMessage: error };
     }
 };
