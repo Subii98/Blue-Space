@@ -115,7 +115,7 @@ function NavElements() {
                 </a>
             </div>
             <div className="navHeaders navElement">
-                <HistoryIcon sx={{ fontSize: 26 }}></HistoryIcon>
+                <HistoryIcon style={{ color: "gray" }} sx={{ fontSize: 28 }}></HistoryIcon>
                 Recent Quizzes
                 <div className="linksContainer">
                     {quizzes
@@ -125,7 +125,7 @@ function NavElements() {
                               const quizIds = quiz._id;
                               return (
                                   <ui className="navLinks">
-                                      <Link to={`/quiz/${quizIds}`}>{quizName}</Link>
+                                      <a href={`/quiz/${quizIds}`}>{quizName}</a>
                                   </ui>
                               );
                           })
@@ -133,7 +133,9 @@ function NavElements() {
                 </div>
             </div>
             <div className="navHeaders navElement">
-                <FolderSharedOutlinedIcon sx={{ fontSize: 28 }}> </FolderSharedOutlinedIcon>
+                <FolderSharedOutlinedIcon style={{ color: "gray" }} sx={{ fontSize: 28 }}>
+                    {" "}
+                </FolderSharedOutlinedIcon>
                 Subscribed Platforms
                 <div className="linksContainer">
                     {subscribedID
@@ -142,7 +144,7 @@ function NavElements() {
                               const subName = subscribedNames[index];
                               return (
                                   <ui className="navLinks">
-                                      <Link to={`/platform/${sub}`}>{subName}</Link>
+                                      <a href={`/platform/${sub}`}>{subName}</a>
                                   </ui>
                               );
                           })
@@ -150,24 +152,30 @@ function NavElements() {
                 </div>
             </div>
             <div className="navHeaders navElement">
-                <FolderSharedOutlinedIcon sx={{ fontSize: 28 }}> </FolderSharedOutlinedIcon>
+                <FolderSharedOutlinedIcon style={{ color: "gray" }} sx={{ fontSize: 28 }}>
+                    {" "}
+                </FolderSharedOutlinedIcon>
                 Suggested Platforms
             </div>
             <div className="navHeaders navElement">
-                <AnnouncementOutlinedIcon sx={{ fontSize: 28 }}> </AnnouncementOutlinedIcon>
+                <AnnouncementOutlinedIcon style={{ color: "gray" }} sx={{ fontSize: 28 }}>
+                    {" "}
+                </AnnouncementOutlinedIcon>
                 <a className="popup" href="https://twitter.com" target="_blank">
                     Announcements on Twitter
                 </a>
             </div>
             <div className="navHeaders navElement">
                 <a className="popup" href="javascript:;" onClick={e => modalOpen(e)}>
-                    <TextsmsOutlinedIcon sx={{ fontSize: 28 }}> </TextsmsOutlinedIcon>
+                    <TextsmsOutlinedIcon style={{ color: "gray" }} sx={{ fontSize: 28 }}>
+                        {" "}
+                    </TextsmsOutlinedIcon>
                     Send Us Feedback
                 </a>
             </div>
 
             <div className="navHeaders navElement copyright">
-                <CopyrightIcon sx={{ fontSize: 28 }}></CopyrightIcon>
+                <CopyrightIcon style={{ color: "gray" }}  sx={{ fontSize: 28 }}></CopyrightIcon>
                 Blue-Space 2021
             </div>
             <div className={`send-feedback ${showModal ? "expanded" : ""}`}>
