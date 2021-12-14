@@ -17,6 +17,7 @@ function Quiz(props) {
     const [isOwner, setIsOwner] = useState(false);
     const [platform, setPlatform] = useState();
     const [user, setUser] = useState();
+    const [topQuiz, setTopQuiz] = useState();
     const isMounted = useIsMounted();
     const history = useHistory();
 
@@ -73,6 +74,8 @@ function Quiz(props) {
                 if (isMounted.current) {
                     const data = res.data;
                     setQuizzes(data);
+                    const maxLikes = (Math.max(...data.map(({ likes }) => likes)))
+                    setTopQuiz(data.filter(({ likes }) => likes === maxLikes))
                     setLoading(false);
                     return;
                 }
@@ -92,18 +95,13 @@ function Quiz(props) {
                 <MessageModal variant="danger">{error}</MessageModal>
             ) : (
                 <div className="platformQuiz">
-                    <div className="quizHeader">
-                        <p>Quiz</p>
-                        <Button
-                            style={isOwner ? {} : { display: "none" }}
-                            onClick={() => history.push("/CreateQuiz/" + props.platformId)}
-                        >
-                            Create
-                        </Button>
-                    </div>
-                    {quizzes.map(quiz => (
+                    {!props.onlyTopQuiz? quizzes.map(quiz => (
                         <QuizCard quiz={quiz} />
-                    ))}
+                    )) 
+                    : topQuiz ? topQuiz.map(quiz => (
+                        <QuizCard quiz={quiz} />
+                    ))
+                    : false}
                 </div>
             )}
         </div>

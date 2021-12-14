@@ -8,6 +8,9 @@ import MessageModal from "../components/MessageModal.js";
 import PlatformListArea from "../components/PlatformListArea.js";
 import { useIsMounted } from "../components/useIsMounted.js";
 import Quiz from "../components/Quiz.js";
+import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import QuizCard from "../components/QuizCard.js";
 
 
 function PlatformScreen(props) {
@@ -16,15 +19,29 @@ function PlatformScreen(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [platform, setPlatform] = useState()
+  const [user, setUser] = useState();
+  const [topQuiz, setTopQuiz] = useState();
   const isMounted = useIsMounted();
   //const platform = data.platforms.find( x => x._id === props.match.params._id)
+
+  const [isOwner, setIsOwner] = useState(false);
+  const history = useHistory();
+  useEffect(() => {
+      if (user && platform) {
+          if (user._id == platform.userId) {
+              setIsOwner(true);
+          }
+      }
+  });
 
 
   useEffect(() => {
     isMounted.current = true
     fetchPlatform()
+    fetchUser();
     return () => {isMounted.current = false}
-}, []);
+  }, []);
+
 
   function fetchPlatform(){
     axios
@@ -48,6 +65,17 @@ function PlatformScreen(props) {
          });
   }
 
+  function fetchUser() {
+    let userData = localStorage.getItem("data");
+    userData = JSON.parse(userData);
+    axios
+        .get("/api/v1/get_user?user_id=" + userData.id)
+        .then(res => setUser(res.data))
+        .catch(error => {
+            setError("No userdata");
+        });
+  }
+
   return (
     <div>
         {loading ? (
@@ -58,7 +86,25 @@ function PlatformScreen(props) {
             <div className="platform">
                 {platform && <Tags platform={platform} />}
                 {platform && <PostArea platform={platform} />}
-                <Quiz platformId={platform ? platform._id : null} />
+                <div className="platformContentArea">
+                  <div className="platformQuizHeader">
+                      <p>Quiz</p>
+                      <div className="linePlatform" />
+                      <Button
+                          style={isOwner ? {} : { display: "none" }}
+                          onClick={() => history.push("/CreateQuiz/" + props.match.params.id)}
+                      >
+                          Create
+                      </Button>
+                      <Quiz platformId={platform ? platform._id : null} onlyTopQuiz={false}/>
+                  </div>
+                  <div className="topRatedQuiz">
+                    <p>Top Rated</p>
+                    <div className="linePlatform2" />
+                    <Quiz platformId={platform ? platform._id : null} onlyTopQuiz={true}/>
+                  </div>
+                </div>
+                
             </div>
         )}
     </div>

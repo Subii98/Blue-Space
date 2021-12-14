@@ -53,8 +53,6 @@ function PostArea(props) {
 
     useEffect(() => {
         if (user) {
-            console.log("!!!!", user.subscribedPlatforms);
-            console.log("!!!!", platform._id);
             let _isSubscribed = user.subscribedPlatforms.indexOf(platform._id) != -1;
             setIsSubscribed(_isSubscribed);
             if (user._id == platform.userId) {

@@ -21,7 +21,6 @@ function QuizCard(props) {
     });
 
     useEffect(() => {
-        console.log(props.quiz.platformId)
         if (props.quiz.platformId) {
             fetchPlatform();
         }
