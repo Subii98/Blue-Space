@@ -42,6 +42,9 @@ quizRouter.get(
         console.log("type of variable is " , typeof(idVal));
         console.log("type of variable is " , typeof(onlyQuiz));
         console.log("quiz is ", quiz);
+        console.log(typeof(quiz));
+        console.log(typeof(JSON.stringify(quiz)));
+        console.log(JSON.stringify(quiz));
         if (quiz){
             res.send(quiz)
         }else{
