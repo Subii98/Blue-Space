@@ -7,7 +7,7 @@ import { useIsMounted } from "../components/useIsMounted.js";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { prop } from "dom7";
+import ReactPaginate from "react-paginate";
 
 function Quiz(props) {
     const [quizId, setQuizId] = useState();
@@ -21,6 +21,12 @@ function Quiz(props) {
     const isMounted = useIsMounted();
     const history = useHistory();
 
+    const [currentItems, setCurrentItems] = useState(null);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemOffset, setItemOffset] = useState(0);
+
+
     useEffect(() => {
         if (user && platform) {
             if (user._id == platform.userId) {
@@ -28,6 +34,34 @@ function Quiz(props) {
             }
         }
     });
+
+    useEffect(() => {
+        const endOffset = itemOffset + itemsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+        setCurrentItems(quizzes.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(quizzes.length / itemsPerPage));
+    }, [quizzes])
+
+    useEffect(() => {
+
+    }, [currentItems])
+
+    useEffect(() => {
+      // Fetch items from another resources.
+      const endOffset = itemOffset + itemsPerPage;
+      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+      setCurrentItems(quizzes.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(quizzes.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage]);
+
+    // Invoke when user click to request another page.
+    const handlePageClick = (event) => {
+      const newOffset = (event.selected * itemsPerPage) % quizzes.length;
+      console.log(
+        `User requested page number ${event.selected}, which is offset ${newOffset}`
+      );
+      setItemOffset(newOffset);
+    };
 
     function fetchUser() {
         let userData = localStorage.getItem("data");
@@ -87,6 +121,14 @@ function Quiz(props) {
             });
     }
 
+    function QuizItems(props) {
+        return (
+          <>
+          {props.currentItems && props.currentItems.map(quiz => (<QuizCard quiz={quiz}/>))}
+          </>
+        );
+    }
+
     return (
         <div className="quizCardArea">
             {loading ? (
@@ -95,13 +137,34 @@ function Quiz(props) {
                 <MessageModal variant="danger">{error}</MessageModal>
             ) : (
                 <div className="platformQuiz">
-                    {!props.onlyTopQuiz? quizzes.map(quiz => (
-                        <QuizCard quiz={quiz} />
-                    )) 
+                    {!props.onlyTopQuiz? <div className="platformQuiz2">
+                        <QuizItems currentItems={currentItems}/>
+                        <ReactPaginate
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={2}
+                        pageCount={pageCount}
+                        previousLabel="<"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
+                        />
+                    </div>
                     : topQuiz ? topQuiz.map(quiz => (
                         <QuizCard quiz={quiz} />
                     ))
                     : false}
+                    
                 </div>
             )}
         </div>
