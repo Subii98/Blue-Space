@@ -11,27 +11,26 @@ function ContactHelp() {
         <div>
             <Grid container sx={{ color: "text.primary" }}>
                 <Grid item xs={4}>
-                    <EmailIcon />
+                    <EmailIcon sx={{ fontSize: 34 }} />
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography>support_blue@bluespace.com</Typography>
+                    <div className="contactText">support_blue@bluespace.com</div>
                 </Grid>
 
                 <Grid item xs={4}>
-                    <PhoneAndroidIcon />
+                    <PhoneAndroidIcon sx={{ fontSize: 34 }} />
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography>1 631.123.1234</Typography>
+                    <div className="contactText">1 631.123.1234</div>
                 </Grid>
 
                 <Grid item xs={4}>
-                    <LocationOnIcon />
+                    <LocationOnIcon sx={{ fontSize: 34 }} />
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography>1234 Red Circle, Stonybrook, NY</Typography>
+                    <div className="contactText">1234 Red Circle, Stonybrook, NY</div>
                 </Grid>
             </Grid>
-            
         </div>
     );
 }
