@@ -1,6 +1,19 @@
 import React, { useEffect, useState, useContext } from "react";
 import ReactPaginate from "react-paginate";
-import PlatformItems from "./PlatformItems";
+import Platform from './Platform.js';
+
+function PlatformItems(props){
+
+  useEffect(() => {
+
+  }, [props.currentItems])
+
+  return(
+    <>
+      {props.currentItems && <Platform platforms={props.currentItems} row={props.row}/>}
+    </>
+  )
+}
 
 function PaginatedItems(props) {
     // We start with an empty list of items.
@@ -11,16 +24,22 @@ function PaginatedItems(props) {
     const [itemOffset, setItemOffset] = useState(0);
 
     useEffect(() => {
+
+    }, [currentItems])
+
+    useEffect(() => {
       // Fetch items from another resources.
-      const endOffset = itemOffset + itemsPerPage;
-      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(items.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(items.length / itemsPerPage));
-    }, [itemOffset, itemsPerPage]);
+      if (props.items){
+        const endOffset = itemOffset + props.itemsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+        setCurrentItems(props.items.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(props.items.length / props.itemsPerPage));
+      }
+    }, [itemOffset, props.itemsPerPage]);
   
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {
-      const newOffset = (event.selected * itemsPerPage) % items.length;
+      const newOffset = (event.selected * props.itemsPerPage) % props.items.length;
       console.log(
         `User requested page number ${event.selected}, which is offset ${newOffset}`
       );
@@ -29,7 +48,7 @@ function PaginatedItems(props) {
   
     return (
       <>
-        {currentItems && <PlatformItems currentItems={currentItems} row={props.row}/>}
+        <PlatformItems currentItems={currentItems} row={props.row}/>
         <ReactPaginate
           nextLabel=">"
           onPageChange={handlePageClick}

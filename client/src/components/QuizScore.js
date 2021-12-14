@@ -160,17 +160,22 @@ function QuizScore(props){
 
     return(
         <div className="score">
-            <div className="scoreHeader">
-                <div className="centered">Score</div>
-                <img src="/images/confetti.png" alt="confetti"/>
-            </div>
-            <div className="userPreview2">
-                <div className="userTitle2">
-                    <p style={{ textAlign: "center"}}>{user.title}</p>
-                </div>                    
-                <div className="usernameBadge2">
-                    <img src={user.badge}/>
-                    <span>{user.username}</span>
+            <div className="scoreHeader">            
+                <div className='quizScoreUserInfo'>
+                    <div className="centered">Score</div>
+                    <img className="confetti" src="/images/confetti.png" alt="confetti"/>
+                    <div className='userImage2'>
+                        <img src={user.userImage}/>
+                    </div>
+                    <div className="userPreview2">                
+                        <div className="userTitle2">
+                            <p style={{ textAlign: "center"}}>{user.title}</p>
+                        </div>                    
+                        <div className="usernameBadge2">
+                            <img src={user.badge}/>
+                            <span>{user.username}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="scoreText">

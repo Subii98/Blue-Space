@@ -2,12 +2,11 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import User from "../models/userModel.js";
-import Platform from "../models/platformModel.js"
+import Platform from "../models/platformModel.js";
 import Counter from "../models/counterModel.js";
 import cookieParser from "cookie-parser";
 import { createRequire } from "module";
 import { uploadModule } from "../utils.js";
-
 
 const require = createRequire(import.meta.url);
 
@@ -161,8 +160,7 @@ userRouter.post("/auth/google", async (req, res) => {
 
             console.log("saving username: ", user.username);
             console.log("what user", user);
-            user
-              .save()
+            user.save()
                 .then(() => {
                     return res.status(200).json({
                         success: true,
@@ -242,6 +240,10 @@ userRouter.post(
             { _id: userId },
             { $addToSet: { subscribedPlatforms: platformId } }
         );
+        const updatePlatform = await Platform.updateOne(
+            { _id: platformId},
+            { $addToSet: {subscriber : userId}}
+        )
         res.send(updateuser);
     })
 );
@@ -254,6 +256,10 @@ userRouter.post(
             { _id: userId },
             { $pull: { subscribedPlatforms: platformId } }
         );
+        const updatePlatform = await Platform.updateOne(
+            { _id: platformId},
+            { $pull: {subscriber : userId}}
+        )
         res.send(updateuser);
     })
 );
@@ -315,24 +321,34 @@ userRouter.post(
     "/set_user",
     uploadModule.array("file"),
     expressAsyncHandler(async (req, res) => {
-        console.log(req.files)
+        console.log(req.files);
         const { newName, userId } = req.body;
         const existUser = await User.findById(userId);
         console.log("-----------------", existUser);
         if (existUser) {
             if (existUser._id != userId) return res.send({ err: "exist user" });
         }
-        let update_obj = { username : newName };
-        if(req.files[0]){
-            Object.assign(update_obj, { userImage : "/" + req.files[0].path});
+        let update_obj = { username: newName };
+        if (req.files[0]) {
+            Object.assign(update_obj, { userImage: "/" + req.files[0].path });
         }
-        // const userImagePath = req.files[0] ? req.files[0].path : null;
-        // console.log("-----------------", newName);
-        // console.log("!!!", userImagePath);
+        const userImagePath = req.files[0] ? req.files[0].path : null;
+        console.log("-----------------", newName);
+        console.log("!!!", userId);
+        const platform = await Platform.find({userID: userId});
+        console.log("!!!plat", platform);
+        
+        if (platform) {
+            const modifyplatform = await Platform.updateMany(
+                { userId: userId },
+                { $set: { userName: newName }}
+            );
+        }
+
         const modifyUser = await User.updateOne(
             { _id: userId },
             {
-                $set: update_obj
+                $set: update_obj,
             }
         );
         res.send({ modifyUser });
@@ -398,39 +414,43 @@ userRouter.post(
 );
 
 userRouter.get(
-  "/get_subscribers/:id",
-  expressAsyncHandler(async (req, res) => {
-    console.log("Entered get subscribers with id" , req.params.id);
-    const user = await User.findOne({ _id: req.params.id });
-    if (user) {
-      var subscriberarray = user.subscribedPlatforms;
-      if (!subscriberarray.length){
-        return res.status(201).json({
-          success: true,
-          ids: [],
-          names: [],
-          message: "No platforms",
-        });
-      }
-      const platforms = await Platform.find({_id: {$in: subscriberarray}}).sort({title: 1});
-      if (platforms){
-        var ids = platforms.map(function(platform) {return platform._id});
-        var names = platforms.map(function(platform) {return platform.title});
-        return res.status(200).json({
-          success: true,
-          ids: ids,
-          names: names,
-          message: "Sucessful with platforms",
-        });
-      } 
-      else {
-        res.status(404).send({ message: "Platforms Not Found" });
-      }
-      
-    } else {
-      res.status(404).send({ message: "User Not Found" });
-    }
-  })
+    "/get_subscribers/:id",
+    expressAsyncHandler(async (req, res) => {
+        console.log("Entered get subscribers with id", req.params.id);
+        const user = await User.findOne({ _id: req.params.id });
+        if (user) {
+            var subscriberarray = user.subscribedPlatforms;
+            if (!subscriberarray.length) {
+                return res.status(201).json({
+                    success: true,
+                    ids: [],
+                    names: [],
+                    message: "No platforms",
+                });
+            }
+            const platforms = await Platform.find({ _id: { $in: subscriberarray } }).sort({
+                title: 1,
+            });
+            if (platforms) {
+                var ids = platforms.map(function (platform) {
+                    return platform._id;
+                });
+                var names = platforms.map(function (platform) {
+                    return platform.title;
+                });
+                return res.status(200).json({
+                    success: true,
+                    ids: ids,
+                    names: names,
+                    message: "Sucessful with platforms",
+                });
+            } else {
+                res.status(404).send({ message: "Platforms Not Found" });
+            }
+        } else {
+            res.status(404).send({ message: "User Not Found" });
+        }
+    })
 );
 
 export default userRouter;

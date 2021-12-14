@@ -6,7 +6,7 @@ import PostArea from "../components/PostArea.js";
 import LoadingModal from "../components/LoadingModal.js";
 import MessageModal from "../components/MessageModal.js";
 import { FetchApiDelete, FetchApiPost, FetchApiPostWithFile } from "../utils/Network";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { ConstructionOutlined } from "@mui/icons-material";
 
@@ -120,7 +120,7 @@ function EditPlatform(props) {
             platformId: platform._id,
         });
         console.log(res);
-        // alert("platform delete");
+        alert("platform delete");
         // history.goBack();
     };
 
@@ -251,6 +251,7 @@ function EditPlatform(props) {
                                 {"CANCEL"}
                             </Button>
                             <Button
+                            component={Link} to ="/"
                                 onClick={onClickDelete}
                                 style={{
                                     float: "right",

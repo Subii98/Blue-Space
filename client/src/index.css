@@ -220,8 +220,9 @@ img.hamburger{
 
 .profileThumb{
   border-radius: 50%;
-  object-fit: contain;
+  object-fit: cover;
   width: 5rem;
+  height: 5rem;
   border: 1px solid #00aeef;
 }
 
@@ -549,31 +550,55 @@ top: 69rem;
 }
 
 .scoreHeader {
-  position: relative;
-  height: auto;
-  overflow: hidden;
-}
-
-.scoreHeader img{
-  object-fit: cover;
-  transform: scale(1.4);
-  width: 100%;
-  position: relative;
-  opacity: 80%;
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .centered {
   position: absolute;
-  top: 55%;
+  top: 33%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 4rem;
 }
 
+.confetti{
+  object-fit: cover;
+  transform: scale(1.3);
+  width: 100%;
+  top: 33%;
+  position: relative;
+  opacity: 70%;
+  
+}
+
+.quizScoreUserInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: auto;
+  overflow: hidden;
+}
 .userPreview2 {
   display: flex;
   flex-direction: column;
+}
+
+.userImage2{
+  margin-top: 4rem;
+}
+
+.userImage2 img{
+  position: absolute;
+  top: 47%;
+  left: 40%;
+  width: 15rem;
+  height: 15rem;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #00aeef;
 }
 
 .userTitle2 {
@@ -591,6 +616,7 @@ top: 69rem;
 }
 
 .usernameBadge2{
+  width: 100%;
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
@@ -606,6 +632,10 @@ top: 69rem;
 .storeContent{
   display: flex;
   flex-direction: column;
+}
+
+.storeContent p{
+  color: #929292;
 }
 
 .scoreText{
@@ -735,12 +765,25 @@ top: 69rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position:relative
+}
+
+.latestQuiz ul{
+  position: absolute;
+  bottom: -3rem;
 }
 
 .trendingPlatform {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position:relative
+}
+
+.trendingPlatform ul{
+  position: absolute;
+  bottom: 0;
+  bottom: -3rem;
 }
 
 div.flex-container {
@@ -833,16 +876,35 @@ div.wrap {
 }
 
 .helpTitle {
-  border-bottom: 1px solid  #e4e8eb;
+  border-bottom: 1px solid  #929292;
   font-family: Oswald;
   font-weight: 300;
-
+  font-size: 2.4rem;
+  text-align: center;
+  margin: 1rem 1rem 1rem 1rem;
 }
 .selected {
   border-bottom: 1px solid #00AEEF;
   color: #00AEEF;
   font-family: Oswald;
   font-weight: 300;
+}
+.panel-heading {
+  font-size: 1.6rem;
+  font-weight: 300;
+  display:flex;
+  align-items: center;
+  justify-content: center;;
+}
+.panel {
+  border: 1px solid;
+  border-color: #D2D2D2;  
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+.arrow {
+  margin-left: auto;
+  vertical-align:middle;
 }
 
 .panel .panel-collapse {
@@ -1028,6 +1090,19 @@ th button:disabled{
   padding: 1rem 5rem 1rem 5rem;
   
 }
+
+.lineBadge{
+  width: 10rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 2rem;
+}
+
+.lineTitle{
+  width: 15rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 2rem;
+}
+/*
 .badges {
   display: flex;
   flex-direction: row;
@@ -1036,8 +1111,31 @@ th button:disabled{
   margin-bottom: 2rem;
   padding: 0rem 5rem 5rem 5rem;
   border-bottom: 1px solid #d2d2d2;
+}*/
+
+.badges{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 0rem 5rem 5rem 5rem;
+  border-bottom: 1px solid #d2d2d2;
+  justify-content: space-between;
 }
 
+.badges ul{
+  margin-top: 3rem;
+}
+.badgePagination{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.badgeItemsToBuy{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 .storeBadges{
   display: flex;
   flex-direction: column;
@@ -1126,7 +1224,8 @@ th button:disabled{
 .myPage{
   display: flex;
   flex-direction: row;
-  border: 1px solid #d2d2d2
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
 }
 
 .profileImage{
@@ -1170,7 +1269,6 @@ th button:disabled{
 }
 .settingsGear img{
   width: 1.7rem;
-  opacity: 80%;
 }
 .settingsGear button{
   margin-top: 1rem;
@@ -1315,5 +1413,85 @@ th button:disabled{
 }
 .active{
   color: #00aeef;
+  font-weight: bold;
 }
 /*end of PaginatedItems*/
+
+.createquiz-image-block {
+  width : 50%;
+  height : 120px;
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+  border-radius: 5px 5px 0px 0px;
+  border-color: #d2d2d2;
+  border-width: 1px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.contactText {
+  font-size: 2.2rem;
+  font-weight: 300;
+}
+/*start of platformscreen*/
+.platformContentArea{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border-width: 0px 1px 1px 1px;
+  border-color: #D2D2D2;
+  border-radius: 0 0 5px 5px;
+  border-style: solid;
+}
+
+.platformQuiz{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.platformQuiz2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.platformQuizHeader{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.platformQuizButton{
+  display: flex;
+  flex-direction: row;
+}
+
+.platformContentArea p{
+  color: #929292;
+}
+
+.linePlatform{
+  width: 10rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 2rem;
+}
+
+.linePlatform2{
+  width: 15rem;
+  border-top: 2px solid #929292;
+  margin-bottom: 2rem;
+}
+
+.topRatedQuiz{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*end of platformscreen*/

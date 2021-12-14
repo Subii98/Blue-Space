@@ -10,6 +10,8 @@ import Platform from "../components/Platform.js";
 import PlatformCard from "../components/PlatformCard.js";
 import { Link, useHistory } from "react-router-dom";
 import PaginatedItems from "../components/PaginatedItems";
+import PlatformItems from "../components/PlatformItems";
+import ReactPaginate from "react-paginate";
 
 function MyPage(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -32,6 +34,16 @@ function MyPage(props) {
     const [userImage, setUserImage] = useState("");
     const [playCount, setUserPlayCount] = useState()
     const history = useHistory();
+
+    //pagination stuff
+    const [currentItems, setCurrentItems] = useState(null);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(4)
+    const [itemOffset, setItemOffset] = useState(0);
+
+    const [currentItems2, setCurrentItems2] = useState(null);
+    const [pageCount2, setPageCount2] = useState(0);
+    const [itemOffset2, setItemOffset2] = useState(0);
 
     useEffect(() => {
         let userData = localStorage.getItem("data");
@@ -68,12 +80,67 @@ function MyPage(props) {
                 user.subscribedPlatforms.map((raw, idx) => {
                     subscribe(raw);
                 });
-                console.log(subscribingPlatforms);
+                
+                console.log("?",subscribingPlatforms);
                 console.log("platforms", platforms);
             };
             fetchData();
         }
     }, [user]);
+
+    useEffect(() => {
+        // Fetch items from another resources.
+        const endOffset = itemOffset + itemsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+        setCurrentItems(platforms.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(platforms.length / itemsPerPage));
+    }, [platforms]);
+
+    useEffect(() => {
+        // Fetch items from another resources.
+        const endOffset = itemOffset + itemsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+        setCurrentItems(platforms.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(platforms.length / itemsPerPage));
+    }, [itemOffset]);
+
+    useEffect(() => {
+
+    }, [currentItems, currentItems2])
+    
+      // Invoke when user click to request another page.
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % platforms.length;
+        console.log(
+          `User requested page number ${event.selected}, which is offset ${newOffset}`
+        );
+        setItemOffset(newOffset);
+    };
+
+    useEffect(() => {
+        // Fetch items from another resources.
+        const endOffset = itemOffset2 + itemsPerPage;
+        console.log(`Loading items from ${itemOffset2} to ${endOffset}`);
+        setCurrentItems2(subscribingPlatforms.slice(itemOffset2, endOffset));
+        setPageCount2(Math.ceil(subscribingPlatforms.length / itemsPerPage));
+    }, [subscribingPlatforms]);
+
+    useEffect(() => {
+        // Fetch items from another resources.
+        const endOffset = itemOffset2 + itemsPerPage;
+        console.log(`Loading items from ${itemOffset2} to ${endOffset}`);
+        setCurrentItems2(subscribingPlatforms.slice(itemOffset2, endOffset));
+        setPageCount2(Math.ceil(subscribingPlatforms.length / itemsPerPage));
+    }, [itemOffset2]);
+    
+      // Invoke when user click to request another page.
+    const handlePageClick2 = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % subscribingPlatforms.length;
+        console.log(
+          `User requested page number ${event.selected}, which is offset ${newOffset}`
+        );
+        setItemOffset2(newOffset);
+    };
 
     function subscribe(id) {
         axios
@@ -92,9 +159,9 @@ function MyPage(props) {
     //     if (store && store.username) setName(store.username);
     // }, [store]);
 
-    useEffect(() => {
+    // useEffect(() => {
         
-    }, [platforms, subscribingPlatforms]);
+    // }, [platforms, subscribingPlatforms]);
 
     /*
     return (
@@ -158,7 +225,6 @@ function MyPage(props) {
         </div>
     );
     */
-   if (subscribingPlatforms)
     return(
         <div>
             {loading && <LoadingModal />}
@@ -219,14 +285,54 @@ function MyPage(props) {
                             <p>OWNED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>                        
-                        <PaginatedItems itemsPerPage={4} items={platforms} row={true}/>
+                        {currentItems && <PlatformItems currentItems={currentItems} row={true}/>}
+                        <ReactPaginate
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={2}
+                        pageCount={pageCount}
+                        previousLabel="<"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
+                        />
                     </div>
                     <div className="myPageDetailsList2">
                         <div className="myPagePlatformsHeader">
                             <p>SUBSCRIBED PLATFORMS</p>
                             <div className="linePlatforms"/>
                         </div>
-                        <PaginatedItems itemsPerPage={4} items={subscribingPlatforms} row={true}/>
+                        {currentItems2 && <PlatformItems currentItems={currentItems2} row={true}/>}
+                        <ReactPaginate
+                        nextLabel=">"
+                        onPageChange={handlePageClick2}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={2}
+                        pageCount={pageCount2}
+                        previousLabel="<"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
+                        />
                     </div>
                 </div>
             </div>

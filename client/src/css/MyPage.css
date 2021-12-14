@@ -26,10 +26,6 @@
     height: 100%;
 }
 
-.settingsGear button:hover{
-    cursor: pointer;
-}
-
 .platforms-list {
     flex: 75%;
     border-style: solid;

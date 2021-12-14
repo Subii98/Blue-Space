@@ -17,6 +17,9 @@ const quizSchema = new mongoose.Schema({
     },
     likes: {
         type: Number
+    },
+    quizImage:{
+        type:String
     }
 });
 

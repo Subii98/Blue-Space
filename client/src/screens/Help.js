@@ -8,6 +8,8 @@ import { useState, useContext, useEffect } from "react";
 import CollapsibleContent from "../components/HelpPage/CollapsibleContent.js";
 import ContactHelp from "../components/HelpPage/ContactHelp.js";
 import PlatformHelp from "../components/HelpPage/PlatformHelp.js";
+import LeaderboardHelp from "../components/HelpPage/LeaderboardHelp.js";
+import StoreHelp from "../components/HelpPage/StoreHelp.js";
 import QuizHelp from "../components/HelpPage/QuizHelp.js";
 
 function Help() {
@@ -36,7 +38,7 @@ function Help() {
                         Quiz
                     </h2>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <h2
                         className={`helpTitle ${selected == 2 ? "selected" : ""}`}
                         onClick={() => handleClick(2)}
@@ -63,8 +65,8 @@ function Help() {
             </Grid>
             {selected == 0 ? [<PlatformHelp></PlatformHelp>] : []}
             {selected == 1 ? [<QuizHelp></QuizHelp>] : []}
-            {selected == 2 ? [] : []}
-            {selected == 3 ? [] : []}
+            {selected == 2 ? [<LeaderboardHelp></LeaderboardHelp>] : []}
+            {selected == 3 ? [<StoreHelp></StoreHelp>] : []}
             {selected == 4 ? [<ContactHelp> </ContactHelp>] : []}
         </div>
     );
