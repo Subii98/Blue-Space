@@ -94,7 +94,7 @@ function QuizCard(props) {
     */
 
     return (
-        <>
+        <div>
             <Card sx={props.row ? { maxWidth: 100 } : { maxWidth: 400 }} variant="outlined">
                 <CardActionArea
                     component={Link}
@@ -167,7 +167,7 @@ function QuizCard(props) {
                 </Button>
             </Card>
             <br />
-        </>
+        </div>
     );
 }
 
