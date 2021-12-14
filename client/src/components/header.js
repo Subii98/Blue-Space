@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { GlobalStoreContext } from "../store";
 import LoginComponent from "./Login";
 import LogoutComponent from "./Logout";
+import LoginHamburger from "./LoginHamburger";
 
 function Header(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -119,21 +120,40 @@ function Header(props) {
               </div>
             </div>
             <div className="mainButtons">
-              <Link to="/categories">
+              {!store.loggedIn ? 
+              [<Link to="/categories">
                 <button type="button">CATEGORIES</button>
-              </Link>
-              <Link to="/createplatform">
+              </Link>,
+              <LoginHamburger>
                 <button type="button">CREATE</button>
-              </Link>
-              <Link to="/leaderboard">
+              </LoginHamburger>,
+              <LoginHamburger>
                 <button type="button">LEADERBOARD</button>
-              </Link>
-              <Link to="/store">
+              </LoginHamburger>,
+              <LoginHamburger>
                 <button type="button">STORE</button>
-              </Link>
+              </LoginHamburger>,
               <Link to="/help">
                 <button type="button">HELP</button>
-              </Link>
+              </Link>]
+              :
+              [<Link to="/categories">
+                <button type="button">CATEGORIES</button>
+              </Link>,
+              <Link to="/createplatform">
+                <button type="button">CREATE</button>
+              </Link>,
+              <Link to="/leaderboard">
+                <button type="button">LEADERBOARD</button>
+              </Link>,
+              <Link to="/store">
+                <button type="button">STORE</button>
+              </Link>,
+              <Link to="/help">
+                <button type="button">HELP</button>
+              </Link>]
+              
+               }
             </div>
           </div>
           <div className="loginButtons">

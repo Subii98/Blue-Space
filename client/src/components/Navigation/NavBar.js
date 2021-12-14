@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { GlobalStoreContext } from "../../store";
 import { Link } from 'react-router-dom'
 import MenuIcon from "@mui/icons-material/Menu";
@@ -15,6 +15,12 @@ function NavBar(children, ...rest) {
     const [showNav, setShowNav] = useState(false);
     const toggle = () => setShowNav(!showNav);
 
+    useEffect(()=> {
+        if (!store.loggedIn){
+            setShowNav(false);
+        }
+
+    }, [store.loggedIn]);
         
 /* <img src="/images/hamburger.png" className="hamburger" alt="hamburger" width="25" />*/
     
@@ -22,12 +28,16 @@ function NavBar(children, ...rest) {
         <div className={`navigation ${showNav ? "expanded" : ""}`}>
             {!store.loggedIn ? 
                 [<LoginHamburger>
-                    <MenuIcon sx={{ fontSize: 36 }}> </MenuIcon>
-                </LoginHamburger>] :
+                    <div className="menuIcon">
+                    <MenuIcon style={{ color: "gray" }}sx={{ fontSize: 36 }}> </MenuIcon>
+                    </div>
+                </LoginHamburger>
+                    
+                ] :
             [<div className="menuIcon" onClick={toggle}>
-                <MenuIcon sx={{ fontSize: 36 }}> </MenuIcon>
+                <MenuIcon style={{ color: "gray" }} sx={{ fontSize: 36 }}> </MenuIcon>
             </div>] }
-
+            
             {showNav ? <NavElements></NavElements> : null}
         </div>
     );
