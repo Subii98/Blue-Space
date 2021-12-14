@@ -17,6 +17,7 @@ function NavElements() {
     const [subscribedID, setSubscribedID] = useState([]);
     const [subscribedNames, setSubscribedNames] = useState([]);
     const [error, setError] = useState();
+    const [top3, setTop3] = useState();
     function fetchUser() {
         let userData = localStorage.getItem("data");
         userData = JSON.parse(userData);
@@ -25,6 +26,12 @@ function NavElements() {
             .then(res => setData(res.data))
             .catch(error => {
                 setError("No userdata");
+            });
+        axios
+            .get("/api/v1/get_top3")
+            .then(res => setTop3(res.data))
+            .catch(error => {
+                setError("No Top3");
             });
     }
     function getQuizzes() {
@@ -156,6 +163,19 @@ function NavElements() {
                     {" "}
                 </FolderSharedOutlinedIcon>
                 Suggested Platforms
+                <div className="linksContainer">
+                    {top3
+                        ? top3.map((plat, index) => {
+                              /* console.log("entered loop: ", sub, index); */
+                              const subName = plat.title
+                              return (
+                                  <ui className="navLinks">
+                                      <a href={`/platform/${plat._id}`}>{subName}</a>
+                                  </ui>
+                              );
+                          })
+                        : null}
+                </div>
             </div>
             <div className="navHeaders navElement">
                 <AnnouncementOutlinedIcon style={{ color: "gray" }} sx={{ fontSize: 28 }}>
@@ -175,7 +195,7 @@ function NavElements() {
             </div>
 
             <div className="navHeaders navElement copyright">
-                <CopyrightIcon style={{ color: "gray" }}  sx={{ fontSize: 28 }}></CopyrightIcon>
+                <CopyrightIcon style={{ color: "gray" }} sx={{ fontSize: 28 }}></CopyrightIcon>
                 Blue-Space 2021
             </div>
             <div className={`send-feedback ${showModal ? "expanded" : ""}`}>
