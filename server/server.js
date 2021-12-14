@@ -28,7 +28,7 @@ app.get("/me", async (req, res) => {
   res.json(req.user);
 });
 
-const saveVar = false
+/* const saveVar = false
 if (saveVar){
   saveJSON();
 }
@@ -40,7 +40,7 @@ var minutes = 5,
 setInterval(function () {
     console.log("I am doing my 1 minutes check to upload");
     writeJSON();
-}, the_interval);
+}, the_interval); */
 
 
 // app.use(logger("dev"));
