@@ -24,7 +24,9 @@ function QuizCard(props) {
         if (props.quiz.platformId) {
             fetchPlatform();
         }
-        fetchUser();
+        if(localStorage.getItem("data")){
+            fetchUser();
+        }
     }, [props.quiz]);
 
     function fetchUser() {
