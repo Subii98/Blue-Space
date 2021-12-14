@@ -162,7 +162,7 @@ function HomeScreen(props) {
                               onPageChange={handlePageClick2}
                               pageRangeDisplayed={3}
                               marginPagesDisplayed={2}
-                              pageCount={pageCount}
+                              pageCount={pageCount2}
                               previousLabel="<"
                               pageClassName="page-item"
                               pageLinkClassName="page-link"
@@ -190,7 +190,7 @@ function HomeScreen(props) {
                               onPageChange={handlePageClick}
                               pageRangeDisplayed={3}
                               marginPagesDisplayed={2}
-                              pageCount={pageCount2}
+                              pageCount={pageCount}
                               previousLabel="<"
                               pageClassName="page-item"
                               pageLinkClassName="page-link"
