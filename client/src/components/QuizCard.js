@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent, CardMedia, Typography, CardActionArea, Button } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 
 function QuizCard(props) {
     const history = useHistory();
@@ -24,7 +24,7 @@ function QuizCard(props) {
         if (props.quiz.platformId) {
             fetchPlatform();
         }
-        if (localStorage.getItem("data")) {
+        if(localStorage.getItem("data")){
             fetchUser();
         }
     }, [props.quiz]);
@@ -93,82 +93,48 @@ function QuizCard(props) {
     );
     */
 
-    return (
+    return(
         <>
-            <Card sx={props.row ? { maxWidth: 100 } : { maxWidth: 400 }} variant="outlined">
-                <CardActionArea
-                    component={Link}
-                    to={`/quiz/${props.quiz._id}`}
-                    sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        width: "30rem",
-                    }}
-                >
+            <Card sx={props.row ? { maxWidth: 100} : {maxWidth: 400}} variant="outlined">
+                <CardActionArea component={Link} to={`/quiz/${props.quiz._id}`} sx={{display: 'flex', flexDirection: 'row', alignItems:'center', width: '30rem'}}>
                     <CardMedia
                         component="img"
-                        sx={{ width: 100, height: 100, padding: "1.5rem" }}
-                        image={props.quiz.quizImage}
+                        sx={{ width: 100, height: 100, padding: '1.5rem' }}
+                        image = {props.quiz.quizImage}
                         alt="thumbnail"
                     />
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            width: "100%",
-                            justifyContent: "space-beween",
-                            padding: "1rem",
-                        }}
-                    >
-                        <CardContent
-                            sx={{ display: "flex", flexDirection: "column", padding: "0" }}
-                        >
+                    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent:'space-beween', padding: '1rem'}}>
+                        <CardContent sx={{ display: 'flex', flexDirection: 'column', padding:'0'}}>
                             <Typography component="div" variant="h5">
                                 {props.quiz.title}
                             </Typography>
-                            <Typography variant="subtitle1" color="text.secondary" component="div">
+                            <Typography variant="subtitle1" color="text.secondary" component="div" >
                                 {props.quiz.description}
                             </Typography>
                         </CardContent>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                                marginTop: "1rem",
-                                alignItems: "center",
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '1rem', alignItems:'center'}}>
                             <Typography
-                                className="quizHeart"
-                                variant="subtitle1"
-                                color="text.secondary"
-                                sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-                            >
-                                <img
-                                    src="/images/icon/like.png"
-                                    style={{
-                                        width: "1.3rem",
-                                        objectFit: "contain",
-                                        marginRight: "0.3rem",
-                                    }}
-                                />
-                                {props.quiz.likes}
+                                    className="quizHeart"
+                                    variant="subtitle1"
+                                    color="text.secondary"
+                                    sx={{display: 'flex', flexDirection:'row', alignItems:'center'}}
+                                >
+                                    <img src="/images/icon/like.png" style={{ width: '1.3rem', objectFit: 'contain', marginRight: '0.3rem'}} />
+                                    {props.quiz.likes}
                             </Typography>
                         </Box>
                     </Box>
                 </CardActionArea>
                 <Button
-                    style={isOwner ? {} : { display: "none" }}
-                    onClick={() => history.push("/CreateQuestion/" + props.quiz._id)}
-                >
-                    Create/Edit Question
+                        style={isOwner ? {} : { display: "none" }}
+                        onClick={() => history.push("/CreateQuestion/" + props.quiz._id)}
+                    >
+                        Create/Edit Question
                 </Button>
             </Card>
             <br />
         </>
-    );
+    )
 }
 
 export default QuizCard;
