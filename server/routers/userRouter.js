@@ -453,4 +453,18 @@ userRouter.get(
     })
 );
 
+userRouter.get(
+    "/get_top3",
+    expressAsyncHandler(async (req, res) => {
+        const recent = await Platform.aggregate([
+            {
+                $addFields: { subscriber_count: { $size: { $ifNull: ["$subscriber", []] } } },
+            },
+        ]).sort({ subscriber_count: -1 }).limit(3);
+        console.log("recent object", recent);
+        res.send(recent);
+                
+    })
+);
+
 export default userRouter;
