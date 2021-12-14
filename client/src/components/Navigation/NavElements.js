@@ -110,7 +110,9 @@ function NavElements() {
                     style={{ color: "gray" }}
                     sx={{ fontSize: 28 }}
                 ></HomeOutlinedIcon>
-                Home
+                <a className="popup nButton" href="/">
+                    Home
+                </a>
             </div>
             <div className="navHeaders navElement">
                 <HistoryIcon sx={{ fontSize: 26 }}></HistoryIcon>
