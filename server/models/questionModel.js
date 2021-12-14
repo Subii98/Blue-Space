@@ -6,7 +6,7 @@ const questionSchema = new mongoose.Schema({
     questionNum: Number,
     text: String,
     option: [String],
-    answer: Number,
+    answer: String,
     first: Number,
     second: Number,
     third: Number,
