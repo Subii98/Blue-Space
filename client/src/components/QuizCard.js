@@ -17,7 +17,7 @@ function QuizCard(props) {
                 setIsOwner(true);
             }
         }
-        console.log("are you quiz?", isOwner);
+        // console.log("are you quiz?", isOwner);
     });
 
     useEffect(() => {
@@ -40,7 +40,7 @@ function QuizCard(props) {
                 setError("No userdata");
             });
     }
-    
+
     function fetchPlatform() {
         axios
             .get("/api/platforms/by_id/" + props.quiz.platformId)
