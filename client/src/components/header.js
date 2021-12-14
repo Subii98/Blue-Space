@@ -59,6 +59,10 @@ function Header(props) {
 
     }, [openMiniProfile, store.loggedIn])
 
+    useEffect(() => {
+
+    }, [user])
+
     const handleSubmit = (event) => {
       event.preventDefault();
       store.setSearch(data);
@@ -121,7 +125,7 @@ function Header(props) {
               <Link to="/createplatform">
                 <button type="button">CREATE</button>
               </Link>
-              <Link to="leaderboard">
+              <Link to="/leaderboard">
                 <button type="button">LEADERBOARD</button>
               </Link>
               <Link to="/store">

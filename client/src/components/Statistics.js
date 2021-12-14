@@ -26,7 +26,7 @@ function Statistics(props) {
         else{
             return(<div className="result" id="result">
             <p>Wrong!</p>
-            <p>Answer: {props.question.option[answer - 1]}</p>
+            <p>Answer: {answer}</p>
             {isNaN(first+second+third+fourth) || (first+second+third+fourth == 0) ?
                 <p>0% of users got this question right</p>
             : 
@@ -47,7 +47,7 @@ function Statistics(props) {
         else{
             return(<div className="result" id="result">
             <p>Wrong!</p>
-            <p>Answer: {props.question.option[answer - 1]}</p>
+            <p>Answer: {answer}</p>
             {isNaN(first+second+third+fourth) || (first+second+third+fourth == 0) ?
                 <p>0% of users got this question right</p>
             : 
@@ -68,7 +68,7 @@ function Statistics(props) {
         else{
             return(<div className="result" id="result">
             <p>Wrong!</p>
-            <p>Answer: {props.question.option[answer - 1]}</p>
+            <p>Answer: {answer}</p>
             {isNaN(first+second+third+fourth) || (first+second+third+fourth == 0) ?
                 <p>0% of users got this question right</p>
             : 
@@ -90,7 +90,7 @@ function Statistics(props) {
         else{
             return(<div className="result" id="result">
             <p>Wrong!</p>
-            <p>Answer: {props.question.option[answer - 1]}</p>
+            <p>Answer: {answer}</p>
             {isNaN(first+second+third+fourth) || (first+second+third+fourth == 0) ?
                 <p>0% of users got this question right</p>
             : 
