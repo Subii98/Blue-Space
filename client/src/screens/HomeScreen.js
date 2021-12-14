@@ -33,12 +33,12 @@ function HomeScreen(props) {
   //pagination stuff
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(4)
+  const [itemsPerPage, setItemsPerPage] = useState(3)
   const [itemOffset, setItemOffset] = useState(0);
 
   const [currentItems2, setCurrentItems2] = useState(null);
   const [pageCount2, setPageCount2] = useState(0);
-  const [itemsPerPage2, setItemsPerPage2] = useState(4)
+  const [itemsPerPage2, setItemsPerPage2] = useState(3)
   const [itemOffset2, setItemOffset2] = useState(0);
 
   useEffect(() => {
@@ -190,7 +190,7 @@ function HomeScreen(props) {
                               onPageChange={handlePageClick}
                               pageRangeDisplayed={3}
                               marginPagesDisplayed={2}
-                              pageCount={pageCount}
+                              pageCount={pageCount2}
                               previousLabel="<"
                               pageClassName="page-item"
                               pageLinkClassName="page-link"

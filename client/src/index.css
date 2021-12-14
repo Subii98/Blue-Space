@@ -220,8 +220,9 @@ img.hamburger{
 
 .profileThumb{
   border-radius: 50%;
-  object-fit: contain;
+  object-fit: cover;
   width: 5rem;
+  height: 5rem;
   border: 1px solid #00aeef;
 }
 
@@ -740,7 +741,7 @@ top: 69rem;
 
 .latestQuiz ul{
   position: absolute;
-  bottom: -2.5rem;
+  bottom: -3rem;
 }
 
 .trendingPlatform {
@@ -753,7 +754,7 @@ top: 69rem;
 .trendingPlatform ul{
   position: absolute;
   bottom: 0;
-  bottom: -2.5rem;
+  bottom: -3rem;
 }
 
 div.flex-container {
@@ -1041,6 +1042,7 @@ th button:disabled{
   padding: 1rem 5rem 1rem 5rem;
   
 }
+/*
 .badges {
   display: flex;
   flex-direction: row;
@@ -1049,8 +1051,31 @@ th button:disabled{
   margin-bottom: 2rem;
   padding: 0rem 5rem 5rem 5rem;
   border-bottom: 1px solid #d2d2d2;
+}*/
+
+.badges{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 0rem 5rem 5rem 5rem;
+  border-bottom: 1px solid #d2d2d2;
+  justify-content: space-between;
 }
 
+.badges ul{
+  margin-top: 3rem;
+}
+.badgePagination{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.badgeItemsToBuy{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 .storeBadges{
   display: flex;
   flex-direction: column;

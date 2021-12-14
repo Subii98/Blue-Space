@@ -134,7 +134,7 @@ function Header(props) {
           </div>
           <div className="loginButtons">
             {!store.loggedIn ? <LoginComponent />
-              : store.loggedIn && !openMiniProfile ? <img className="profileThumb" src={user && user.badge} onClick={() => onClickMiniProfile()}/>
+              : store.loggedIn && !openMiniProfile ? <img className="profileThumb" src={user && user.userImage} onClick={() => onClickMiniProfile()}/>
               : store.loggedIn && openMiniProfile ?
                 <div className="miniProfile">
                   <div className="userPreview">
