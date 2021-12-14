@@ -59,6 +59,10 @@ function Header(props) {
 
     }, [openMiniProfile, store.loggedIn])
 
+    useEffect(() => {
+
+    }, [user])
+
     const handleSubmit = (event) => {
       event.preventDefault();
       store.setSearch(data);
