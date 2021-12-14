@@ -130,6 +130,7 @@ function CreateQuestion(props) {
     };
 
     const onClickSubmit = async (e) => {
+        e.preventDefault();
         if (text == ""){
             setErrorText(true)
             setUpdate(false)
