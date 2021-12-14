@@ -110,7 +110,6 @@ function Question(props) {
             if (ele[i].type == "radio") {
                 if (ele[i].checked && ele[i].value == question.answer) {
                     setDisable(true);
-                    
                     setChecked(true);
                     setCount(count + 1);
                     setCorrect(true)
@@ -228,7 +227,7 @@ function Question(props) {
                                       type="radio"
                                       id="option1"
                                       name="option"
-                                      value="1"
+                                      value={question.option[0]}
                                       disabled={disable}
                                   ></input>,
                                   <label for="option1">{question.option[0]}</label>,
@@ -241,7 +240,7 @@ function Question(props) {
                                       type="radio"
                                       id="option2"
                                       name="option"
-                                      value="2"
+                                      value={question.option[1]}
                                       disabled={disable}
                                   ></input>,
                                   <label for="option2">{question.option[1]}</label>,
@@ -254,7 +253,7 @@ function Question(props) {
                                       type="radio"
                                       id="option3"
                                       name="option"
-                                      value="3"
+                                      value={question.option[2]}
                                       disabled={disable}
                                   ></input>,
                                   <label for="option3">{question.option[2]}</label>,
@@ -267,7 +266,7 @@ function Question(props) {
                                       type="radio"
                                       id="option4"
                                       name="option"
-                                      value="4"
+                                      value={question.option[3]}
                                       disabled={disable}
                                   ></input>,
                                   <label for="option4">{question.option[3]}</label>,

@@ -1414,6 +1414,11 @@ th button:disabled{
   background-repeat: no-repeat;
 }
 
+.platformQuizTake{
+  display: flex;
+  flex-direction: column;
+}
+
 /*start of platformscreen*/
 .platformContentArea{
   display: flex;
@@ -1428,7 +1433,6 @@ th button:disabled{
 .platformQuiz{
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .platformQuiz2{
@@ -1472,3 +1476,13 @@ th button:disabled{
 }
 
 /*end of platformscreen*/
+
+/*start of createQuestion*/
+.createquiz-content-block{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+
+/*end of createQuestion*/
