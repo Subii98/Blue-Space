@@ -12,6 +12,7 @@ import platformRouter from "./routers/platformRouter.js";
 import searchRouter from "./routers/searchRouter.js";
 import recentQuizRouter from "./routers/recentQuizRouter.js";
 import feedbackRouter from "./routers/feedbackRouter.js";
+import {uploadJSON, saveJSON, writeJSON} from "./updateJSON.js"
 
 env(); // set enviornment variables
 const app = express();
@@ -26,6 +27,19 @@ app.get("/me", async (req, res) => {
   res.status(200);
   res.json(req.user);
 });
+
+
+
+saveJSON();
+/* writeJSON(); */
+
+/* var minutes = 5,
+    the_interval = minutes * 5 * 1000;
+setInterval(function () {
+    console.log("I am doing my 1 minutes check to upload");
+    writeJSON();
+}, the_interval); */
+
 
 // app.use(logger("dev"));
 //localhost:3000/static
