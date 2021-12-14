@@ -95,10 +95,19 @@ function QuizCard(props) {
     );
     */
 
-    return(
-        <>
-            <Card sx={props.row ? { maxWidth: 100} : {maxWidth: 400}} variant="outlined">
-                <CardActionArea component={Link} to={`/quiz/${props.quiz._id}`} sx={{display: 'flex', flexDirection: 'row', alignItems:'center', width: '30rem'}}>
+    return (
+        <div>
+            <Card sx={props.row ? { maxWidth: 100 } : { maxWidth: 400 }} variant="outlined">
+                <CardActionArea
+                    component={Link}
+                    to={`/quiz/${props.quiz._id}`}
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        width: "30rem",
+                    }}
+                >
                     <CardMedia
                         component="img"
                         sx={{ width: 100, height: 100, padding: '1.5rem' }}
@@ -135,8 +144,8 @@ function QuizCard(props) {
                 </Button>
             </Card>
             <br />
-        </>
-    )
+        </div>
+    );
 }
 
 export default QuizCard;
