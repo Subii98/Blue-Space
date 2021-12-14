@@ -228,7 +228,7 @@ function MyPage(props) {
     return(
         <div>
             {loading && <LoadingModal />}
-            {error && <MessageModal variant="danger">{error}</MessageModal>}
+            {/* {error && <MessageModal variant="danger">{error}</MessageModal>} */}
             <div className="myPage">
                 <div className="sideArea">
                     <div className="settingsGear">
