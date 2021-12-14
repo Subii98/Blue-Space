@@ -35,13 +35,12 @@ function CreateQuiz(props) {
     const onChangeImage = e => {
         setImageURL(URL.createObjectURL(e.target.files[0]));
         setImage(e.target.files[0]);
-    
     }
 
     return (
         <div className="createquiz-main-container">
             {/* <Tags/> */}
-            {/* <PostArea/>             */}
+            {/* <PostArea/>*/}
             <Typography fontSize="30px" marginBottom="24px">
                 Create Quiz Screen
             </Typography>

@@ -40,6 +40,7 @@ function QuizCard(props) {
                 setError("No userdata");
             });
     }
+    
     function fetchPlatform() {
         axios
             .get("/api/platforms/by_id/" + props.quiz.platformId)

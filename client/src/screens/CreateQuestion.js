@@ -38,8 +38,6 @@ function CreateQuestion(props) {
 
 
 
-
-
     useEffect(() => {
         console.log("updating info");
         setUpdate(false);
