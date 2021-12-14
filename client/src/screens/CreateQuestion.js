@@ -4,6 +4,8 @@ import { Button, Typography, TextField } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { set } from "mongoose";
+import Box from '@mui/material/Box';
+import { ConstructionOutlined } from "@mui/icons-material";
 
 function CreateQuestion(props) {
     const history = useHistory();
@@ -26,6 +28,17 @@ function CreateQuestion(props) {
     const [error, setError] = useState(false);
     const [questionID, setQuestionID] = useState(0);
     const [update, setUpdate] = useState(false);
+
+    const [answerError, setAnswerError] = useState(false)
+    const [errorOne, setErrorOne] = useState(false)
+    const [errorTwo, setErrorTwo] = useState(false)
+    const [errorThree, setErrorThree] = useState(false)
+    const [errorFour, setErrorFour] = useState(false)
+    const [errorText, setErrorText] = useState(false)
+
+
+
+
 
     useEffect(() => {
         console.log("updating info");
@@ -60,6 +73,12 @@ function CreateQuestion(props) {
 
 
     useEffect(()=> {
+        setErrorOne(false)
+        setErrorTwo(false)
+        setErrorThree(false)
+        setErrorFour(false)
+        setErrorText(false)
+        setAnswerError(false)
         if (index <= 0) {
             setBackDisabled(true);
         } else {
@@ -76,8 +95,17 @@ function CreateQuestion(props) {
         }
     }, [index,max]);
 
+    useEffect(() => {
+
+    }, [answerError, errorOne, errorTwo, errorThree, errorFour, errorText])
+
     const onBackClick = e => {
         e.preventDefault();
+        setAnswerError(false)
+        setErrorOne(false)
+        setErrorTwo(false)
+        setErrorThree(false)
+        setErrorFour(false)
         if (index > 0) {
             setIndex(index - 1);
         }
@@ -103,40 +131,65 @@ function CreateQuestion(props) {
         setIndex(max);
     };
 
-    const onClickSubmit = async () => {
-        if (index == max) {
-            console.log("create new question");
-            let res = await FetchApiPost("/api/questions/insert", {
-                text: text,
-                option: [optionOne, optionTwo, optionThree, optionFour],
-                answer: answer,
-                quizId: props.match.params.quizId,
-                questionNum: questionID,
-            });
-            setUpdate(true);
-            alert("question added");
-        } else {
-            console.log('update new question');
-            let res = await FetchApiPost("/api/questions/upsert", {
-                text: text,
-                option: [optionOne, optionTwo, optionThree, optionFour],
-                answer: answer,
-                quizId: props.match.params.quizId,
-                questionNum: questionID,
-            });
-            setUpdate(true);
-            alert("question modified");
+    const onClickSubmit = async (e) => {
+        if (text == ""){
+            setErrorText(true)
+            setUpdate(false)
+        }
+        else if (answer == ""){
+            setAnswerError(true)
+            setUpdate(false)
+        }
+        else if (optionOne == ""){
+            setErrorOne(true)
+            setUpdate(false)
+        }
+        else if (optionTwo == ""){
+            setErrorTwo(true)
+            setUpdate(false)
+        }
+        else if (optionThree == ""){
+            setErrorThree(true)
+            setUpdate(false)
+        }
+        else if (optionFour == ""){
+            setErrorFour(true)
+            setUpdate(false)
+        }
+        else{
+            if (answer == optionOne || answer == optionTwo || answer == optionThree || answer == optionFour){
+                setAnswerError(false)
+                if (index == max) {
+                    console.log("create new question");
+                    let res = await FetchApiPost("/api/questions/insert", {
+                        text: text,
+                        option: [optionOne, optionTwo, optionThree, optionFour],
+                        answer: answer,
+                        quizId: props.match.params.quizId,
+                        questionNum: questionID,
+                    });
+                    setUpdate(true);
+                    alert("question added");
+                } else {
+                    console.log('update new question');
+                    let res = await FetchApiPost("/api/questions/upsert", {
+                        text: text,
+                        option: [optionOne, optionTwo, optionThree, optionFour],
+                        answer: answer,
+                        quizId: props.match.params.quizId,
+                        questionNum: questionID,
+                    });
+                    setUpdate(true);
+                    alert("question modified");
+                }
+            }
+            else{
+                e.preventDefault()
+                setAnswerError(true)
+                setUpdate(false)
+            }
         }
         
-        setUpdate(true);
-        /*
-        setText("")
-        setAnswer("")
-        setOptionOne("")
-        setOptionTwo("")
-        setOptionThree("")
-        setOptionFour("")
-        */
     };
 
     function fetchQuiz() {
@@ -194,65 +247,68 @@ function CreateQuestion(props) {
                 Edit Quiz Screen
             </Typography>
             <div className="createquiz-content">
+            <Box component="form" autoComplete="off">
                 <div className="createquiz-content-block">
-                    <div className="createquiz-content-block-label">Question {index+1} :</div>
                     <TextField
-                        onChange={e => setText(e.target.value)}
+                        error={errorText}
+                        helperText={errorText && "Empty Entry"}
+                        required                        
+                        onChange={e => (setText(e.target.value), e.target.value != "" ? setErrorText(false) : setErrorText(true))}
                         value={text}
-                        label="Question"
+                        label= {`Question ${index+1}`}
                         style={{ minWidth: "300px" }}
                         inputProps={{ style: { fontSize: "14px" } }}
                         InputLabelProps={{ style: { fontSize: "12px" } }}
                     />
-                </div>
-                <div className="createquiz-content-block">
-                    <div className="createquiz-content-block-label">Answer :</div>
                     <TextField
-                        onChange={e => setAnswer(e.target.value)}
+                        error={answerError}
+                        helperText={answerError && "Answer Not Found In Options"}
+                        required
+                        onChange={e => (setAnswer(e.target.value), e.target.value != "" ? setAnswerError(false) : setAnswerError(true))}
                         value={answer}
                         label="Answer"
                         style={{ minWidth: "300px" }}
                         inputProps={{ style: { fontSize: "14px" } }}
                         InputLabelProps={{ style: { fontSize: "12px" } }}
                     />
-                </div>
-                <div className="createquiz-content-block">
-                    <div className="createquiz-content-block-label">First :</div>
                     <TextField
-                        onChange={e => setOptionOne(e.target.value)}
+                        error={errorOne}
+                        helperText={errorOne && "Empty Entry"}
+                        required
+                        onChange={e => (setOptionOne(e.target.value), e.target.value != "" ? setErrorOne(false) : setErrorOne(true))}
                         value={optionOne}
                         label="First"
                         style={{ minWidth: "300px" }}
                         inputProps={{ style: { fontSize: "14px" } }}
                         InputLabelProps={{ style: { fontSize: "12px" } }}
                     />
-                </div>
-                <div className="createquiz-content-block">
-                    <div className="createquiz-content-block-label">Second :</div>
                     <TextField
-                        onChange={e => setOptionTwo(e.target.value)}
+                        error={errorTwo}
+                        helperText={errorTwo && "Empty Entry"}
+                        required
+                        onChange={e => (setOptionTwo(e.target.value), e.target.value != "" ? setErrorTwo(false) : setErrorTwo(true))}
                         value={optionTwo}
                         label="Second"
                         style={{ minWidth: "300px" }}
                         inputProps={{ style: { fontSize: "14px" } }}
                         InputLabelProps={{ style: { fontSize: "12px" } }}
                     />
-                </div>
-                <div className="createquiz-content-block">
-                    <div className="createquiz-content-block-label">Third :</div>
                     <TextField
-                        onChange={e => setOptionThree(e.target.value)}
+                        error={errorThree}
+                        helperText={errorThree && "Empty Entry"}
+                        required
+                        onChange={e => (setOptionThree(e.target.value), e.target.value != "" ? setErrorThree(false) : setErrorThree(true))}
                         value={optionThree}
                         label="Third"
                         style={{ minWidth: "300px" }}
                         inputProps={{ style: { fontSize: "14px" } }}
                         InputLabelProps={{ style: { fontSize: "12px" } }}
                     />
-                </div>
-                <div className="createquiz-content-block">
-                    <div className="createquiz-content-block-label">Fourth :</div>
                     <TextField
-                        onChange={e => setOptionFour(e.target.value)}
+                        error={errorFour}
+                        helperText={errorFour && "Empty Entry"}
+                        required
+                        onChange={e => (setOptionFour(e.target.value), e.target.value != "" ? setErrorFour(false) : setErrorFour(true))}
                         value={optionFour}
                         label="Fourth"
                         style={{ minWidth: "300px" }}
@@ -260,16 +316,17 @@ function CreateQuestion(props) {
                         InputLabelProps={{ style: { fontSize: "12px" } }}
                     />
                 </div>
-                <Button style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit}>
+                <Button type="submit" style={{ width: "10%", marginTop: "12px" }} onClick={onClickSubmit}>
                     SUBMIT
                 </Button>
                 <Button style={{ width: "10%", marginTop: "12px" }} onClick={() => history.goBack()}> 
-                CANCEL
+                    CANCEL
                 </Button>
                 <Button disabled={backDisabled} style={{ width: "10%", marginTop: "12px" }} onClick={onBackClick}>
                     Back
                 </Button>
                 <Button
+                    type="submit"
                     disabled={nextDisabled}
                     style={{ width: "10%", marginTop: "12px" }}
                     onClick={onNextClick}
@@ -286,7 +343,9 @@ function CreateQuestion(props) {
                 <Button disabled={deleteDisabled} style={{ width: "10%", marginTop: "12px" }} onClick={onDeleteClick}>
                     Delete
                 </Button>
+                </Box>
             </div>
+            
         </div>
     );
 }

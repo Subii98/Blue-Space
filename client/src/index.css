@@ -894,7 +894,7 @@ div.wrap {
   font-weight: 300;
   display:flex;
   align-items: center;
-  justify-content: center;;
+  justify-content: center;
 }
 .panel {
   border: 1px solid;
@@ -1193,9 +1193,6 @@ th button:disabled{
 /* end of StoreScreen*/
 
 /*start of LeaderboardScreen*/
-.leaderboard{
-  
-}
 .leaderboardHeader{
   display: flex;
   flex-direction: row;
@@ -1433,6 +1430,11 @@ th button:disabled{
   background-repeat: no-repeat;
 }
 
+.platformQuizTake{
+  display: flex;
+  flex-direction: column;
+}
+
 .contactText {
   font-size: 2.2rem;
   font-weight: 300;
@@ -1451,7 +1453,6 @@ th button:disabled{
 .platformQuiz{
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .platformQuiz2{
@@ -1495,3 +1496,13 @@ th button:disabled{
 }
 
 /*end of platformscreen*/
+
+/*start of createQuestion*/
+.createquiz-content-block{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+
+/*end of createQuestion*/

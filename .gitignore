@@ -141,7 +141,12 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/node,react
 client/package.json
+client/package-lock.json
+package-lock.json
+client/collections
 
 
 #ignore build
-#client/build
+client/build
+*.json
+

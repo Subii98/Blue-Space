@@ -43,7 +43,7 @@ function QuizScreen(props) {
             ) : error ? (
                 <MessageModal variant="danger">{error}</MessageModal>
             ) : (
-                <div className="platformQuiz">
+                <div className="platformQuizTake">
                     {quiz && quiz.length > 0 ? (
                         <Question quizID={props.match.params.quizId} question={quiz}></Question>
                     ) : (

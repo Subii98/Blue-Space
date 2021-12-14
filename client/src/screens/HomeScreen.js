@@ -45,7 +45,7 @@ function HomeScreen(props) {
     axios
          .get('/api/platforms')
          .then((res) => {
-             setPlatforms(res?.data)
+             setPlatforms(res?.data.slice(0,9))
              setCurrentItems(res?.data)
              setLoading(false)
            return res.data;
@@ -61,7 +61,7 @@ function HomeScreen(props) {
          .get('/api/quizzes')
          .then((res) => {
            setLoading(true)
-           setQuizzes(res?.data.sort((b, a) => a.likes - b.likes))
+           setQuizzes(res?.data.sort((b, a) => a.likes - b.likes).slice(0,9))
            setLoading(false)
            return res?.data
          })
