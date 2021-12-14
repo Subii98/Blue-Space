@@ -86,23 +86,25 @@ function PlatformScreen(props) {
             <div className="platform">
                 {platform && <Tags platform={platform} />}
                 {platform && <PostArea platform={platform} />}
-                <div className="platformContentArea">
-                  <div className="platformQuizHeader">
-                    <Button
+                <div className="platformContentArea2">
+                  <Button
+                            className="createQuizButton"
                             style={isOwner ? {} : { display: "none" }}
                             onClick={() => history.push("/CreateQuiz/" + props.match.params.id)}
                       >
                             Create Quiz
                       </Button>
-                      <p>Quiz</p>
-                      <div className="linePlatform" />                      
-                      <Quiz platformId={platform ? platform._id : null} onlyTopQuiz={false}/>
-                  </div>
-                  <div className="topRatedQuiz">
-                    <Button style={{opacity: "0%"}}/>
-                    <p>Top Rated</p>
-                    <div className="linePlatform2" />
-                    <Quiz platformId={platform ? platform._id : null} onlyTopQuiz={true}/>
+                  <div className="platformContentArea">
+                    <div className="platformQuizHeader">
+                        <p>Quiz</p>
+                        <div className="linePlatform" />                      
+                        <Quiz platformId={platform ? platform._id : null} onlyTopQuiz={false}/>
+                    </div>
+                    <div className="topRatedQuiz">                    
+                      <p>Top Rated</p>
+                      <div className="linePlatform2" />
+                      <Quiz platformId={platform ? platform._id : null} onlyTopQuiz={true}/>
+                    </div>
                   </div>
                 </div>
                 
